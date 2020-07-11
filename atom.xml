@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Jeri的博客</title>
-    <updated>2020-07-11T15:17:11.765Z</updated>
+    <updated>2020-07-11T15:58:32.168Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -39,8 +39,9 @@
 <h2 id="线段树">线段树</h2>
 <h3 id="原理">原理</h3>
 <p>线段树属于二叉树，除叶节点外，其他节点的度都是2。<br>
-线段树特性 ： 父节点的值为子节点值的和，便于求区间和。</p>
-<p>备注：线段树有多种形式，父节点也可以为两个子节点的最大值/最小值等。</p>
+线段树特性 ： 父节点的值为子节点值的和，便于求区间和。<br>
+<img src="https://jerilee.github.io/post-images/1594483104377.png" alt="" loading="lazy"><br>
+备注：线段树有多种形式，父节点也可以为两个子节点的最大值/最小值等。</p>
 <h2 id="树状数组">树状数组</h2>
 <h2 id="堆">堆</h2>
 <h2 id=""></h2>
