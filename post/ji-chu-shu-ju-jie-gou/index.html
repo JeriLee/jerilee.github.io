@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>基础数据结构 | Jeri的博客</title>
-<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1594483236917">
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1594489771247">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="基础数据结构 | Jeri的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
@@ -14,13 +14,10 @@
     <meta name="description" content="基础数据结构
 @(数据结构)[线段树|树状数组|堆]
 
-线段树
+线段树（Segment Tree）
 原理
 线段树属于二叉树，除叶节点外，其他节点的度都是2。
-线段树特性 ： 父节点的值为子节点值的和，便于求区间和。
-
-如图，对于任意一个节点，它的value为两个子节点的和。
-..." />
+线段树特性 ： 父节点的值为子节点值的和，便于求区间和。如图，5号节点，它的v值为10号节..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -30,7 +27,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://jerilee.github.io">
-  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1594483236917" alt="">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1594489771247" alt="">
   </a>
   <h1 class="site-title">
     Jeri的博客
@@ -90,7 +87,7 @@
                 2020-07-11
               </span>
               <span>
-                1 min read
+                4 min read
               </span>
               
             </div>
@@ -100,30 +97,133 @@
                 <h1 id="基础数据结构">基础数据结构</h1>
 <p>@(数据结构)[线段树|树状数组|堆]</p>
 <hr>
-<h2 id="线段树">线段树</h2>
+<h2 id="线段树segment-tree">线段树（Segment Tree）</h2>
 <h3 id="原理">原理</h3>
 <p>线段树属于二叉树，除叶节点外，其他节点的度都是2。<br>
-线段树特性 ： 父节点的值为子节点值的和，便于求区间和。<br>
+线段树特性 ： 父节点的值为子节点值的和，便于求区间和。如图，5号节点，它的v值为10号节点和11号节点的和。<br>
 <img src="https://jerilee.github.io/post-images/1594483104377.png" alt="" loading="lazy"></p>
-<p>如图，对于任意一个节点，它的value为两个子节点的和。<br>
-备注：线段树有多种形式，父节点也可以为两个子节点的最大值/最小值等。</p>
+<p>备注：线段树有多种形式，父节点也可以为两个子节点的最大值/最小值等。</p>
+<h3 id="code">Code</h3>
+<h4 id="c代码"><strong>C++代码</strong></h4>
+<pre><code class="language-C#">  public class SegmentTree&lt;T&gt; where T : new() {
+    T[] list;
+    int Count;
+    Func&lt;T, T, T&gt; addFunc;
+    /// &lt;summary&gt;
+    /// 构造函数
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;collection&quot;&gt; 数据集合&lt;/param&gt;
+    /// &lt;param name=&quot;func&quot;&gt; 两个T相加方法&lt;/param&gt;
+    public SegmentTree(List&lt;T&gt; collection, Func&lt;T,T,T&gt; func) {
+      if(collection.Count &gt; 0) {
+        int temp = 1;
+        while(temp &lt; collection.Count) {
+          temp &lt;&lt;= 1;
+        }
+        Count = temp;
+        list = new T[temp &lt;&lt; 1];
+        addFunc = func;
+        BuildTree(1, 0, temp, collection);
+      } else {
+        throw new Exception(&quot;List Count is Zero&quot;);
+      }
+    }
+
+    private void BuildTree(int nodeId, int left, int right, List&lt;T&gt; collection) {
+      if(left + 1 == right) {
+        if(left &lt; collection.Count) {
+          list[nodeId] = collection[left];
+        } else {
+          list[nodeId] = new T();
+        }
+        return;
+      }
+
+      int mid = (left + right) &gt;&gt; 1;
+      BuildTree(nodeId &lt;&lt; 1, left, mid, collection);
+      BuildTree(nodeId &lt;&lt; 1 | 1, mid, right, collection);
+      list[nodeId] = addFunc(list[nodeId &lt;&lt; 1], list[nodeId &lt;&lt; 1 | 1]);
+    }
+    /// &lt;summary&gt;
+    /// 设置值
+    /// &lt;/summary&gt;
+    public bool TrySetValue(int index, T value) {
+      if (index &gt;= 0 &amp;&amp; index &lt; Count) {
+        SetValue(1, 0, Count, index, value);
+        return true;
+      }
+      return false;
+    }
+
+    private void SetValue(int nodeId, int left, int right, int index, T value) {
+      if(left + 1 == right) {
+        list[nodeId] = value;
+        return;
+      }
+      int mid = (left + right) &gt;&gt; 1;
+      if(index &lt; mid) {
+        SetValue(nodeId &lt;&lt; 1, left, mid, index, value);
+      } else {
+        SetValue(nodeId &lt;&lt; 1 | 1, mid, right, index, value);
+      }
+      list[nodeId] = addFunc(list[nodeId &lt;&lt; 1], list[nodeId &lt;&lt; 1 | 1]);
+    }
+    /// &lt;summary&gt;
+    /// 查询区间和
+    /// &lt;/summary&gt;
+    public T QueryValue(int left, int right) {
+      if(left &lt; right &amp;&amp; left &gt;= 0 &amp;&amp; right &lt;= Count) {
+        return QueryValue(1, 0, Count, left, right);
+      }
+      return default(T);
+    }
+
+    private T QueryValue(int nodeId, int left, int right, int qleft, int qright) {
+      if(left == qleft &amp;&amp; right == qright) {
+        return list[nodeId];
+      }
+
+      int mid = (left + right) &gt;&gt; 1;
+      if(qright &lt;= mid) {
+        return QueryValue(nodeId &lt;&lt; 1, left, mid, qleft, qright);
+      }else if(qleft &gt;= mid) {
+        return QueryValue(nodeId &lt;&lt; 1 | 1, mid, right, qleft, qright);
+      } else {
+        return addFunc(QueryValue(nodeId &lt;&lt; 1, left, mid, qleft, mid),
+          QueryValue(nodeId &lt;&lt; 1 | 1, mid, right, mid, qright));
+      }
+    }
+  }
+</code></pre>
+<h4 id="c代码-2"><strong>C#代码</strong></h4>
 <h2 id="树状数组">树状数组</h2>
 <h2 id="堆">堆</h2>
-<h2 id=""></h2>
+<h2 id="字典树trie">字典树（Trie）</h2>
+<h3 id="原理-2">原理</h3>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
 <li><a href="#%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">基础数据结构</a>
 <ul>
-<li><a href="#%E7%BA%BF%E6%AE%B5%E6%A0%91">线段树</a>
+<li><a href="#%E7%BA%BF%E6%AE%B5%E6%A0%91segment-tree">线段树（Segment Tree）</a>
 <ul>
 <li><a href="#%E5%8E%9F%E7%90%86">原理</a></li>
+<li><a href="#code">Code</a>
+<ul>
+<li><a href="#c%E4%BB%A3%E7%A0%81"><strong>C++代码</strong></a></li>
+<li><a href="#c%E4%BB%A3%E7%A0%81-2"><strong>C#代码</strong></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84">树状数组</a></li>
 <li><a href="#%E5%A0%86">堆</a></li>
-<li></li>
+<li><a href="#%E5%AD%97%E5%85%B8%E6%A0%91trie">字典树（Trie）</a>
+<ul>
+<li><a href="#%E5%8E%9F%E7%90%86-2">原理</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
