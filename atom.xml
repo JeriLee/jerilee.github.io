@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Jeri的博客</title>
-    <updated>2020-07-11T18:22:04.469Z</updated>
+    <updated>2020-07-11T18:31:36.967Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -28,24 +28,23 @@
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[基础数据结构]]></title>
+        <title type="html"><![CDATA[线段树（Segment Tree）]]></title>
         <id>https://jerilee.github.io/post/ji-chu-shu-ju-jie-gou/</id>
         <link href="https://jerilee.github.io/post/ji-chu-shu-ju-jie-gou/">
         </link>
         <updated>2020-07-11T15:05:38.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="基础数据结构">基础数据结构</h1>
-<p>@(数据结构)[线段树|树状数组|堆]</p>
+        <content type="html"><![CDATA[<h1 id="线段树segment-tree">线段树（Segment Tree）</h1>
+<p>@(数据结构)[线段树|数据结构]</p>
 <hr>
-<h2 id="线段树segment-tree">线段树（Segment Tree）</h2>
-<h3 id="原理">原理</h3>
+<h2 id="原理">原理</h2>
 <p>线段树属于二叉树，除叶节点外，其他节点的度都是2。<br>
 线段树特性 ： 父节点的值为子节点值的和，便于求区间和。如图，5号节点，它的v值为10号节点和11号节点的和。<br>
 <img src="https://jerilee.github.io/post-images/1594483104377.png" alt="" loading="lazy"></p>
 <p>备注：线段树有多种形式，父节点也可以为两个子节点的最大值/最小值等。</p>
-<h3 id="code">Code</h3>
-<h4 id="c代码"><strong>C++代码</strong></h4>
-<h4 id="c代码-2"><strong>C#代码</strong></h4>
-<h5 id="数组实现">数组实现</h5>
+<h2 id="code">Code</h2>
+<h3 id="c代码"><strong>C++代码</strong></h3>
+<h3 id="c代码-2"><strong>C#代码</strong></h3>
+<h4 id="数组实现">数组实现</h4>
 <pre><code class="language-C#">  public class SegmentTree&lt;T&gt; where T : new() {
     T[] list;
     int Count;
@@ -136,7 +135,7 @@
     }
   }
 </code></pre>
-<h5 id="引用实现">引用实现</h5>
+<h4 id="引用实现">引用实现</h4>
 <pre><code class="language-C#">  public class SegmentTree2&lt;T&gt; where T : new() {
     private class Node {
       public int Left, Right;
@@ -220,19 +219,6 @@
     }
   }
 </code></pre>
-<h2 id="树状数组">树状数组</h2>
-<h2 id="堆">堆</h2>
-<h2 id="字典树trie">字典树（Trie）</h2>
-<h3 id="原理-2">原理</h3>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Jeri的First博客]]></title>
-        <id>https://jerilee.github.io/post/jeri-de-di-yi-pian-bo-ke/</id>
-        <link href="https://jerilee.github.io/post/jeri-de-di-yi-pian-bo-ke/">
-        </link>
-        <updated>2020-07-10T16:29:34.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="从今天开始用这个博客做个学习笔记偶尔随便写点什么">从今天开始，用这个博客做个<strong>学习笔记</strong>，偶尔<strong>随便写点</strong>什么</h2>
 ]]></content>
     </entry>
 </feed>
