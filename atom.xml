@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Jeri的博客</title>
-    <updated>2020-07-12T01:53:05.192Z</updated>
+    <updated>2020-07-12T02:11:05.645Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -24,8 +24,19 @@
 <h3 id="原理">原理</h3>
 <p>堆属于二叉树，属于完全二叉树。<br>
 堆特性 ： 以大顶堆为例，父节点比两个子节点的值都要大。如图，5号节点，它的v值比10号节点和11号节点都要大。<br>
-实现方式： 通常采用数组实现。<br>
 <img src="https://jerilee.github.io/post-images/1594513997324.png" alt="" loading="lazy"></p>
+<h3 id="实现方法">实现方法</h3>
+<p>堆通常使用数组实现。<br>
+每个堆节点（index）的左子节点为（index*2 + 1），右子节点为（index*2 + 2）</p>
+<h4 id="插入元素">插入元素</h4>
+<p>1.因为堆属于完全二叉树，所以新元素放在数组的最末尾。<br>
+2.如果<strong>当前节点</strong>比<strong>父节点</strong>更优先，则和父节点交换，递归向上比较。</p>
+<h4 id="删除最优先元素">删除最优先元素</h4>
+<p>因为堆属于完全二叉树，删除最优先元素时：<br>
+1.先将0号元素与末尾元素交换，再删除最末尾元素。<br>
+2.该节点是否比子节点要小，如果确实是这样，则从两个子节点中找一个更大的和自己交换，再递归向下比较。</p>
+<h4 id="查找最优先元素">查找最优先元素</h4>
+<p>如果堆不为空，则最优先元素一定是根节点。</p>
 <h3 id="code">Code</h3>
 <h4 id="c代码">C#代码</h4>
 <pre><code class="language-C#">

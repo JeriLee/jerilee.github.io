@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>基础数据结构（堆Segment Tree） | Jeri的博客</title>
-<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1594518783441">
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1594519863710">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="基础数据结构（堆Segment Tree） | Jeri的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
@@ -28,7 +28,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://jerilee.github.io">
-  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1594518783441" alt="">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1594519863710" alt="">
   </a>
   <h1 class="site-title">
     Jeri的博客
@@ -88,7 +88,7 @@
                 2020-07-12
               </span>
               <span>
-                2 min read
+                3 min read
               </span>
               
             </div>
@@ -103,8 +103,19 @@
 <h3 id="原理">原理</h3>
 <p>堆属于二叉树，属于完全二叉树。<br>
 堆特性 ： 以大顶堆为例，父节点比两个子节点的值都要大。如图，5号节点，它的v值比10号节点和11号节点都要大。<br>
-实现方式： 通常采用数组实现。<br>
 <img src="https://jerilee.github.io/post-images/1594513997324.png" alt="" loading="lazy"></p>
+<h3 id="实现方法">实现方法</h3>
+<p>堆通常使用数组实现。<br>
+每个堆节点（index）的左子节点为（index*2 + 1），右子节点为（index*2 + 2）</p>
+<h4 id="插入元素">插入元素</h4>
+<p>1.因为堆属于完全二叉树，所以新元素放在数组的最末尾。<br>
+2.如果<strong>当前节点</strong>比<strong>父节点</strong>更优先，则和父节点交换，递归向上比较。</p>
+<h4 id="删除最优先元素">删除最优先元素</h4>
+<p>因为堆属于完全二叉树，删除最优先元素时：<br>
+1.先将0号元素与末尾元素交换，再删除最末尾元素。<br>
+2.该节点是否比子节点要小，如果确实是这样，则从两个子节点中找一个更大的和自己交换，再递归向下比较。</p>
+<h4 id="查找最优先元素">查找最优先元素</h4>
+<p>如果堆不为空，则最优先元素一定是根节点。</p>
 <h3 id="code">Code</h3>
 <h4 id="c代码">C#代码</h4>
 <pre><code class="language-C#">
@@ -187,6 +198,13 @@
 <li><a href="#%E5%A0%86">堆</a>
 <ul>
 <li><a href="#%E5%8E%9F%E7%90%86">原理</a></li>
+<li><a href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95">实现方法</a>
+<ul>
+<li><a href="#%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0">插入元素</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E6%9C%80%E4%BC%98%E5%85%88%E5%85%83%E7%B4%A0">删除最优先元素</a></li>
+<li><a href="#%E6%9F%A5%E6%89%BE%E6%9C%80%E4%BC%98%E5%85%88%E5%85%83%E7%B4%A0">查找最优先元素</a></li>
+</ul>
+</li>
 <li><a href="#code">Code</a>
 <ul>
 <li><a href="#c%E4%BB%A3%E7%A0%81">C#代码</a></li>
