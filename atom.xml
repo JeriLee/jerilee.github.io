@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Jeri的博客</title>
-    <updated>2020-07-12T01:24:22.123Z</updated>
+    <updated>2020-07-12T01:26:15.614Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -10,42 +10,6 @@
     <logo>https://jerilee.github.io/images/avatar.png</logo>
     <icon>https://jerilee.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Jeri的博客</rights>
-    <entry>
-        <title type="html"><![CDATA[Manacher算法]]></title>
-        <id>https://jerilee.github.io/post/manacher-suan-fa/</id>
-        <link href="https://jerilee.github.io/post/manacher-suan-fa/">
-        </link>
-        <updated>2020-07-11T18:42:56.000Z</updated>
-        <content type="html"><![CDATA[<p>1</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[KMP算法]]></title>
-        <id>https://jerilee.github.io/post/kmp-suan-fa/</id>
-        <link href="https://jerilee.github.io/post/kmp-suan-fa/">
-        </link>
-        <updated>2020-07-11T18:42:50.000Z</updated>
-        <content type="html"><![CDATA[<p>1</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[字典树（Trie）]]></title>
-        <id>https://jerilee.github.io/post/zi-dian-shu-trie/</id>
-        <link href="https://jerilee.github.io/post/zi-dian-shu-trie/">
-        </link>
-        <updated>2020-07-11T18:42:20.000Z</updated>
-        <content type="html"><![CDATA[<p>1</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[树状数组]]></title>
-        <id>https://jerilee.github.io/post/shu-zhuang-shu-zu/</id>
-        <link href="https://jerilee.github.io/post/shu-zhuang-shu-zu/">
-        </link>
-        <updated>2020-07-11T18:42:05.000Z</updated>
-        <content type="html"><![CDATA[<p>1</p>
-]]></content>
-    </entry>
     <entry>
         <title type="html"><![CDATA[基础算法]]></title>
         <id>https://jerilee.github.io/post/ji-chu-suan-fa/</id>
@@ -77,7 +41,7 @@
 <h3 id="原理">原理</h3>
 <p>线段树属于二叉树，除叶节点外，其他节点的度都是2。<br>
 线段树特性 ： 父节点的值为子节点值的和，便于求区间和。如图，5号节点，它的v值为10号节点和11号节点的和。<br>
-<img src="https://jerilee.github.io/post-images/1594483104377.png" alt="" loading="lazy"></p>
+<img src="https://jerilee.github.io/post-images/1594517169989.png" alt="" loading="lazy"></p>
 <p>备注：线段树有多种形式，父节点也可以为两个子节点的最大值/最小值等。<br>
 如图，以<strong>下文C#引用实现</strong>为例，每个节点的value代表一个区间[left, right)的和，若一个元素代表[left, right)的和，那它的两个儿子分别代表[left, mid), [mid, right) 的和。<br>
 <img src="https://jerilee.github.io/post-images/1594514907199.png" alt="" loading="lazy"></p>
