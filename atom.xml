@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Jeri的博客</title>
-    <updated>2020-07-11T18:43:07.648Z</updated>
+    <updated>2020-07-12T01:24:22.123Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -64,23 +64,26 @@
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[线段树（Segment Tree）]]></title>
+        <title type="html"><![CDATA[基础数据结构]]></title>
         <id>https://jerilee.github.io/post/ji-chu-shu-ju-jie-gou/</id>
         <link href="https://jerilee.github.io/post/ji-chu-shu-ju-jie-gou/">
         </link>
         <updated>2020-07-11T15:05:38.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="线段树segment-tree">线段树（Segment Tree）</h1>
+        <content type="html"><![CDATA[<h1 id="基础数据结构">基础数据结构</h1>
 <p>@(数据结构)[线段树|数据结构]</p>
 <hr>
-<h2 id="原理">原理</h2>
+<p>[TOC]</p>
+<h2 id="线段树segment-tree">线段树（Segment Tree）</h2>
+<h3 id="原理">原理</h3>
 <p>线段树属于二叉树，除叶节点外，其他节点的度都是2。<br>
 线段树特性 ： 父节点的值为子节点值的和，便于求区间和。如图，5号节点，它的v值为10号节点和11号节点的和。<br>
 <img src="https://jerilee.github.io/post-images/1594483104377.png" alt="" loading="lazy"></p>
-<p>备注：线段树有多种形式，父节点也可以为两个子节点的最大值/最小值等。</p>
-<h2 id="code">Code</h2>
-<h3 id="c代码"><strong>C++代码</strong></h3>
-<h3 id="c代码-2"><strong>C#代码</strong></h3>
-<h4 id="数组实现">数组实现</h4>
+<p>备注：线段树有多种形式，父节点也可以为两个子节点的最大值/最小值等。<br>
+如图，以<strong>下文C#引用实现</strong>为例，每个节点的value代表一个区间[left, right)的和，若一个元素代表[left, right)的和，那它的两个儿子分别代表[left, mid), [mid, right) 的和。<br>
+<img src="https://jerilee.github.io/post-images/1594514907199.png" alt="" loading="lazy"></p>
+<h3 id="code">Code</h3>
+<h4 id="c代码"><strong>C++代码</strong></h4>
+<h4 id="c代码-数组实现这是一棵满二叉树"><strong>C#代码</strong> 数组实现，这是一棵满二叉树</h4>
 <pre><code class="language-C#">  public class SegmentTree&lt;T&gt; where T : new() {
     T[] list;
     int Count;
@@ -171,7 +174,7 @@
     }
   }
 </code></pre>
-<h4 id="引用实现">引用实现</h4>
+<h4 id="c代码-引用实现这不是满二叉树"><strong>C#代码</strong> 引用实现，这不是满二叉树</h4>
 <pre><code class="language-C#">  public class SegmentTree2&lt;T&gt; where T : new() {
     private class Node {
       public int Left, Right;
@@ -254,6 +257,85 @@
       }
     }
   }
+</code></pre>
+<hr>
+<h2 id="堆">堆</h2>
+<h3 id="原理-2">原理</h3>
+<p>堆属于二叉树，属于完全二叉树。<br>
+堆特性 ： 以大顶堆为例，父节点比两个子节点的值都要大。如图，5号节点，它的v值比10号节点和11号节点都要大。<br>
+<img src="https://jerilee.github.io/post-images/1594513997324.png" alt="" loading="lazy"></p>
+<h3 id="code-2">Code</h3>
+<h4 id="c代码-2">C#代码</h4>
+<pre><code class="language-C#">
+  public class Heap&lt;T&gt; where T: IComparable&lt;T&gt; {
+    private List&lt;T&gt; list = new List&lt;T&gt;();
+    private int count = 0;
+
+    public Heap() {
+    }
+
+    public void Add(T value) {
+      if(list.Count &gt; count) {
+        list[count] = value;
+      } else {
+        list.Add(value);
+      }
+
+      CheckAdd(count);
+      ++count;
+    }
+
+    private void CheckAdd(int index) {
+      if(index &gt; 0) {
+        int father = (index - 1 ) &gt;&gt; 1;
+        if (list[index].CompareTo(list[father]) &lt; 0) {
+          T temp = list[index];
+          list[index] = list[father];
+          list[father] = temp;
+          CheckAdd(father);
+        }
+      }
+    }
+
+    public T Top() {
+      if(count &gt; 0) {
+        return list[0];
+      }
+      return default;
+    }
+
+    public int Count =&gt; count;
+    public bool IsEmpty =&gt; count == 0;
+
+    public bool Pop() {
+      if(count &gt; 0) {
+        --count;
+        if (count &gt; 0) {
+          T temp = list[0];
+          list[0] = list[count];
+          list[count] = temp;
+          CheckPop(0);
+        }
+        return true;
+      }
+      return false;
+    }
+
+    private void CheckPop(int index) {
+      int leftSon = index &lt;&lt; 1 | 1;
+      int rightSon = leftSon + 1;
+      if (leftSon &lt; Count) {
+        int upSon = rightSon &lt; Count &amp;&amp; list[rightSon].CompareTo(list[leftSon]) &lt; 0 ? rightSon : leftSon;
+        if (list[upSon].CompareTo(list[index]) &lt; 0) {
+          T temp = list[index];
+          list[index] = list[upSon];
+          list[upSon] = temp;
+          CheckPop(upSon);
+        }
+      }
+    }
+  }
+
 </code></pre>
 ]]></content>
     </entry>
