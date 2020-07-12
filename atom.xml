@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Jeri的博客</title>
-    <updated>2020-07-12T01:52:35.078Z</updated>
+    <updated>2020-07-12T01:53:05.192Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -138,14 +138,11 @@
 <p>如图，以<strong>下文C#引用实现</strong>为例，每个节点的value代表一个区间[left, right)的和，若一个元素代表[left, right)的和，那它的两个儿子分别代表[left, mid), [mid, right) 的和。<br>
 <img src="https://jerilee.github.io/post-images/1594514907199.png" alt="" loading="lazy"></p>
 <h4 id="创建线段树-参考函数buildtree">创建线段树 （参考函数BuildTree）</h4>
-<pre><code>创建树每个结点时，如果这个节点不是叶节点，先创建两个子节点，通过递归的方式创建完左右两棵子树时，再初始化该节点，这样就完成了以这个节点为根节点的线段树初始化。
-</code></pre>
+<p>创建树每个结点时，如果这个节点不是叶节点，先创建两个子节点，通过递归的方式创建完左右两棵子树时，再初始化该节点，这样就完成了以这个节点为根节点的线段树初始化。</p>
 <h4 id="通过索引修改线段树的值-参考函数setvalue">通过索引修改线段树的值 （参考函数SetValue）</h4>
-<pre><code>通过递归的方式，找到索引所在的叶节点，修改叶节点的值，再从下往上修改路径上节点的值。
-</code></pre>
+<p>通过递归的方式，找到索引所在的叶节点，修改叶节点的值，再从下往上修改路径上节点的值。</p>
 <h4 id="查找区间和-参考函数-queryvalue">查找区间和 （参考函数 QueryValue）</h4>
-<pre><code>通过递归的方式，判断所要查找的区间覆盖在哪些节点。例如图例，若要查找[1, 6]区间的和，只需要2号节点[1,4]， 6号节点[5,6]求和。
-</code></pre>
+<p>通过递归的方式，判断所要查找的区间覆盖在哪些节点。例如图例，若要查找[1, 6]区间的和，只需要2号节点[1,4]， 6号节点[5,6]求和。</p>
 <h3 id="code">Code</h3>
 <h4 id="c代码"><strong>C++代码</strong></h4>
 <h4 id="c代码-数组实现这是一棵满二叉树"><strong>C#代码</strong> 数组实现，这是一棵满二叉树</h4>
