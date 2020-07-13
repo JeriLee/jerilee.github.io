@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>基础算法（KMP） | Jeri的博客</title>
-<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1594648488248">
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1594649084429">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="基础算法（KMP） | Jeri的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
@@ -29,7 +29,7 @@ A=&quot;a..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://jerilee.github.io">
-  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1594648488248" alt="">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1594649084429" alt="">
   </a>
   <h1 class="site-title">
     Jeri的博客
@@ -139,7 +139,7 @@ next数组的含义：一个固定字符串的最长前缀和最长后缀相同�
 }
 
 public static int FindByKmp(this string str1, string str2) {
-    var next = GetNext2(str2);
+    var next = GetNext(str2);
     for (int i = 0, k = -1; i &lt; str1.Length; i++) {
     while (k &gt; -1 &amp;&amp; str2[k + 1] != str1[i]) {
         k = next[k];
