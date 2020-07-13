@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Jeri的博客</title>
-    <updated>2020-07-12T02:11:05.645Z</updated>
+    <updated>2020-07-13T13:53:03.899Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -10,6 +10,154 @@
     <logo>https://jerilee.github.io/images/avatar.png</logo>
     <icon>https://jerilee.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Jeri的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[C#笔记]]></title>
+        <id>https://jerilee.github.io/post/cbi-ji/</id>
+        <link href="https://jerilee.github.io/post/cbi-ji/">
+        </link>
+        <updated>2020-07-13T13:28:35.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="c笔记">C#笔记</h2>
+<h3 id="c部分类">C#部分类</h3>
+<p>部分类可以定义部分方法。部分方法在部分类中定义，但没有方法体，在另一个部分类中执行。</p>
+<pre><code class="language-C#">public partial class MyClass {
+  partial void MyMethod();
+}
+
+public partial class MyClass {
+  partial void MyMethod(){
+    
+  }
+}
+</code></pre>
+<p>部分方法不能有返回值。<br>
+部分方法如果没有实现，编译器不会编译这个方法。</p>
+<h3 id="字符串查找">字符串查找</h3>
+<pre><code class="language-C#">string.Contains();
+string.IndexOf();
+</code></pre>
+<h3 id="dictionary和-sorteddictionary">Dictionary和 SortedDictionary</h3>
+<pre><code class="language-C#">SortedDictionary&lt;string, string&gt; dic = new SortedDictionary&lt;string, string&gt;();
+dic.Add(&quot;1&quot;, &quot;Tom&quot;);
+dic.Add(&quot;1&quot;, &quot;Jeri&quot;); //不可以重复添加
+
+Dictionary&lt;string, string&gt; dic = new Dictionary&lt;string, string&gt;();
+dic.Add(&quot;1&quot;, &quot;Tom&quot;);
+dic.Add(&quot;1&quot;, &quot;Jeri&quot;); //不可以重复添加
+//SortedList也不可以重复Add
+</code></pre>
+<p><a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.collections.generic.dictionary-2?view=netcore-3.1">Dictionary文档</a></p>
+<h3 id="linq库">Linq库</h3>
+<p>Select和Where都是延迟加载</p>
+<pre><code class="language-C#">IEnumerable&lt;T&gt;.Select(Func func);
+IEnumerable&lt;T&gt;.Where(Func func);
+</code></pre>
+<h3 id="元组">元组</h3>
+<h4 id="引用元组-tuple">引用元组 Tuple</h4>
+<p>元素最多8个，并且第8个元素是Tuple<br>
+元素是只读<br>
+元组为引用</p>
+<pre><code class="language-C#">var testTuple1 = new Tuple&lt;int, int, int, int, int&gt;(1, 2, 3, 4, 5);
+var testTuple2 = Tuple.Create&lt;int, int, int&gt;(1, 2, 3);
+</code></pre>
+<h4 id="值元组-valuetuple">值元组 ValueTuple</h4>
+<p>元素属于字段，可读可写<br>
+元素值传递</p>
+<pre><code class="language-C#">//构造函数最多8个元素
+var testTuple1 = new ValueTuple&lt;int, int, int, int, int&gt;(1, 2, 3, 4, 5);
+var testTuple2 = ValueTuple.Create&lt;int, int, int&gt;(1, 2, 3);
+
+//元素超过8个可以使用 Item8 Item9访问
+var testTuple4 = new ValueTuple&lt;int, int, int, int, int, int, int, ValueTuple&lt;int, int&gt;&gt;(1, 2, 3, 4, 5, 6, 7, new ValueTuple&lt;int, int&gt;(8,9));
+Console.WriteLine($&quot;Item 8: {testTuple4.Item8}, Item 8: {testTuple4.Item9}&quot;);
+Console.WriteLine($&quot;Item 8: {testTuple4.Rest.Item1}, Item 8: {testTuple4.Rest.Item2}&quot;);
+
+// 解构
+var testTuple42 = Tuple.Create&lt;int, int, int&gt;(1, 2, 3);
+var (_, x, _) = testTuple42;
+</code></pre>
+<h3 id="多线程">多线程</h3>
+<pre><code class="language-C#">
+static void DoFunction(Object obj) {
+}
+static void RunTest() {
+  var t = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(DoFunction));
+  t.Start(new object());
+  while (t.IsAlive) {
+    System.Threading.Thread.Sleep(50);
+  }
+}
+
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[基础算法（KMP）]]></title>
+        <id>https://jerilee.github.io/post/ji-chu-suan-fa-kmp/</id>
+        <link href="https://jerilee.github.io/post/ji-chu-suan-fa-kmp/">
+        </link>
+        <updated>2020-07-12T05:02:32.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="基础算法">基础算法</h1>
+<p>@(算法)[算法|KMP|字符串]</p>
+<hr>
+<p>[TOC]</p>
+<h2 id="kmp">KMP</h2>
+<p>KMP特点：字符串匹配算法，从S串中匹配T串，KMP算法时间复杂度为O(N+M)</p>
+<h3 id="逻辑">逻辑</h3>
+<p>这里有两个字符串，一个A串，一个B串，从A串中匹配B串出现的位置<br>
+A=&quot;abababcababa&quot;<br>
+B=&quot;ababcababa&quot;</p>
+<p><strong>Next数组</strong><br>
+KMP里最重要的Next数组计算。<br>
+next数组的含义：一个固定字符串的最长前缀和最长后缀相同的长度，然后再减1 （计算机下标从0开始）。<br>
+很明显<br>
+&quot;aba&quot;的前缀和后缀相同的最长串为&quot;a&quot;，所以长度为1<br>
+&quot;abab&quot;的前缀和后缀相同的最长串为&quot;ab&quot;，所以长度为2<br>
+可以推出next数组：<br>
+<img src="https://jerilee.github.io/post-images/1594647097197.jpg" alt="" loading="lazy"><br>
+第一行为字符串B<br>
+第二行为固定字符串的<strong>前缀和后缀相同的最长串</strong><br>
+<strong>Next数组</strong>为第二行数值减1</p>
+<p>KMP匹配和Next数组的处理是一摸一样的逻辑。<br>
+如下图，蓝色区域是相同的部分，对于&quot;ababcabab&quot;串来说， 它的最长的相同前缀和后缀就是&quot;abab&quot;，所以当字符'a'和'c'失配的时候，字符串最长可用部分为蓝色部分，所以从这个位置继续匹配。<br>
+下面重复相同步骤。<br>
+<img src="https://jerilee.github.io/post-images/1594648216459.png" alt="" loading="lazy"></p>
+<h3 id="code">Code</h3>
+<h4 id="c代码">C#代码</h4>
+<pre><code class="language-C#">public static int[] GetNext(string str) {
+  int[] next = new int[str.Length];
+  next[0] = -1;
+  for (int i = 1, k = -1; i &lt; str.Length; ++i) {
+    while (k &gt; -1 &amp;&amp; str[k + 1] != str[i]){
+      k = next[k];
+    }
+    if (str[k + 1] == str[i]){
+      k = k + 1;
+    }
+    next[i] = k;
+  }
+  return next;
+}
+
+public static int FindByKmp(this string str1, string str2) {
+    var next = GetNext2(str2);
+    for (int i = 0, k = -1; i &lt; str1.Length; i++) {
+    while (k &gt; -1 &amp;&amp; str2[k + 1] != str1[i]) {
+        k = next[k];
+    }
+
+    if (str2[k + 1] == str1[i]) {
+        ++k;
+    }
+        
+    if (k == str2.Length - 1){
+        return i - str2.Length + 1;
+    }
+    }
+    return -1;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[基础数据结构（堆Segment Tree）]]></title>
         <id>https://jerilee.github.io/post/ji-chu-shu-ju-jie-gou-dui/</id>

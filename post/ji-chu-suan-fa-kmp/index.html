@@ -2,25 +2,24 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>基础算法 | Jeri的博客</title>
+<title>基础算法（KMP） | Jeri的博客</title>
 <link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1594648381741">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="基础算法 | Jeri的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="基础算法（KMP） | Jeri的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
     <meta name="description" content="基础算法
-@(算法)[KMP|Manacher|Huffman]
+@(算法)[算法|KMP|字符串]
 
+[TOC]
 KMP
-原理
-Manacher算法
-huffman树
-LIS算法
-动态规划
-..." />
+KMP特点：字符串匹配算法，从S串中匹配T串，KMP算法时间复杂度为O(N+M)
+逻辑
+这里有两个字符串，一个A串，一个B串，从A串中匹配B串出现的位置
+A=&quot;a..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -83,14 +82,14 @@ LIS算法
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              基础算法
+              基础算法（KMP）
             </h2>
             <div class="post-info">
               <span>
-                2020-07-11
+                2020-07-12
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
             </div>
@@ -98,14 +97,65 @@ LIS算法
             <div class="post-content-wrapper">
               <div class="post-content">
                 <h1 id="基础算法">基础算法</h1>
-<p>@(算法)[KMP|Manacher|Huffman]</p>
+<p>@(算法)[算法|KMP|字符串]</p>
 <hr>
+<p>[TOC]</p>
 <h2 id="kmp">KMP</h2>
-<h3 id="原理">原理</h3>
-<h2 id="manacher算法">Manacher算法</h2>
-<h2 id="huffman树">huffman树</h2>
-<h2 id="lis算法">LIS算法</h2>
-<h2 id="动态规划">动态规划</h2>
+<p>KMP特点：字符串匹配算法，从S串中匹配T串，KMP算法时间复杂度为O(N+M)</p>
+<h3 id="逻辑">逻辑</h3>
+<p>这里有两个字符串，一个A串，一个B串，从A串中匹配B串出现的位置<br>
+A=&quot;abababcababa&quot;<br>
+B=&quot;ababcababa&quot;</p>
+<p><strong>Next数组</strong><br>
+KMP里最重要的Next数组计算。<br>
+next数组的含义：一个固定字符串的最长前缀和最长后缀相同的长度，然后再减1 （计算机下标从0开始）。<br>
+很明显<br>
+&quot;aba&quot;的前缀和后缀相同的最长串为&quot;a&quot;，所以长度为1<br>
+&quot;abab&quot;的前缀和后缀相同的最长串为&quot;ab&quot;，所以长度为2<br>
+可以推出next数组：<br>
+<img src="https://jerilee.github.io/post-images/1594647097197.jpg" alt="" loading="lazy"><br>
+第一行为字符串B<br>
+第二行为固定字符串的<strong>前缀和后缀相同的最长串</strong><br>
+<strong>Next数组</strong>为第二行数值减1</p>
+<p>KMP匹配和Next数组的处理是一摸一样的逻辑。<br>
+如下图，蓝色区域是相同的部分，对于&quot;ababcabab&quot;串来说， 它的最长的相同前缀和后缀就是&quot;abab&quot;，所以当字符'a'和'c'失配的时候，字符串最长可用部分为蓝色部分，所以从这个位置继续匹配。<br>
+下面重复相同步骤。<br>
+<img src="https://jerilee.github.io/post-images/1594648216459.png" alt="" loading="lazy"></p>
+<h3 id="code">Code</h3>
+<h4 id="c代码">C#代码</h4>
+<pre><code class="language-C#">public static int[] GetNext(string str) {
+  int[] next = new int[str.Length];
+  next[0] = -1;
+  for (int i = 1, k = -1; i &lt; str.Length; ++i) {
+    while (k &gt; -1 &amp;&amp; str[k + 1] != str[i]){
+      k = next[k];
+    }
+    if (str[k + 1] == str[i]){
+      k = k + 1;
+    }
+    next[i] = k;
+  }
+  return next;
+}
+
+public static int FindByKmp(this string str1, string str2) {
+    var next = GetNext2(str2);
+    for (int i = 0, k = -1; i &lt; str1.Length; i++) {
+    while (k &gt; -1 &amp;&amp; str2[k + 1] != str1[i]) {
+        k = next[k];
+    }
+
+    if (str2[k + 1] == str1[i]) {
+        ++k;
+    }
+        
+    if (k == str2.Length - 1){
+        return i - str2.Length + 1;
+    }
+    }
+    return -1;
+}
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -114,13 +164,14 @@ LIS算法
 <ul>
 <li><a href="#kmp">KMP</a>
 <ul>
-<li><a href="#%E5%8E%9F%E7%90%86">原理</a></li>
+<li><a href="#%E9%80%BB%E8%BE%91">逻辑</a></li>
+<li><a href="#code">Code</a>
+<ul>
+<li><a href="#c%E4%BB%A3%E7%A0%81">C#代码</a></li>
 </ul>
 </li>
-<li><a href="#manacher%E7%AE%97%E6%B3%95">Manacher算法</a></li>
-<li><a href="#huffman%E6%A0%91">huffman树</a></li>
-<li><a href="#lis%E7%AE%97%E6%B3%95">LIS算法</a></li>
-<li><a href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">动态规划</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -133,9 +184,9 @@ LIS算法
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://jerilee.github.io/post/ji-chu-shu-ju-jie-gou/">
+            <a href="https://jerilee.github.io/post/ji-chu-shu-ju-jie-gou-dui/">
               <h3 class="post-title">
-                基础数据结构（线段树Segment Tree）
+                基础数据结构（堆Segment Tree）
               </h3>
             </a>
           </div>
