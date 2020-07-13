@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Jeri的博客</title>
-    <updated>2020-07-13T14:04:46.944Z</updated>
+    <updated>2020-07-13T14:33:09.171Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -122,7 +122,39 @@ next数组的含义：一个固定字符串的最长前缀和最长后缀相同�
 下面重复相同步骤。<br>
 <img src="https://jerilee.github.io/post-images/1594648216459.png" alt="" loading="lazy"></p>
 <h3 id="code">Code</h3>
-<h4 id="c代码">C#代码</h4>
+<h4 id="c代码">C++代码</h4>
+<pre><code class="language-C++">void Kmp::GetNext(std::string str, std::vector&lt;int&gt;&amp; next) {
+  next[0] = -1;
+  for (int i = 1, k = -1; i &lt; str.length(); ++i) {
+    while (k &gt; -1 &amp;&amp; str[k + 1] != str[i])
+      k = next[k];
+    if (str[k + 1] == str[i])
+      k = k + 1;
+    next[i] = k;
+  }
+}
+
+int Kmp::FindByKmp(std::string str1, std::string str2) {
+  std::vector&lt;int&gt; next(str2.length());
+  GetNext(str2, next);
+  for (int i = 0, k = -1; i &lt; str1.length(); i++) {
+    while (k &gt; -1 &amp;&amp; str2[k + 1] != str1[i]) {
+      k = next[k];
+    }
+
+    if (str2[k + 1] == str1[i]) {
+      ++k;
+    }
+
+    if (k == str2.length() - 1) {
+      return i - (int)str2.length() + 1;
+    }
+  }
+  return -1;
+}
+
+</code></pre>
+<h4 id="c代码-2">C#代码</h4>
 <pre><code class="language-C#">public static int[] GetNext(string str) {
   int[] next = new int[str.Length];
   next[0] = -1;

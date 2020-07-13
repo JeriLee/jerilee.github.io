@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>基础算法（KMP） | Jeri的博客</title>
-<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1594649084429">
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1594650786745">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="基础算法（KMP） | Jeri的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
@@ -29,7 +29,7 @@ A=&quot;a..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://jerilee.github.io">
-  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1594649084429" alt="">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1594650786745" alt="">
   </a>
   <h1 class="site-title">
     Jeri的博客
@@ -89,7 +89,7 @@ A=&quot;a..." />
                 2020-07-12
               </span>
               <span>
-                2 min read
+                3 min read
               </span>
               
             </div>
@@ -122,7 +122,39 @@ next数组的含义：一个固定字符串的最长前缀和最长后缀相同�
 下面重复相同步骤。<br>
 <img src="https://jerilee.github.io/post-images/1594648216459.png" alt="" loading="lazy"></p>
 <h3 id="code">Code</h3>
-<h4 id="c代码">C#代码</h4>
+<h4 id="c代码">C++代码</h4>
+<pre><code class="language-C++">void Kmp::GetNext(std::string str, std::vector&lt;int&gt;&amp; next) {
+  next[0] = -1;
+  for (int i = 1, k = -1; i &lt; str.length(); ++i) {
+    while (k &gt; -1 &amp;&amp; str[k + 1] != str[i])
+      k = next[k];
+    if (str[k + 1] == str[i])
+      k = k + 1;
+    next[i] = k;
+  }
+}
+
+int Kmp::FindByKmp(std::string str1, std::string str2) {
+  std::vector&lt;int&gt; next(str2.length());
+  GetNext(str2, next);
+  for (int i = 0, k = -1; i &lt; str1.length(); i++) {
+    while (k &gt; -1 &amp;&amp; str2[k + 1] != str1[i]) {
+      k = next[k];
+    }
+
+    if (str2[k + 1] == str1[i]) {
+      ++k;
+    }
+
+    if (k == str2.length() - 1) {
+      return i - (int)str2.length() + 1;
+    }
+  }
+  return -1;
+}
+
+</code></pre>
+<h4 id="c代码-2">C#代码</h4>
 <pre><code class="language-C#">public static int[] GetNext(string str) {
   int[] next = new int[str.Length];
   next[0] = -1;
@@ -167,7 +199,8 @@ public static int FindByKmp(this string str1, string str2) {
 <li><a href="#%E9%80%BB%E8%BE%91">逻辑</a></li>
 <li><a href="#code">Code</a>
 <ul>
-<li><a href="#c%E4%BB%A3%E7%A0%81">C#代码</a></li>
+<li><a href="#c%E4%BB%A3%E7%A0%81">C++代码</a></li>
+<li><a href="#c%E4%BB%A3%E7%A0%81-2">C#代码</a></li>
 </ul>
 </li>
 </ul>
