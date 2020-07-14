@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://jerilee2.github.io</id>
+    <id>https://jerilee.github.io</id>
     <title>Jeri的博客</title>
-    <updated>2020-07-14T14:22:15.505Z</updated>
+    <updated>2020-07-14T14:23:21.766Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://jerilee2.github.io"/>
-    <link rel="self" href="https://jerilee2.github.io/atom.xml"/>
+    <link rel="alternate" href="https://jerilee.github.io"/>
+    <link rel="self" href="https://jerilee.github.io/atom.xml"/>
     <subtitle>温故而知新</subtitle>
-    <logo>https://jerilee2.github.io/images/avatar.png</logo>
-    <icon>https://jerilee2.github.io/favicon.ico</icon>
+    <logo>https://jerilee.github.io/images/avatar.png</logo>
+    <icon>https://jerilee.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Jeri的博客</rights>
     <entry>
         <title type="html"><![CDATA[C#笔记]]></title>
-        <id>https://jerilee2.github.io/post/cbi-ji/</id>
-        <link href="https://jerilee2.github.io/post/cbi-ji/">
+        <id>https://jerilee.github.io/post/cbi-ji/</id>
+        <link href="https://jerilee.github.io/post/cbi-ji/">
         </link>
         <updated>2020-07-13T13:28:35.000Z</updated>
         <content type="html"><![CDATA[<h2 id="c笔记">C#笔记</h2>
@@ -92,8 +92,8 @@ static void RunTest() {
     </entry>
     <entry>
         <title type="html"><![CDATA[基础算法（KMP）]]></title>
-        <id>https://jerilee2.github.io/post/ji-chu-suan-fa-kmp/</id>
-        <link href="https://jerilee2.github.io/post/ji-chu-suan-fa-kmp/">
+        <id>https://jerilee.github.io/post/ji-chu-suan-fa-kmp/</id>
+        <link href="https://jerilee.github.io/post/ji-chu-suan-fa-kmp/">
         </link>
         <updated>2020-07-12T05:02:32.000Z</updated>
         <content type="html"><![CDATA[<h1 id="基础算法">基础算法</h1>
@@ -113,14 +113,14 @@ next数组的含义：一个固定字符串的最长前缀和最长后缀相同�
 &quot;aba&quot;的前缀和后缀相同的最长串为&quot;a&quot;，所以长度为1<br>
 &quot;abab&quot;的前缀和后缀相同的最长串为&quot;ab&quot;，所以长度为2<br>
 可以推出next数组：<br>
-<img src="https://jerilee2.github.io/post-images/1594647097197.jpg" alt="" loading="lazy"><br>
+<img src="https://jerilee.github.io/post-images/1594647097197.jpg" alt="" loading="lazy"><br>
 第一行为字符串B<br>
 第二行为固定字符串的<strong>前缀和后缀相同的最长串</strong><br>
 <strong>Next数组</strong>为第二行数值减1</p>
 <p>KMP匹配和Next数组的处理是一摸一样的逻辑。<br>
 如下图，蓝色区域是相同的部分，对于&quot;ababcabab&quot;串来说， 它的最长的相同前缀和后缀就是&quot;abab&quot;，所以当字符'a'和'c'失配的时候，字符串最长可用部分为蓝色部分，所以从这个位置继续匹配。<br>
 下面重复相同步骤。<br>
-<img src="https://jerilee2.github.io/post-images/1594648216459.png" alt="" loading="lazy"></p>
+<img src="https://jerilee.github.io/post-images/1594648216459.png" alt="" loading="lazy"></p>
 <h3 id="code">Code</h3>
 <h4 id="c代码">C++代码</h4>
 <pre><code class="language-C++">void Kmp::GetNext(std::string str, std::vector&lt;int&gt;&amp; next) {
@@ -192,8 +192,8 @@ public static int FindByKmp(this string str1, string str2) {
     </entry>
     <entry>
         <title type="html"><![CDATA[基础数据结构（堆Segment Tree）]]></title>
-        <id>https://jerilee2.github.io/post/ji-chu-shu-ju-jie-gou-dui/</id>
-        <link href="https://jerilee2.github.io/post/ji-chu-shu-ju-jie-gou-dui/">
+        <id>https://jerilee.github.io/post/ji-chu-shu-ju-jie-gou-dui/</id>
+        <link href="https://jerilee.github.io/post/ji-chu-shu-ju-jie-gou-dui/">
         </link>
         <updated>2020-07-12T01:37:56.000Z</updated>
         <content type="html"><![CDATA[<h1 id="基础数据结构">基础数据结构</h1>
@@ -204,7 +204,7 @@ public static int FindByKmp(this string str1, string str2) {
 <h3 id="原理">原理</h3>
 <p>堆属于二叉树，属于完全二叉树。<br>
 堆特性 ： 以大顶堆为例，父节点比两个子节点的值都要大。如图，5号节点，它的v值比10号节点和11号节点都要大。<br>
-<img src="https://jerilee2.github.io/post-images/1594513997324.png" alt="" loading="lazy"></p>
+<img src="https://jerilee.github.io/post-images/1594513997324.png" alt="" loading="lazy"></p>
 <h3 id="实现方法">实现方法</h3>
 <p>堆通常使用数组实现。<br>
 每个堆节点（index）的左子节点为（index*2 + 1），右子节点为（index*2 + 2）</p>
@@ -294,8 +294,8 @@ public static int FindByKmp(this string str1, string str2) {
     </entry>
     <entry>
         <title type="html"><![CDATA[基础算法]]></title>
-        <id>https://jerilee2.github.io/post/ji-chu-suan-fa/</id>
-        <link href="https://jerilee2.github.io/post/ji-chu-suan-fa/">
+        <id>https://jerilee.github.io/post/ji-chu-suan-fa/</id>
+        <link href="https://jerilee.github.io/post/ji-chu-suan-fa/">
         </link>
         <updated>2020-07-11T15:14:01.000Z</updated>
         <content type="html"><![CDATA[<h1 id="基础算法">基础算法</h1>
@@ -312,8 +312,8 @@ public static int FindByKmp(this string str1, string str2) {
     </entry>
     <entry>
         <title type="html"><![CDATA[基础数据结构（线段树Segment Tree）]]></title>
-        <id>https://jerilee2.github.io/post/ji-chu-shu-ju-jie-gou/</id>
-        <link href="https://jerilee2.github.io/post/ji-chu-shu-ju-jie-gou/">
+        <id>https://jerilee.github.io/post/ji-chu-shu-ju-jie-gou/</id>
+        <link href="https://jerilee.github.io/post/ji-chu-shu-ju-jie-gou/">
         </link>
         <updated>2020-07-11T15:05:38.000Z</updated>
         <content type="html"><![CDATA[<h1 id="基础数据结构">基础数据结构</h1>
@@ -324,11 +324,11 @@ public static int FindByKmp(this string str1, string str2) {
 <h3 id="特性">特性</h3>
 <p>线段树属于二叉树，除叶节点外，其他节点的度都是2。<br>
 线段树特性 ： 父节点的值为子节点值的和，便于求区间和。如图，5号节点，它的v值为10号节点和11号节点的和。<br>
-<img src="https://jerilee2.github.io/post-images/1594517169989.png" alt="" loading="lazy"></p>
+<img src="https://jerilee.github.io/post-images/1594517169989.png" alt="" loading="lazy"></p>
 <p>备注：线段树有多种形式，父节点也可以为两个子节点的最大值/最小值等。</p>
 <h3 id="实现逻辑">实现逻辑</h3>
 <p>如图，以<strong>下文C#引用实现</strong>为例，每个节点的value代表一个区间[left, right)的和，若一个元素代表[left, right)的和，那它的两个儿子分别代表[left, mid), [mid, right) 的和。<br>
-<img src="https://jerilee2.github.io/post-images/1594514907199.png" alt="" loading="lazy"></p>
+<img src="https://jerilee.github.io/post-images/1594514907199.png" alt="" loading="lazy"></p>
 <h4 id="创建线段树-参考函数buildtree">创建线段树 （参考函数BuildTree）</h4>
 <p>创建树每个结点时，如果这个节点不是叶节点，先创建两个子节点，通过递归的方式创建完左右两棵子树时，再初始化该节点，这样就完成了以这个节点为根节点的线段树初始化。</p>
 <h4 id="通过索引修改线段树的值-参考函数setvalue">通过索引修改线段树的值 （参考函数SetValue）</h4>

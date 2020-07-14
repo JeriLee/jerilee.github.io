@@ -3,10 +3,10 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>基础算法（KMP） | Jeri的博客</title>
-<link rel="shortcut icon" href="https://jerilee2.github.io/favicon.ico?v=1594736534679">
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1594736599788">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="https://jerilee2.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="基础算法（KMP） | Jeri的博客 - Atom Feed" href="https://jerilee2.github.io/atom.xml">
+<link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="基础算法（KMP） | Jeri的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
@@ -28,8 +28,8 @@ A=&quot;a..." />
     <div class="main">
       <div class="main-content">
         <div class="site-header">
-  <a href="https://jerilee2.github.io">
-  <img class="avatar" src="https://jerilee2.github.io/images/avatar.png?v=1594736534679" alt="">
+  <a href="https://jerilee.github.io">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1594736599788" alt="">
   </a>
   <h1 class="site-title">
     Jeri的博客
@@ -113,14 +113,14 @@ next数组的含义：一个固定字符串的最长前缀和最长后缀相同�
 &quot;aba&quot;的前缀和后缀相同的最长串为&quot;a&quot;，所以长度为1<br>
 &quot;abab&quot;的前缀和后缀相同的最长串为&quot;ab&quot;，所以长度为2<br>
 可以推出next数组：<br>
-<img src="https://jerilee2.github.io/post-images/1594647097197.jpg" alt="" loading="lazy"><br>
+<img src="https://jerilee.github.io/post-images/1594647097197.jpg" alt="" loading="lazy"><br>
 第一行为字符串B<br>
 第二行为固定字符串的<strong>前缀和后缀相同的最长串</strong><br>
 <strong>Next数组</strong>为第二行数值减1</p>
 <p>KMP匹配和Next数组的处理是一摸一样的逻辑。<br>
 如下图，蓝色区域是相同的部分，对于&quot;ababcabab&quot;串来说， 它的最长的相同前缀和后缀就是&quot;abab&quot;，所以当字符'a'和'c'失配的时候，字符串最长可用部分为蓝色部分，所以从这个位置继续匹配。<br>
 下面重复相同步骤。<br>
-<img src="https://jerilee2.github.io/post-images/1594648216459.png" alt="" loading="lazy"></p>
+<img src="https://jerilee.github.io/post-images/1594648216459.png" alt="" loading="lazy"></p>
 <h3 id="code">Code</h3>
 <h4 id="c代码">C++代码</h4>
 <pre><code class="language-C++">void Kmp::GetNext(std::string str, std::vector&lt;int&gt;&amp; next) {
@@ -217,7 +217,7 @@ public static int FindByKmp(this string str1, string str2) {
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://jerilee2.github.io/post/ji-chu-shu-ju-jie-gou-dui/">
+            <a href="https://jerilee.github.io/post/ji-chu-shu-ju-jie-gou-dui/">
               <h3 class="post-title">
                 基础数据结构（堆Segment Tree）
               </h3>
@@ -229,7 +229,7 @@ public static int FindByKmp(this string str1, string str2) {
 
         <div class="site-footer">
   Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://jerilee2.github.io/atom.xml" target="_blank">
+  <a class="rss" href="https://jerilee.github.io/atom.xml" target="_blank">
     <i class="ri-rss-line"></i> RSS
   </a>
 </div>

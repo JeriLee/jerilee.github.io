@@ -3,10 +3,10 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>基础数据结构（线段树Segment Tree） | Jeri的博客</title>
-<link rel="shortcut icon" href="https://jerilee2.github.io/favicon.ico?v=1594736534679">
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1594736599788">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="https://jerilee2.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="基础数据结构（线段树Segment Tree） | Jeri的博客 - Atom Feed" href="https://jerilee2.github.io/atom.xml">
+<link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="基础数据结构（线段树Segment Tree） | Jeri的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
@@ -27,8 +27,8 @@
     <div class="main">
       <div class="main-content">
         <div class="site-header">
-  <a href="https://jerilee2.github.io">
-  <img class="avatar" src="https://jerilee2.github.io/images/avatar.png?v=1594736534679" alt="">
+  <a href="https://jerilee.github.io">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1594736599788" alt="">
   </a>
   <h1 class="site-title">
     Jeri的博客
@@ -103,11 +103,11 @@
 <h3 id="特性">特性</h3>
 <p>线段树属于二叉树，除叶节点外，其他节点的度都是2。<br>
 线段树特性 ： 父节点的值为子节点值的和，便于求区间和。如图，5号节点，它的v值为10号节点和11号节点的和。<br>
-<img src="https://jerilee2.github.io/post-images/1594517169989.png" alt="" loading="lazy"></p>
+<img src="https://jerilee.github.io/post-images/1594517169989.png" alt="" loading="lazy"></p>
 <p>备注：线段树有多种形式，父节点也可以为两个子节点的最大值/最小值等。</p>
 <h3 id="实现逻辑">实现逻辑</h3>
 <p>如图，以<strong>下文C#引用实现</strong>为例，每个节点的value代表一个区间[left, right)的和，若一个元素代表[left, right)的和，那它的两个儿子分别代表[left, mid), [mid, right) 的和。<br>
-<img src="https://jerilee2.github.io/post-images/1594514907199.png" alt="" loading="lazy"></p>
+<img src="https://jerilee.github.io/post-images/1594514907199.png" alt="" loading="lazy"></p>
 <h4 id="创建线段树-参考函数buildtree">创建线段树 （参考函数BuildTree）</h4>
 <p>创建树每个结点时，如果这个节点不是叶节点，先创建两个子节点，通过递归的方式创建完左右两棵子树时，再初始化该节点，这样就完成了以这个节点为根节点的线段树初始化。</p>
 <h4 id="通过索引修改线段树的值-参考函数setvalue">通过索引修改线段树的值 （参考函数SetValue）</h4>
@@ -331,7 +331,7 @@
 
         <div class="site-footer">
   Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://jerilee2.github.io/atom.xml" target="_blank">
+  <a class="rss" href="https://jerilee.github.io/atom.xml" target="_blank">
     <i class="ri-rss-line"></i> RSS
   </a>
 </div>
