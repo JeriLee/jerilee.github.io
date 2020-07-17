@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
-    <title>Jeri的博客</title>
-    <updated>2020-07-17T14:08:24.904Z</updated>
+    <title>Rong Sir的博客</title>
+    <updated>2020-07-17T14:09:32.516Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
-    <subtitle>Rong Sir phone number: 17621996523</subtitle>
+    <subtitle>Phone: 17621996523
+Mail: Rongerace@163.com</subtitle>
     <logo>https://jerilee.github.io/images/avatar.png</logo>
     <icon>https://jerilee.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, Jeri的博客</rights>
+    <rights>All rights reserved 2020, Rong Sir的博客</rights>
     <entry>
         <title type="html"><![CDATA[C#笔记]]></title>
         <id>https://jerilee.github.io/post/cbi-ji/</id>
