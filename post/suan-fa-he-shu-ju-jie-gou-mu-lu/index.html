@@ -2,23 +2,22 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>C#笔记 | Rong Sir的博客</title>
+<title>算法和数据结构(目录) | Rong Sir的博客</title>
 <link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1595036301131">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="C#笔记 | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="算法和数据结构(目录) | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="C#笔记
-C#部分类
-部分类可以定义部分方法。部分方法在部分类中定义，但没有方法体，在另一个部分类中执行。
-public partial class MyClass {
-  partial void MyMethod();
-}
-
-publi..." />
+    <meta name="description" content="数据结构
+线段树 Segment Tree
+堆
+算法
+字符串处理
+KMP字符串匹配
+..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -82,111 +81,41 @@ Mail: Rongerace@163.com
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              C#笔记
+              算法和数据结构(目录)
             </h2>
             <div class="post-info">
               <span>
-                2020-07-13
+                2020-07-18
               </span>
               <span>
-                3 min read
+                1 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h2 id="c笔记">C#笔记</h2>
-<h3 id="c部分类">C#部分类</h3>
-<p>部分类可以定义部分方法。部分方法在部分类中定义，但没有方法体，在另一个部分类中执行。</p>
-<pre><code class="language-C#">public partial class MyClass {
-  partial void MyMethod();
-}
-
-public partial class MyClass {
-  partial void MyMethod(){
-    
-  }
-}
-</code></pre>
-<p>部分方法不能有返回值。<br>
-部分方法如果没有实现，编译器不会编译这个方法。</p>
-<h3 id="字符串查找">字符串查找</h3>
-<pre><code class="language-C#">string.Contains();
-string.IndexOf();
-</code></pre>
-<h3 id="dictionary和-sorteddictionary">Dictionary和 SortedDictionary</h3>
-<pre><code class="language-C#">SortedDictionary&lt;string, string&gt; dic = new SortedDictionary&lt;string, string&gt;();
-dic.Add(&quot;1&quot;, &quot;Tom&quot;);
-dic.Add(&quot;1&quot;, &quot;Jeri&quot;); //不可以重复添加
-
-Dictionary&lt;string, string&gt; dic = new Dictionary&lt;string, string&gt;();
-dic.Add(&quot;1&quot;, &quot;Tom&quot;);
-dic.Add(&quot;1&quot;, &quot;Jeri&quot;); //不可以重复添加
-//SortedList也不可以重复Add
-</code></pre>
-<p><a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.collections.generic.dictionary-2?view=netcore-3.1">Dictionary文档</a></p>
-<h3 id="linq库">Linq库</h3>
-<p>Select和Where都是延迟加载</p>
-<pre><code class="language-C#">IEnumerable&lt;T&gt;.Select(Func func);
-IEnumerable&lt;T&gt;.Where(Func func);
-</code></pre>
-<h3 id="元组">元组</h3>
-<h4 id="引用元组-tuple">引用元组 Tuple</h4>
-<p>元素最多8个，并且第8个元素是Tuple<br>
-元素是只读<br>
-元组为引用</p>
-<pre><code class="language-C#">var testTuple1 = new Tuple&lt;int, int, int, int, int&gt;(1, 2, 3, 4, 5);
-var testTuple2 = Tuple.Create&lt;int, int, int&gt;(1, 2, 3);
-</code></pre>
-<h4 id="值元组-valuetuple">值元组 ValueTuple</h4>
-<p>元素属于字段，可读可写<br>
-元素值传递</p>
-<pre><code class="language-C#">//构造函数最多8个元素
-var testTuple1 = new ValueTuple&lt;int, int, int, int, int&gt;(1, 2, 3, 4, 5);
-var testTuple2 = ValueTuple.Create&lt;int, int, int&gt;(1, 2, 3);
-
-//元素超过8个可以使用 Item8 Item9访问
-var testTuple4 = new ValueTuple&lt;int, int, int, int, int, int, int, ValueTuple&lt;int, int&gt;&gt;(1, 2, 3, 4, 5, 6, 7, new ValueTuple&lt;int, int&gt;(8,9));
-Console.WriteLine($&quot;Item 8: {testTuple4.Item8}, Item 8: {testTuple4.Item9}&quot;);
-Console.WriteLine($&quot;Item 8: {testTuple4.Rest.Item1}, Item 8: {testTuple4.Rest.Item2}&quot;);
-
-// 解构
-var testTuple42 = Tuple.Create&lt;int, int, int&gt;(1, 2, 3);
-var (_, x, _) = testTuple42;
-</code></pre>
-<h3 id="多线程">多线程</h3>
-<pre><code class="language-C#">
-static void DoFunction(Object obj) {
-}
-static void RunTest() {
-  var t = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(DoFunction));
-  t.Start(new object());
-  while (t.IsAlive) {
-    System.Threading.Thread.Sleep(50);
-  }
-}
-
-</code></pre>
+                <h1 id="数据结构">数据结构</h1>
+<h2 id="线段树-segment-tree"><a href="https://jerilee.github.io/post/ji-chu-shu-ju-jie-gou/">线段树 Segment Tree</a></h2>
+<h2 id="堆"><a href="https://jerilee.github.io/post/ji-chu-shu-ju-jie-gou-dui/">堆</a></h2>
+<h1 id="算法">算法</h1>
+<h2 id="字符串处理">字符串处理</h2>
+<h3 id="kmp字符串匹配"><a href="https://jerilee.github.io/post/ji-chu-suan-fa-kmp/">KMP字符串匹配</a></h3>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">数据结构</a>
 <ul>
-<li><a href="#c%E7%AC%94%E8%AE%B0">C#笔记</a>
-<ul>
-<li><a href="#c%E9%83%A8%E5%88%86%E7%B1%BB">C#部分类</a></li>
-<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9F%A5%E6%89%BE">字符串查找</a></li>
-<li><a href="#dictionary%E5%92%8C-sorteddictionary">Dictionary和 SortedDictionary</a></li>
-<li><a href="#linq%E5%BA%93">Linq库</a></li>
-<li><a href="#%E5%85%83%E7%BB%84">元组</a>
-<ul>
-<li><a href="#%E5%BC%95%E7%94%A8%E5%85%83%E7%BB%84-tuple">引用元组 Tuple</a></li>
-<li><a href="#%E5%80%BC%E5%85%83%E7%BB%84-valuetuple">值元组 ValueTuple</a></li>
+<li><a href="#%E7%BA%BF%E6%AE%B5%E6%A0%91-segment-tree">线段树 Segment Tree</a></li>
+<li><a href="#%E5%A0%86">堆</a></li>
 </ul>
 </li>
-<li><a href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B">多线程</a></li>
+<li><a href="#%E7%AE%97%E6%B3%95">算法</a>
+<ul>
+<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86">字符串处理</a>
+<ul>
+<li><a href="#kmp%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D">KMP字符串匹配</a></li>
 </ul>
 </li>
 </ul>
@@ -201,9 +130,9 @@ static void RunTest() {
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://jerilee.github.io/post/ji-chu-suan-fa-kmp/">
+            <a href="https://jerilee.github.io/post/cbi-ji/">
               <h3 class="post-title">
-                基础算法（KMP）
+                C#笔记
               </h3>
             </a>
           </div>
