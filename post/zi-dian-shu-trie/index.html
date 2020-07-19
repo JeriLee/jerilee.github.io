@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>基础数据结构(字典树 Trie) | Rong Sir的博客</title>
-<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1595086351693">
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1595128275435">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="基础数据结构(字典树 Trie) | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://jerilee.github.io">
-  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1595086351693" alt="">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1595128275435" alt="">
   </a>
   <h1 class="site-title">
     Rong Sir的博客
@@ -90,7 +90,7 @@ Mail: Rongerace@163.com
                 2020-07-18
               </span>
               <span>
-                1 min read
+                3 min read
               </span>
               
             </div>
@@ -115,10 +115,81 @@ orz<br>
 字典树结构如图，从根节点到每一个叶节点的路径为每个敏感词，比如root-o-r-z这条路径组成&quot;orz&quot;这个字符串<br>
 <img src="https://jerilee.github.io/post-images/1595039709938.png" alt="" loading="lazy"></p>
 <p>每次查询目标字符串时，从root开始向下匹配字符，时间复杂度O(deep)，deep为字典树深度，空间复杂度无法估算。</p>
-<h4 id="code"><strong>Code</strong></h4>
-<h5 id="c"><strong>C#</strong></h5>
-<pre><code class="language-C#">
+<h3 id="code"><strong>Code</strong></h3>
+<h4 id="c"><strong>C#</strong></h4>
+<h5 id="字典树查询字符串">字典树查询字符串</h5>
+<pre><code class="language-C#">  // Author : JeriLee
+  // Time : 2020-7-18-11:01
+  public class Trie {
+    public Trie() {
+    }
 
+    private List&lt;int[]&gt; list_ = new List&lt;int[]&gt;();
+    private List&lt;bool&gt; vis_ = new List&lt;bool&gt;();
+
+    public void Init(IEnumerable&lt;string&gt; strs) {
+      if(strs != null) {
+        AddNode();
+        foreach (var str in strs) {
+          AddModelString(str);
+        }
+      }
+
+      for(int index = 0; index &lt; list_.Count; ++index) {
+        var dig = list_[index];
+        Console.WriteLine($&quot;Node {index} has {vis_[index]}&quot;);
+        foreach (var item in dig) {
+          if(item &gt; 0) {
+            Console.WriteLine($&quot; next{item}&quot;);
+          }
+        }
+      }
+    }
+
+    private void AddModelString(string str) {
+      if(str != null &amp;&amp; str.Length &gt; 0) {
+        AddLastString(0, str, 0);
+      }
+    }
+
+    private void AddLastString(int cnt, string str, int index) {
+      if(index == str.Length) {
+        vis_[cnt] = true;
+      } else {
+        char c = str[index];
+        if(list_[cnt][c] == 0) {
+          list_[cnt][c] = list_.Count;
+          AddNode();
+        }
+        AddLastString(list_[cnt][c], str, index + 1);
+      }
+    }
+
+    private void AddNode() {
+      list_.Add(new int[1 &lt;&lt; 8]);
+      vis_.Add(default);
+    }
+
+    public int FindString(string str) {
+      return FindStringByBord(str, 0, str.Length);
+    }
+
+    public int FindString(string str, int startIndex , int len) {
+      int endIndex = startIndex + len;
+      return FindStringByBord(str, startIndex, Math.Min(endIndex, str.Length));
+    }
+
+    private int FindStringByBord(string str, int index, int endIndex, int cnt = 0) {
+      if (index == endIndex) {
+        return index;
+      }
+      char c = str[index];
+      if (list_[cnt][c] &gt; 0) {
+        return FindStringByBord(str, index + 1, endIndex, list_[cnt][c]);
+      }
+      return 0;
+    }
+  }
 </code></pre>
 
               </div>
@@ -128,11 +199,12 @@ orz<br>
 <ul>
 <li><a href="#%E5%AD%97%E5%85%B8%E6%A0%91-trie"><strong>字典树 Trie</strong></a>
 <ul>
-<li><a href="#%E9%80%BB%E8%BE%91%E5%AE%9E%E7%8E%B0"><strong>逻辑实现</strong></a>
-<ul>
+<li><a href="#%E9%80%BB%E8%BE%91%E5%AE%9E%E7%8E%B0"><strong>逻辑实现</strong></a></li>
 <li><a href="#code"><strong>Code</strong></a>
 <ul>
-<li><a href="#c"><strong>C#</strong></a></li>
+<li><a href="#c"><strong>C#</strong></a>
+<ul>
+<li><a href="#%E5%AD%97%E5%85%B8%E6%A0%91%E6%9F%A5%E8%AF%A2%E5%AD%97%E7%AC%A6%E4%B8%B2">字典树查询字符串</a></li>
 </ul>
 </li>
 </ul>

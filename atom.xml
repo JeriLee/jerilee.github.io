@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Rong Sir的博客</title>
-    <updated>2020-07-18T15:32:35.988Z</updated>
+    <updated>2020-07-19T03:11:18.092Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -35,10 +35,81 @@ orz<br>
 字典树结构如图，从根节点到每一个叶节点的路径为每个敏感词，比如root-o-r-z这条路径组成&quot;orz&quot;这个字符串<br>
 <img src="https://jerilee.github.io/post-images/1595039709938.png" alt="" loading="lazy"></p>
 <p>每次查询目标字符串时，从root开始向下匹配字符，时间复杂度O(deep)，deep为字典树深度，空间复杂度无法估算。</p>
-<h4 id="code"><strong>Code</strong></h4>
-<h5 id="c"><strong>C#</strong></h5>
-<pre><code class="language-C#">
+<h3 id="code"><strong>Code</strong></h3>
+<h4 id="c"><strong>C#</strong></h4>
+<h5 id="字典树查询字符串">字典树查询字符串</h5>
+<pre><code class="language-C#">  // Author : JeriLee
+  // Time : 2020-7-18-11:01
+  public class Trie {
+    public Trie() {
+    }
 
+    private List&lt;int[]&gt; list_ = new List&lt;int[]&gt;();
+    private List&lt;bool&gt; vis_ = new List&lt;bool&gt;();
+
+    public void Init(IEnumerable&lt;string&gt; strs) {
+      if(strs != null) {
+        AddNode();
+        foreach (var str in strs) {
+          AddModelString(str);
+        }
+      }
+
+      for(int index = 0; index &lt; list_.Count; ++index) {
+        var dig = list_[index];
+        Console.WriteLine($&quot;Node {index} has {vis_[index]}&quot;);
+        foreach (var item in dig) {
+          if(item &gt; 0) {
+            Console.WriteLine($&quot; next{item}&quot;);
+          }
+        }
+      }
+    }
+
+    private void AddModelString(string str) {
+      if(str != null &amp;&amp; str.Length &gt; 0) {
+        AddLastString(0, str, 0);
+      }
+    }
+
+    private void AddLastString(int cnt, string str, int index) {
+      if(index == str.Length) {
+        vis_[cnt] = true;
+      } else {
+        char c = str[index];
+        if(list_[cnt][c] == 0) {
+          list_[cnt][c] = list_.Count;
+          AddNode();
+        }
+        AddLastString(list_[cnt][c], str, index + 1);
+      }
+    }
+
+    private void AddNode() {
+      list_.Add(new int[1 &lt;&lt; 8]);
+      vis_.Add(default);
+    }
+
+    public int FindString(string str) {
+      return FindStringByBord(str, 0, str.Length);
+    }
+
+    public int FindString(string str, int startIndex , int len) {
+      int endIndex = startIndex + len;
+      return FindStringByBord(str, startIndex, Math.Min(endIndex, str.Length));
+    }
+
+    private int FindStringByBord(string str, int index, int endIndex, int cnt = 0) {
+      if (index == endIndex) {
+        return index;
+      }
+      char c = str[index];
+      if (list_[cnt][c] &gt; 0) {
+        return FindStringByBord(str, index + 1, endIndex, list_[cnt][c]);
+      }
+      return 0;
+    }
+  }
 </code></pre>
 ]]></content>
     </entry>
