@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Rong Sir的博客</title>
-    <updated>2020-07-22T16:02:20.575Z</updated>
+    <updated>2020-07-22T16:05:54.953Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -11,6 +11,34 @@ Mail: Rongerace@163.com</subtitle>
     <logo>https://jerilee.github.io/images/avatar.png</logo>
     <icon>https://jerilee.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Rong Sir的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[我的C#工具类代码库]]></title>
+        <id>https://jerilee.github.io/post/wo-de-cgong-ju-lei-dai-ma-ku/</id>
+        <link href="https://jerilee.github.io/post/wo-de-cgong-ju-lei-dai-ma-ku/">
+        </link>
+        <updated>2020-07-22T16:03:15.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="二分查找">二分查找</h1>
+<p>该代码采用C++的std库思路，但是写法上比std库少一次加法运算，所以速度比std库写法更快。实际测试过，确实比std库写法快10%<br>
+附加C++的std库的链接：<br>
+http://en.cppreference.com/w/cpp/algorithm/upper_bound</p>
+<pre><code class="language-C#">public static int MyUpperBound&lt;T&gt;(this IList&lt;T&gt; list, int first, int last, Func&lt;T, int&gt; comparer) {
+    int L = first, R = last, mid;
+    while (L &lt; R) {
+    mid = (L + R) &gt;&gt; 1;
+    if (comparer(list[mid]) &lt;= 0 ) {
+        L = mid + 1;
+    } else {
+        R = mid;
+    }
+    }
+    return L;
+}
+public static int MyUpperBound&lt;T&gt;(this IList&lt;T&gt; list, Func&lt;T, int&gt; comparer) {
+    return list.MyUpperBound(0, list.Count, comparer);
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[代码模板（敏感词匹配）]]></title>
         <id>https://jerilee.github.io/post/dai-ma-mo-ban-min-gan-ci-pi-pei/</id>
