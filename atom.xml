@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Rong Sir的博客</title>
-    <updated>2020-07-22T16:13:25.431Z</updated>
+    <updated>2020-07-22T16:15:29.466Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -45,7 +45,7 @@ public static int MyUpperBound&lt;T&gt;(this IList&lt;T&gt; list, Func&lt;T, int
         <link href="https://jerilee.github.io/post/dai-ma-mo-ban-min-gan-ci-pi-pei/">
         </link>
         <updated>2020-07-22T15:47:34.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="敏感词匹配算法">敏感词匹配算法，</h2>
+        <content type="html"><![CDATA[<h2 id="敏感词匹配算法">敏感词匹配算法</h2>
 <h2 id="基于字典树">基于字典树</h2>
 <p>最基础敏感词匹配，对于敏感词大多在3-5个之间，效率非常高，测试效率比大多数网上的模板都要高很多。</p>
 <h3 id="c版本">C#版本</h3>
