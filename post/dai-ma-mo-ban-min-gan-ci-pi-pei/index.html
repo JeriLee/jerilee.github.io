@@ -2,24 +2,22 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>基础数据结构(字典树 Trie) | Rong Sir的博客</title>
+<title>代码模板（敏感词匹配） | Rong Sir的博客</title>
 <link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1595433101114">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="基础数据结构(字典树 Trie) | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="代码模板（敏感词匹配） | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="基础数据结构
-@(数据结构)[字典树|Trie|字符串]
-
-[TOC]
-字典树 Trie
-字典树应用：适合排除敏感词，适合模糊查询
-字典树是一颗多叉树，一般采用一个字节大小作为字典树一个节点，即为256叉树。
-逻辑实现
-例如，现在有敏感词如..." />
+    <meta name="description" content="敏感词匹配算法，
+基于字典树
+最基础敏感词匹配，对于敏感词大多在3-5个之间，效率非常高，测试效率比大多数网上的模板都要高很多。
+C#版本
+ // Author : JeriLee
+  // Time : 2020-7-18-11:01
+ ..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -83,11 +81,11 @@ Mail: Rongerace@163.com
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              基础数据结构(字典树 Trie)
+              代码模板（敏感词匹配）
             </h2>
             <div class="post-info">
               <span>
-                2020-07-18
+                2020-07-22
               </span>
               <span>
                 18 min read
@@ -97,29 +95,11 @@ Mail: Rongerace@163.com
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h1 id="基础数据结构">基础数据结构</h1>
-<p>@(数据结构)[字典树|Trie|字符串]</p>
-<hr>
-<p>[TOC]</p>
-<h2 id="字典树-trie"><strong>字典树 Trie</strong></h2>
-<p>字典树应用：适合排除敏感词，适合模糊查询<br>
-字典树是一颗多叉树，一般采用一个字节大小作为字典树一个节点，即为256叉树。</p>
-<h3 id="逻辑实现"><strong>逻辑实现</strong></h3>
-<p>例如，现在有敏感词如下：<br>
-abc<br>
-abd<br>
-acd<br>
-bda<br>
-bef<br>
-orz<br>
-字典树结构如图，从根节点到每一个叶节点的路径为每个敏感词，比如root-o-r-z这条路径组成&quot;orz&quot;这个字符串<br>
-<img src="https://jerilee.github.io/post-images/1595039709938.png" alt="" loading="lazy"></p>
-<p>每次查询目标字符串时，从root开始向下匹配字符，时间复杂度O(deep)，deep为字典树深度，空间复杂度无法估算。</p>
-<h3 id="code"><strong>Code</strong></h3>
-<h4 id="c"><strong>C#</strong></h4>
-<h5 id="字典树查询字符串">字典树查询字符串</h5>
-<p><strong>最后修改日2020-7-22，采用引用优化版本</strong></p>
-<pre><code class="language-C#">   // Author : JeriLee
+                <h2 id="敏感词匹配算法">敏感词匹配算法，</h2>
+<h2 id="基于字典树">基于字典树</h2>
+<p>最基础敏感词匹配，对于敏感词大多在3-5个之间，效率非常高，测试效率比大多数网上的模板都要高很多。</p>
+<h3 id="c版本">C#版本</h3>
+<pre><code class="language-C#"> // Author : JeriLee
   // Time : 2020-7-18-11:01
   public class Trie {
     public sealed class TrieNode {
@@ -197,25 +177,35 @@ orz<br>
       return false;
     }
   }
+
+</code></pre>
+<pre><code class="language-C#">  public class SensetiveWorlds {
+    private SensetiveWorlds() {
+      trie_ = new Trie();
+    }
+
+    public static readonly SensetiveWorlds Instance = new SensetiveWorlds();
+    private Trie trie_;
+    public void Init(string path) {
+      var strs = DocumentReader.ReadFileToList(path);
+      trie_.Init(strs);
+    }
+ 
+    public bool HasSensitive(string s) {
+      return trie_.HasKeyWorld(s, 0, s.Length);
+    }
+  }
 </code></pre>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li><a href="#%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">基础数据结构</a>
+<li>
 <ul>
-<li><a href="#%E5%AD%97%E5%85%B8%E6%A0%91-trie"><strong>字典树 Trie</strong></a>
+<li><a href="#%E6%95%8F%E6%84%9F%E8%AF%8D%E5%8C%B9%E9%85%8D%E7%AE%97%E6%B3%95">敏感词匹配算法，</a></li>
+<li><a href="#%E5%9F%BA%E4%BA%8E%E5%AD%97%E5%85%B8%E6%A0%91">基于字典树</a>
 <ul>
-<li><a href="#%E9%80%BB%E8%BE%91%E5%AE%9E%E7%8E%B0"><strong>逻辑实现</strong></a></li>
-<li><a href="#code"><strong>Code</strong></a>
-<ul>
-<li><a href="#c"><strong>C#</strong></a>
-<ul>
-<li><a href="#%E5%AD%97%E5%85%B8%E6%A0%91%E6%9F%A5%E8%AF%A2%E5%AD%97%E7%AC%A6%E4%B8%B2">字典树查询字符串</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a href="#c%E7%89%88%E6%9C%AC">C#版本</a></li>
 </ul>
 </li>
 </ul>
@@ -230,9 +220,9 @@ orz<br>
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://jerilee.github.io/post/suan-fa-he-shu-ju-jie-gou-mu-lu/">
+            <a href="https://jerilee.github.io/post/xia-gao-ri-zhi/">
               <h3 class="post-title">
-                算法和数据结构(目录)
+                本周瞎搞（2020年7月）
               </h3>
             </a>
           </div>
