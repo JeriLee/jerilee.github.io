@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Rong Sir的博客</title>
-    <updated>2020-07-22T14:03:21.912Z</updated>
+    <updated>2020-07-22T14:26:24.579Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -12,7 +12,7 @@ Mail: Rongerace@163.com</subtitle>
     <icon>https://jerilee.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Rong Sir的博客</rights>
     <entry>
-        <title type="html"><![CDATA[瞎搞日志]]></title>
+        <title type="html"><![CDATA[本周瞎搞（2020年7月）]]></title>
         <id>https://jerilee.github.io/post/xia-gao-ri-zhi/</id>
         <link href="https://jerilee.github.io/post/xia-gao-ri-zhi/">
         </link>
