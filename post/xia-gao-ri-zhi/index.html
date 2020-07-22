@@ -2,23 +2,21 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>基础数据结构（堆Segment Tree） | Rong Sir的博客</title>
+<title>瞎搞日志 | Rong Sir的博客</title>
 <link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1595426560020">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="基础数据结构（堆Segment Tree） | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="瞎搞日志 | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="基础数据结构
-@(数据结构)[堆|Segment Tree|数据结构]
-
-[TOC]
-堆
-原理
-堆属于二叉树，属于完全二叉树。
-堆特性 ： 以大顶堆为例，父节点比两个子节点的值都要大。如图，5号节点，它的v值比10号节点和11号节点都要大。..." />
+    <meta name="description" content="发现的微软.Net FrameWork库的一个BUG，
+2020.7.17
+已经把修改提到github地址：
+https://github.com/dotnet/runtime/pull/39497
+微软工作人员的回应
+https://gi..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -82,135 +80,81 @@ Mail: Rongerace@163.com
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              基础数据结构（堆Segment Tree）
+              瞎搞日志
             </h2>
             <div class="post-info">
               <span>
-                2020-07-12
+                2020-07-22
               </span>
               <span>
-                3 min read
+                2 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h1 id="基础数据结构">基础数据结构</h1>
-<p>@(数据结构)[堆|Segment Tree|数据结构]</p>
-<hr>
-<p>[TOC]</p>
-<h2 id="堆">堆</h2>
-<h3 id="原理">原理</h3>
-<p>堆属于二叉树，属于完全二叉树。<br>
-堆特性 ： 以大顶堆为例，父节点比两个子节点的值都要大。如图，5号节点，它的v值比10号节点和11号节点都要大。<br>
-<img src="https://jerilee.github.io/post-images/1594513997324.png" alt="" loading="lazy"></p>
-<h3 id="实现方法">实现方法</h3>
-<p>堆通常使用数组实现。<br>
-每个堆节点（index）的左子节点为（index*2 + 1），右子节点为（index*2 + 2）</p>
-<h4 id="插入元素">插入元素</h4>
-<p>1.因为堆属于完全二叉树，所以新元素放在数组的最末尾。<br>
-2.如果<strong>当前节点</strong>比<strong>父节点</strong>更优先，则和父节点交换，递归向上比较。</p>
-<h4 id="删除最优先元素">删除最优先元素</h4>
-<p>因为堆属于完全二叉树，删除最优先元素时：<br>
-1.先将0号元素与末尾元素交换，再删除最末尾元素。<br>
-2.该节点是否比子节点要小，如果确实是这样，则从两个子节点中找一个更大的和自己交换，再递归向下比较。</p>
-<h4 id="查找最优先元素">查找最优先元素</h4>
-<p>如果堆不为空，则最优先元素一定是根节点。</p>
-<h3 id="code">Code</h3>
-<h4 id="c代码">C#代码</h4>
-<pre><code class="language-C#">
-  public class Heap&lt;T&gt; where T: IComparable&lt;T&gt; {
-    private List&lt;T&gt; list = new List&lt;T&gt;();
-    private int count = 0;
-
-    public Heap() {
-    }
-
-    public void Add(T value) {
-      if(list.Count &gt; count) {
-        list[count] = value;
-      } else {
-        list.Add(value);
-      }
-
-      CheckAdd(count);
-      ++count;
-    }
-
-    private void CheckAdd(int index) {
-      if(index &gt; 0) {
-        int father = (index - 1 ) &gt;&gt; 1;
-        if (list[index].CompareTo(list[father]) &lt; 0) {
-          T temp = list[index];
-          list[index] = list[father];
-          list[father] = temp;
-          CheckAdd(father);
-        }
-      }
-    }
-
-    public T Top() {
-      if(count &gt; 0) {
-        return list[0];
-      }
-      return default;
-    }
-
-    public int Count =&gt; count;
-    public bool IsEmpty =&gt; count == 0;
-
-    public bool Pop() {
-      if(count &gt; 0) {
-        --count;
-        if (count &gt; 0) {
-          T temp = list[0];
-          list[0] = list[count];
-          list[count] = temp;
-          CheckPop(0);
-        }
-        return true;
-      }
-      return false;
-    }
-
-    private void CheckPop(int index) {
-      int leftSon = index &lt;&lt; 1 | 1;
-      int rightSon = leftSon + 1;
-      if (leftSon &lt; Count) {
-        int upSon = rightSon &lt; Count &amp;&amp; list[rightSon].CompareTo(list[leftSon]) &lt; 0 ? rightSon : leftSon;
-        if (list[upSon].CompareTo(list[index]) &lt; 0) {
-          T temp = list[index];
-          list[index] = list[upSon];
-          list[upSon] = temp;
-          CheckPop(upSon);
-        }
-      }
+                <h2 id="发现的微软net-framework库的一个bug">发现的微软.Net FrameWork库的一个BUG，</h2>
+<p>2020.7.17</p>
+<p>已经把修改提到github地址：<br>
+https://github.com/dotnet/runtime/pull/39497<br>
+微软工作人员的回应<br>
+https://github.com/dotnet/runtime/issues/34472</p>
+<p>我阐明了修改的原因：<br>
+This &quot;result&quot; is (-2147483647, 0]U[0,2147483648) ,The probability of 0 is twice that of other numbers.<br>
+after my modification, the result is (-2147483648, -1] U[0,2147483648), is in all int range.<br>
+so after &quot;d += int.maxValue&quot; , d is [0, 2*Int32MaxValue)<br>
+so the last code need to do &quot;d /= 2 * (uint)int.MaxValue&quot;</p>
+<h2 id="发现c的std库二分查找写法可以再优化一下">发现C++的std库二分查找写法，可以再优化一下</h2>
+<p>2020.7.22</p>
+<h3 id="c库文档地址">C++库文档地址</h3>
+<p>http://en.cppreference.com/w/cpp/algorithm/upper_bound</p>
+<h3 id="使用c简单测试了一下">使用C#简单测试了一下</h3>
+<pre><code class="language-C#">//库代码
+public static int UpperBound&lt;T&gt;(this IList&lt;T&gt; list, int first, int last, Func&lt;T, int&gt; comparer) {
+  int count = last - first;
+  int it, step;
+  while (count &gt; 0) {
+    it = first;
+    step = count &gt;&gt; 1;
+    it += step;
+    if (comparer(list[it]) &lt;= 0) {
+      first = ++it;
+      count -= step + 1;
+    } else {
+      count = step;
     }
   }
-
+  return first;
+}
+//我的代码
+public static int MyUpperBound&lt;T&gt;(this IList&lt;T&gt; list, int first, int last, Func&lt;T, int&gt; comparer) {
+  int L = first, R = last, mid;
+  while (L &lt; R) {
+    mid = (L + R) &gt;&gt; 1;
+    if (comparer(list[mid]) &lt;= 0 ) {
+      L = mid + 1;
+    } else {
+      R = mid;
+    }
+  }
+  return L;
+}
 </code></pre>
+<h3 id="以下是测试结果便于取时间戳使用的c有时间用c再测一次">以下是测试结果，便于取时间戳，使用的C#，有时间用C++再测一次：</h3>
+<figure data-type="image" tabindex="1"><img src="https://jerilee.github.io/post-images/1595426558450.png" alt="" loading="lazy"></figure>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li><a href="#%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">基础数据结构</a>
+<li>
 <ul>
-<li><a href="#%E5%A0%86">堆</a>
+<li><a href="#%E5%8F%91%E7%8E%B0%E7%9A%84%E5%BE%AE%E8%BD%AFnet-framework%E5%BA%93%E7%9A%84%E4%B8%80%E4%B8%AAbug">发现的微软.Net FrameWork库的一个BUG，</a></li>
+<li><a href="#%E5%8F%91%E7%8E%B0c%E7%9A%84std%E5%BA%93%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E5%86%99%E6%B3%95%E5%8F%AF%E4%BB%A5%E5%86%8D%E4%BC%98%E5%8C%96%E4%B8%80%E4%B8%8B">发现C++的std库二分查找写法，可以再优化一下</a>
 <ul>
-<li><a href="#%E5%8E%9F%E7%90%86">原理</a></li>
-<li><a href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95">实现方法</a>
-<ul>
-<li><a href="#%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0">插入元素</a></li>
-<li><a href="#%E5%88%A0%E9%99%A4%E6%9C%80%E4%BC%98%E5%85%88%E5%85%83%E7%B4%A0">删除最优先元素</a></li>
-<li><a href="#%E6%9F%A5%E6%89%BE%E6%9C%80%E4%BC%98%E5%85%88%E5%85%83%E7%B4%A0">查找最优先元素</a></li>
-</ul>
-</li>
-<li><a href="#code">Code</a>
-<ul>
-<li><a href="#c%E4%BB%A3%E7%A0%81">C#代码</a></li>
-</ul>
-</li>
+<li><a href="#c%E5%BA%93%E6%96%87%E6%A1%A3%E5%9C%B0%E5%9D%80">C++库文档地址</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8c%E7%AE%80%E5%8D%95%E6%B5%8B%E8%AF%95%E4%BA%86%E4%B8%80%E4%B8%8B">使用C#简单测试了一下</a></li>
+<li><a href="#%E4%BB%A5%E4%B8%8B%E6%98%AF%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C%E4%BE%BF%E4%BA%8E%E5%8F%96%E6%97%B6%E9%97%B4%E6%88%B3%E4%BD%BF%E7%94%A8%E7%9A%84c%E6%9C%89%E6%97%B6%E9%97%B4%E7%94%A8c%E5%86%8D%E6%B5%8B%E4%B8%80%E6%AC%A1">以下是测试结果，便于取时间戳，使用的C#，有时间用C++再测一次：</a></li>
 </ul>
 </li>
 </ul>
@@ -225,9 +169,9 @@ Mail: Rongerace@163.com
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://jerilee.github.io/post/ji-chu-shu-ju-jie-gou/">
+            <a href="https://jerilee.github.io/post/zi-dian-shu-trie/">
               <h3 class="post-title">
-                基础数据结构（线段树Segment Tree）
+                基础数据结构(字典树 Trie)
               </h3>
             </a>
           </div>

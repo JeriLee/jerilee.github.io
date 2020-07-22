@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Rong Sir的博客</title>
-    <updated>2020-07-19T15:40:14.302Z</updated>
+    <updated>2020-07-22T14:02:42.487Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -11,6 +11,63 @@ Mail: Rongerace@163.com</subtitle>
     <logo>https://jerilee.github.io/images/avatar.png</logo>
     <icon>https://jerilee.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Rong Sir的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[瞎搞日志]]></title>
+        <id>https://jerilee.github.io/post/xia-gao-ri-zhi/</id>
+        <link href="https://jerilee.github.io/post/xia-gao-ri-zhi/">
+        </link>
+        <updated>2020-07-22T14:00:00.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="发现的微软net-framework库的一个bug">发现的微软.Net FrameWork库的一个BUG，</h2>
+<p>2020.7.17</p>
+<p>已经把修改提到github地址：<br>
+https://github.com/dotnet/runtime/pull/39497<br>
+微软工作人员的回应<br>
+https://github.com/dotnet/runtime/issues/34472</p>
+<p>我阐明了修改的原因：<br>
+This &quot;result&quot; is (-2147483647, 0]U[0,2147483648) ,The probability of 0 is twice that of other numbers.<br>
+after my modification, the result is (-2147483648, -1] U[0,2147483648), is in all int range.<br>
+so after &quot;d += int.maxValue&quot; , d is [0, 2*Int32MaxValue)<br>
+so the last code need to do &quot;d /= 2 * (uint)int.MaxValue&quot;</p>
+<h2 id="发现c的std库二分查找写法可以再优化一下">发现C++的std库二分查找写法，可以再优化一下</h2>
+<p>2020.7.22</p>
+<h3 id="c库文档地址">C++库文档地址</h3>
+<p>http://en.cppreference.com/w/cpp/algorithm/upper_bound</p>
+<h3 id="使用c简单测试了一下">使用C#简单测试了一下</h3>
+<pre><code class="language-C#">//库代码
+public static int UpperBound&lt;T&gt;(this IList&lt;T&gt; list, int first, int last, Func&lt;T, int&gt; comparer) {
+  int count = last - first;
+  int it, step;
+  while (count &gt; 0) {
+    it = first;
+    step = count &gt;&gt; 1;
+    it += step;
+    if (comparer(list[it]) &lt;= 0) {
+      first = ++it;
+      count -= step + 1;
+    } else {
+      count = step;
+    }
+  }
+  return first;
+}
+//我的代码
+public static int MyUpperBound&lt;T&gt;(this IList&lt;T&gt; list, int first, int last, Func&lt;T, int&gt; comparer) {
+  int L = first, R = last, mid;
+  while (L &lt; R) {
+    mid = (L + R) &gt;&gt; 1;
+    if (comparer(list[mid]) &lt;= 0 ) {
+      L = mid + 1;
+    } else {
+      R = mid;
+    }
+  }
+  return L;
+}
+</code></pre>
+<h3 id="以下是测试结果便于取时间戳使用的c有时间用c再测一次">以下是测试结果，便于取时间戳，使用的C#，有时间用C++再测一次：</h3>
+<figure data-type="image" tabindex="1"><img src="https://jerilee.github.io/post-images/1595426558450.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[基础数据结构(字典树 Trie)]]></title>
         <id>https://jerilee.github.io/post/zi-dian-shu-trie/</id>
