@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Rong Sir的博客</title>
-    <updated>2020-08-04T13:03:47.368Z</updated>
+    <updated>2020-08-04T13:07:46.629Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -11,6 +11,212 @@ Mail: Rongerace@163.com</subtitle>
     <logo>https://jerilee.github.io/images/avatar.png</logo>
     <icon>https://jerilee.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Rong Sir的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[数据结构（完全平衡树 AVL Tree）]]></title>
+        <id>https://jerilee.github.io/post/shu-ju-jie-gou-wan-quan-ping-heng-shu-avl-tree/</id>
+        <link href="https://jerilee.github.io/post/shu-ju-jie-gou-wan-quan-ping-heng-shu-avl-tree/">
+        </link>
+        <updated>2020-08-04T13:04:46.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="基础数据结构">基础数据结构</h1>
+<p>@(数据结构)[完全平衡树|AVL Tree|数据结构]</p>
+<hr>
+<p>[TOC]</p>
+<h2 id="完全平衡树-avltree"><strong>完全平衡树 AVLTree</strong></h2>
+<h3 id="概念"><strong>概念</strong></h3>
+<pre><code>      以后补充
+</code></pre>
+<h3 id="code"><strong>Code</strong></h3>
+<h4 id="c"><strong>C#</strong></h4>
+<p><strong>Author:  Jerilee</strong><br>
+<strong>Time: 最后修改日2020-8-4 20:00</strong><br>
+<strong>AVLTree树</strong></p>
+<pre><code class="language-C#">  /// &lt;summary&gt;
+  /// AVLTree
+  /// Author:  Jerilee
+  /// Time:    2020-8-4 14:47
+  /// Link :   jerilee.github.io
+  /// &lt;/summary&gt;
+  public class AVLTree&lt;T&gt; where T : IComparable&lt;T&gt; {
+    class Node {
+      public T value;
+      public Node leftSon;
+      public Node rightSon;
+      public int height;
+      public Node(T v) {
+        value = v;
+        height = 1;
+        leftSon = default;
+        rightSon = default;
+      }
+
+      public void UpdateHeight() {
+        height = Math.Max(leftSon?.height ?? 0, rightSon?.height ?? 0) + 1;
+      }
+
+      public int DisHeight =&gt; (leftSon?.height ?? 0) - (rightSon?.height ?? 0);
+    }
+
+    private Node root;
+    private Comparer&lt;T&gt; comparer;
+    public AVLTree() {
+      comparer = Comparer&lt;T&gt;.Default;
+    }
+
+    public void Init(List&lt;T&gt; source) {
+      foreach (var item in source) {
+        Add(item);
+      }
+    }
+
+    public List&lt;T&gt; ToList() {
+      List&lt;T&gt; list = new List&lt;T&gt;();
+      Dfs(root, list);
+      return list;
+    }
+
+    private void Dfs(Node node, List&lt;T&gt; list) {
+      if (node != null) {
+        var l = node.leftSon != null ? node.leftSon.value : default;
+        var r = node.rightSon != null ? node.rightSon.value : default;
+        //Console.WriteLine($&quot;Node father[{node.value}] Lson[{l}] rSon[{r}] H[{node.height}]&quot;);
+        Dfs(node.leftSon, list);
+        list.Add(node.value);
+        Dfs(node.rightSon, list);
+      }
+    }
+
+    private Node RotateR(Node node) {
+      Node lson = node.leftSon;
+      Node lsonRson = lson.rightSon;
+      lson.rightSon = node;
+      node.leftSon = lsonRson;
+      node.UpdateHeight();
+      lson.UpdateHeight();
+      return lson;
+    }
+
+    private Node RotateL(Node node) {
+      Node rson = node.rightSon;
+      Node rsonLson = rson.leftSon;
+      rson.leftSon = node;
+      node.rightSon = rsonLson;
+      node.UpdateHeight();
+      rson.UpdateHeight();
+      return rson;
+    }
+
+    private Node RotateLR(Node node) {
+      node.leftSon = RotateL(node.leftSon);
+      return RotateR(node);
+    }
+
+    private Node RotateRL(Node node) {
+      node.rightSon = RotateR(node.rightSon);
+      return RotateL(node);
+    }
+
+    private void CheckRotateR(ref Node node) {
+      if (node.DisHeight &gt; 1) {
+        int leftH = node.leftSon.leftSon?.height ?? 0;
+        int rightH = node.leftSon.rightSon?.height ?? 0;
+        node = leftH &gt;= rightH ? RotateR(node) : RotateLR(node);
+      }
+    }
+
+    private void CheckRotateL(ref Node node) {
+      if (node.DisHeight &lt; -1) {
+        int leftH = node.rightSon.leftSon?.height ?? 0;
+        int rightH = node.rightSon.rightSon?.height ?? 0;
+        node = leftH &gt; rightH ? RotateRL(node) : RotateL(node);
+      }
+    }
+
+    private Node Add(Node node, T val) {
+      if (node == null) {
+        node = new Node(val);
+      } else {
+        int c = comparer.Compare(val, node.value);
+        if (c &lt; 0) {
+          node.leftSon = Add(node.leftSon, val);
+          CheckRotateR(ref node);
+        } else if (c &gt; 0) {
+          node.rightSon = Add(node.rightSon, val);
+          CheckRotateL(ref node);
+        }
+        node.UpdateHeight();
+      }
+      return node;
+    }
+
+    public void Add(T item) {
+      root = Add(root, item);
+    }
+
+    public bool Remove(T item) {
+      return Remove(ref root, item);
+    }
+
+    private bool Remove(ref Node node, T item) {
+      if (node != null) {
+        int c = comparer.Compare(item, node.value);
+
+        if (c == 0) {
+          if(node.leftSon == null &amp;&amp; node.rightSon == null) {
+            node = default;
+          }else if(node.leftSon == null) {
+            node = node.rightSon;
+          }else if(node.rightSon == null) {
+            node = node.leftSon;
+          } else {
+            Node lson = node.leftSon;
+            while (lson.rightSon != null) {
+              lson = lson.rightSon;
+            }
+            node.value = lson.value;
+            Remove(ref node.leftSon, node.value);
+
+            CheckRotateL(ref node);
+            node.UpdateHeight();
+          }
+          return true;
+        } else if (c &lt; 0) {
+          bool ret = Remove(ref node.leftSon, item);
+          CheckRotateL(ref node);
+          node.UpdateHeight();
+          return ret;
+        } else {
+          bool ret = Remove(ref node.rightSon, item);
+          CheckRotateR(ref node);
+          node.UpdateHeight();
+          return ret;
+        }
+      }
+      return false;
+    }
+
+    public bool Change(T fromItem, T toItem) {
+      if (Remove(fromItem)) {
+        Add(toItem);
+        return true;
+      }
+      return false;
+    }
+
+    public bool Contain(T item) {
+      return Find(item, root) != null;
+    }
+
+    private Node Find(T item, Node node) {
+      if (node != null) {
+        int c = comparer.Compare(item, node.value);
+        return c == 0 ? node : Find(item, c &lt; 0 ? node.leftSon : node.rightSon);
+      }
+      return null;
+    }
+  }
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[数据结构(二叉搜索树BinarySortTree)]]></title>
         <id>https://jerilee.github.io/post/shu-ju-jie-gou-er-cha-sou-suo-shu-binarysorttree/</id>
@@ -755,108 +961,6 @@ public static int FindByKmp(this string str1, string str2) {
     }
     return -1;
 }
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[基础数据结构（堆Segment Tree）]]></title>
-        <id>https://jerilee.github.io/post/ji-chu-shu-ju-jie-gou-dui/</id>
-        <link href="https://jerilee.github.io/post/ji-chu-shu-ju-jie-gou-dui/">
-        </link>
-        <updated>2020-07-12T01:37:56.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="基础数据结构">基础数据结构</h1>
-<p>@(数据结构)[堆|Segment Tree|数据结构]</p>
-<hr>
-<p>[TOC]</p>
-<h2 id="堆">堆</h2>
-<h3 id="原理">原理</h3>
-<p>堆属于二叉树，属于完全二叉树。<br>
-堆特性 ： 以大顶堆为例，父节点比两个子节点的值都要大。如图，5号节点，它的v值比10号节点和11号节点都要大。<br>
-<img src="https://jerilee.github.io/post-images/1594513997324.png" alt="" loading="lazy"></p>
-<h3 id="实现方法">实现方法</h3>
-<p>堆通常使用数组实现。<br>
-每个堆节点（index）的左子节点为（index*2 + 1），右子节点为（index*2 + 2）</p>
-<h4 id="插入元素">插入元素</h4>
-<p>1.因为堆属于完全二叉树，所以新元素放在数组的最末尾。<br>
-2.如果<strong>当前节点</strong>比<strong>父节点</strong>更优先，则和父节点交换，递归向上比较。</p>
-<h4 id="删除最优先元素">删除最优先元素</h4>
-<p>因为堆属于完全二叉树，删除最优先元素时：<br>
-1.先将0号元素与末尾元素交换，再删除最末尾元素。<br>
-2.该节点是否比子节点要小，如果确实是这样，则从两个子节点中找一个更大的和自己交换，再递归向下比较。</p>
-<h4 id="查找最优先元素">查找最优先元素</h4>
-<p>如果堆不为空，则最优先元素一定是根节点。</p>
-<h3 id="code">Code</h3>
-<h4 id="c代码">C#代码</h4>
-<pre><code class="language-C#">
-  public class Heap&lt;T&gt; where T: IComparable&lt;T&gt; {
-    private List&lt;T&gt; list = new List&lt;T&gt;();
-    private int count = 0;
-
-    public Heap() {
-    }
-
-    public void Add(T value) {
-      if(list.Count &gt; count) {
-        list[count] = value;
-      } else {
-        list.Add(value);
-      }
-
-      CheckAdd(count);
-      ++count;
-    }
-
-    private void CheckAdd(int index) {
-      if(index &gt; 0) {
-        int father = (index - 1 ) &gt;&gt; 1;
-        if (list[index].CompareTo(list[father]) &lt; 0) {
-          T temp = list[index];
-          list[index] = list[father];
-          list[father] = temp;
-          CheckAdd(father);
-        }
-      }
-    }
-
-    public T Top() {
-      if(count &gt; 0) {
-        return list[0];
-      }
-      return default;
-    }
-
-    public int Count =&gt; count;
-    public bool IsEmpty =&gt; count == 0;
-
-    public bool Pop() {
-      if(count &gt; 0) {
-        --count;
-        if (count &gt; 0) {
-          T temp = list[0];
-          list[0] = list[count];
-          list[count] = temp;
-          CheckPop(0);
-        }
-        return true;
-      }
-      return false;
-    }
-
-    private void CheckPop(int index) {
-      int leftSon = index &lt;&lt; 1 | 1;
-      int rightSon = leftSon + 1;
-      if (leftSon &lt; Count) {
-        int upSon = rightSon &lt; Count &amp;&amp; list[rightSon].CompareTo(list[leftSon]) &lt; 0 ? rightSon : leftSon;
-        if (list[upSon].CompareTo(list[index]) &lt; 0) {
-          T temp = list[index];
-          list[index] = list[upSon];
-          list[upSon] = temp;
-          CheckPop(upSon);
-        }
-      }
-    }
-  }
-
 </code></pre>
 ]]></content>
     </entry>
