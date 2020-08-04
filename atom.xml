@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Rong Sir的博客</title>
-    <updated>2020-08-04T13:12:37.593Z</updated>
+    <updated>2020-08-04T13:13:20.996Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -21,11 +21,10 @@ Mail: Rongerace@163.com</subtitle>
 <h2 id="基于平衡二叉树和线段树">基于平衡二叉树和线段树</h2>
 <p>在完全平衡树上写一颗线段树</p>
 <h3 id="实现逻辑">实现逻辑</h3>
-<pre><code>  以后再写
-  ...
-  ...
-  ...
-</code></pre>
+<p>以后再写<br>
+...<br>
+...<br>
+...</p>
 <h3 id="c版本">C#版本</h3>
 <p><strong>备注：代码是不完整版本</strong></p>
 <pre><code class="language-C#">  /// &lt;summary&gt;
@@ -293,8 +292,10 @@ Mail: Rongerace@163.com</subtitle>
 <p>[TOC]</p>
 <h2 id="完全平衡树-avltree"><strong>完全平衡树 AVLTree</strong></h2>
 <h3 id="概念"><strong>概念</strong></h3>
-<pre><code>      以后补充
-</code></pre>
+<p>以后补充<br>
+...<br>
+...<br>
+...</p>
 <h3 id="code"><strong>Code</strong></h3>
 <h4 id="c"><strong>C#</strong></h4>
 <p><strong>Author:  Jerilee</strong><br>
