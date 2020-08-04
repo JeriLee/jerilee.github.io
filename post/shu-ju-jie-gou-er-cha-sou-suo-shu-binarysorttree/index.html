@@ -2,23 +2,28 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>基础数据结构（堆Segment Tree） | Rong Sir的博客</title>
+<title>数据结构(二叉搜索树BinarySortTree) | Rong Sir的博客</title>
 <link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1596546052259">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="基础数据结构（堆Segment Tree） | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="数据结构(二叉搜索树BinarySortTree) | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
     <meta name="description" content="基础数据结构
-@(数据结构)[堆|Segment Tree|数据结构]
+@(数据结构)[二叉搜索树|BinarySortTree|数据结构]
 
 [TOC]
-堆
-原理
-堆属于二叉树，属于完全二叉树。
-堆特性 ： 以大顶堆为例，父节点比两个子节点的值都要大。如图，5号节点，它的v值比10号节点和11号节点都要大。..." />
+二叉搜索树 BST
+概念
+      以后补充
+
+Code
+C#
+最后修改日2020-8-4
+  /// &lt;summary&gt;
+  ..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -82,11 +87,11 @@ Mail: Rongerace@163.com
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              基础数据结构（堆Segment Tree）
+              数据结构(二叉搜索树BinarySortTree)
             </h2>
             <div class="post-info">
               <span>
-                2020-07-12
+                2020-08-04
               </span>
               <span>
                 3 min read
@@ -97,98 +102,161 @@ Mail: Rongerace@163.com
             <div class="post-content-wrapper">
               <div class="post-content">
                 <h1 id="基础数据结构">基础数据结构</h1>
-<p>@(数据结构)[堆|Segment Tree|数据结构]</p>
+<p>@(数据结构)[二叉搜索树|BinarySortTree|数据结构]</p>
 <hr>
 <p>[TOC]</p>
-<h2 id="堆">堆</h2>
-<h3 id="原理">原理</h3>
-<p>堆属于二叉树，属于完全二叉树。<br>
-堆特性 ： 以大顶堆为例，父节点比两个子节点的值都要大。如图，5号节点，它的v值比10号节点和11号节点都要大。<br>
-<img src="https://jerilee.github.io/post-images/1594513997324.png" alt="" loading="lazy"></p>
-<h3 id="实现方法">实现方法</h3>
-<p>堆通常使用数组实现。<br>
-每个堆节点（index）的左子节点为（index*2 + 1），右子节点为（index*2 + 2）</p>
-<h4 id="插入元素">插入元素</h4>
-<p>1.因为堆属于完全二叉树，所以新元素放在数组的最末尾。<br>
-2.如果<strong>当前节点</strong>比<strong>父节点</strong>更优先，则和父节点交换，递归向上比较。</p>
-<h4 id="删除最优先元素">删除最优先元素</h4>
-<p>因为堆属于完全二叉树，删除最优先元素时：<br>
-1.先将0号元素与末尾元素交换，再删除最末尾元素。<br>
-2.该节点是否比子节点要小，如果确实是这样，则从两个子节点中找一个更大的和自己交换，再递归向下比较。</p>
-<h4 id="查找最优先元素">查找最优先元素</h4>
-<p>如果堆不为空，则最优先元素一定是根节点。</p>
-<h3 id="code">Code</h3>
-<h4 id="c代码">C#代码</h4>
-<pre><code class="language-C#">
-  public class Heap&lt;T&gt; where T: IComparable&lt;T&gt; {
-    private List&lt;T&gt; list = new List&lt;T&gt;();
-    private int count = 0;
-
-    public Heap() {
+<h2 id="二叉搜索树-bst"><strong>二叉搜索树 BST</strong></h2>
+<h3 id="概念"><strong>概念</strong></h3>
+<pre><code>      以后补充
+</code></pre>
+<h3 id="code"><strong>Code</strong></h3>
+<h4 id="c"><strong>C#</strong></h4>
+<p><strong>最后修改日2020-8-4</strong></p>
+<pre><code class="language-C#">  /// &lt;summary&gt;
+  /// BinarySortTree
+  /// Author:  Jerilee
+  /// Time:    2020-8-3 10:24
+  /// Link :   jerilee.github.io
+  /// &lt;/summary&gt;
+  public class BinarySortTree&lt;T&gt; where T : IComparable&lt;T&gt; {
+    class Node {
+      public T value;
+      public Node leftSon;
+      public Node rightSon;
+      public Node(T v) {
+        value = v;
+        leftSon = default;
+        rightSon = default;
+      }
     }
 
-    public void Add(T value) {
-      if(list.Count &gt; count) {
-        list[count] = value;
+    private Node root;
+
+    public BinarySortTree() {
+    }
+
+    public void Init(List&lt;T&gt; source) {
+      foreach (var item in source) {
+        Add(item);
+      }
+    }
+
+    public List&lt;T&gt; ToList() {
+      List&lt;T&gt; list = new List&lt;T&gt;();
+      Dfs(root, list);
+      return list;
+    }
+
+    private void Dfs(Node node, List&lt;T&gt; list) {
+      if (node != null) {
+        Dfs(node.leftSon, list);
+        list.Add(node.value);
+        Dfs(node.rightSon, list);
+      }
+    }
+
+    public bool Add(T item) {
+      if (root == null) {
+        root = new Node(item);
+        return true;
       } else {
-        list.Add(value);
-      }
-
-      CheckAdd(count);
-      ++count;
-    }
-
-    private void CheckAdd(int index) {
-      if(index &gt; 0) {
-        int father = (index - 1 ) &gt;&gt; 1;
-        if (list[index].CompareTo(list[father]) &lt; 0) {
-          T temp = list[index];
-          list[index] = list[father];
-          list[father] = temp;
-          CheckAdd(father);
+        Node node = root;
+        var comparer = Comparer&lt;T&gt;.Default;
+        while (true) {
+          int c = comparer.Compare(item, node.value);
+          if (c == 0) {
+            return false;
+          } else if (c &lt; 0) {
+            if (node.leftSon != null) {
+              node = node.leftSon;
+            } else {
+              node.leftSon = new Node(item);
+              return true;
+            }
+          } else {
+            if (node.rightSon != null) {
+              node = node.rightSon;
+            } else {
+              node.rightSon = new Node(item);
+              return true;
+            }
+          }
         }
       }
     }
 
-    public T Top() {
-      if(count &gt; 0) {
-        return list[0];
-      }
-      return default;
+    public bool Remove(T item) {
+      return Remove(ref root, item);
     }
 
-    public int Count =&gt; count;
-    public bool IsEmpty =&gt; count == 0;
+    private bool Remove(ref Node node, T item) {
 
-    public bool Pop() {
-      if(count &gt; 0) {
-        --count;
-        if (count &gt; 0) {
-          T temp = list[0];
-          list[0] = list[count];
-          list[count] = temp;
-          CheckPop(0);
+      if (node != null) {
+        var comparer = Comparer&lt;T&gt;.Default;
+        int c = comparer.Compare(item, node.value);
+        return c == 0 ? Delete(ref node) : Remove(ref c &lt; 0 ? ref node.leftSon : ref node.rightSon, item);
+        // [1]
+      }
+      return false;
+    }
+
+    private bool Delete(ref Node node) {
+      if (node.leftSon == null &amp;&amp; node.rightSon == null) {
+        node = default;
+      } else if (node.leftSon == null) {
+        node = node.rightSon;
+      } else if (node.rightSon == null) {
+        node = node.leftSon;
+      } else {
+        var lson = node.leftSon;
+        var last = node;
+        while (lson.rightSon != null) {
+          last = lson;
+          lson = lson.rightSon;
         }
+
+        node.value = lson.value;
+
+        if (last == node) {
+          last.leftSon = lson.leftSon;
+        } else {
+          last.rightSon = lson.leftSon;
+        }
+      }
+      return true;
+    }
+
+    public bool Change(T fromItem, T toItem) {
+      if (Remove(fromItem)) {
+        Add(toItem);
         return true;
       }
       return false;
     }
 
-    private void CheckPop(int index) {
-      int leftSon = index &lt;&lt; 1 | 1;
-      int rightSon = leftSon + 1;
-      if (leftSon &lt; Count) {
-        int upSon = rightSon &lt; Count &amp;&amp; list[rightSon].CompareTo(list[leftSon]) &lt; 0 ? rightSon : leftSon;
-        if (list[upSon].CompareTo(list[index]) &lt; 0) {
-          T temp = list[index];
-          list[index] = list[upSon];
-          list[upSon] = temp;
-          CheckPop(upSon);
-        }
+    public bool Contain(T item) {
+      return Find(item, root) != null;
+    }
+
+    private Node Find(T item, Node node) {
+      if (node != null) {
+        var comparer = Comparer&lt;T&gt;.Default;
+        int c = comparer.Compare(item, node.value);
+        return c == 0 ? node : Find(item, c &lt; 0 ? node.leftSon : node.rightSon);
       }
+      return null;
     }
   }
 
+  /* [1]
+  if (c == 0) {
+    return Delete(ref node);
+  }else if(c &lt; 0) {
+    return Remove(ref node.leftSon, item);
+  } else {
+    return Remove(ref node.rightSon, item);
+  }
+  */
 </code></pre>
 
               </div>
@@ -196,19 +264,12 @@ Mail: Rongerace@163.com
                 <ul class="markdownIt-TOC">
 <li><a href="#%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">基础数据结构</a>
 <ul>
-<li><a href="#%E5%A0%86">堆</a>
+<li><a href="#%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91-bst"><strong>二叉搜索树 BST</strong></a>
 <ul>
-<li><a href="#%E5%8E%9F%E7%90%86">原理</a></li>
-<li><a href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95">实现方法</a>
+<li><a href="#%E6%A6%82%E5%BF%B5"><strong>概念</strong></a></li>
+<li><a href="#code"><strong>Code</strong></a>
 <ul>
-<li><a href="#%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0">插入元素</a></li>
-<li><a href="#%E5%88%A0%E9%99%A4%E6%9C%80%E4%BC%98%E5%85%88%E5%85%83%E7%B4%A0">删除最优先元素</a></li>
-<li><a href="#%E6%9F%A5%E6%89%BE%E6%9C%80%E4%BC%98%E5%85%88%E5%85%83%E7%B4%A0">查找最优先元素</a></li>
-</ul>
-</li>
-<li><a href="#code">Code</a>
-<ul>
-<li><a href="#c%E4%BB%A3%E7%A0%81">C#代码</a></li>
+<li><a href="#c"><strong>C#</strong></a></li>
 </ul>
 </li>
 </ul>
@@ -225,9 +286,9 @@ Mail: Rongerace@163.com
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://jerilee.github.io/post/ji-chu-shu-ju-jie-gou/">
+            <a href="https://jerilee.github.io/post/wo-de-cbi-ji/">
               <h3 class="post-title">
-                基础数据结构（线段树Segment Tree）
+                我的C++笔记
               </h3>
             </a>
           </div>
