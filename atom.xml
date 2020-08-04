@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Rong Sir的博客</title>
-    <updated>2020-08-04T13:09:26.285Z</updated>
+    <updated>2020-08-04T13:12:37.593Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -11,6 +11,276 @@ Mail: Rongerace@163.com</subtitle>
     <logo>https://jerilee.github.io/images/avatar.png</logo>
     <icon>https://jerilee.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Rong Sir的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[排行榜代码模板]]></title>
+        <id>https://jerilee.github.io/post/pai-xing-bang-dai-ma-mo-ban/</id>
+        <link href="https://jerilee.github.io/post/pai-xing-bang-dai-ma-mo-ban/">
+        </link>
+        <updated>2020-08-04T13:10:29.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="排行榜代码模板">排行榜代码模板</h2>
+<h2 id="基于平衡二叉树和线段树">基于平衡二叉树和线段树</h2>
+<p>在完全平衡树上写一颗线段树</p>
+<h3 id="实现逻辑">实现逻辑</h3>
+<pre><code>  以后再写
+  ...
+  ...
+  ...
+</code></pre>
+<h3 id="c版本">C#版本</h3>
+<p><strong>备注：代码是不完整版本</strong></p>
+<pre><code class="language-C#">  /// &lt;summary&gt;
+  /// AVLTree
+  /// Author:  Jerilee
+  /// Time:    2020-8-4 17:00
+  /// Link :   jerilee.github.io
+  /// &lt;/summary&gt;
+  public class RankList&lt;T&gt; where T : IComparable&lt;T&gt; {
+    class Node {
+      public T value;
+      public Node leftSon;
+      public Node rightSon;
+      public int height;
+
+      public int LeftCount;
+      public int RightCount;
+
+      public Node(T v) {
+        value = v;
+        height = 1;
+        leftSon = rightSon = default;
+        LeftCount = RightCount = 0;
+      }
+
+      public void UpdateHeight() {
+        height = Math.Max(leftSon?.height ?? 0, rightSon?.height ?? 0) + 1;
+      }
+
+      public void UpdateCount() {
+        LeftCount = leftSon?.Count ?? 0;
+        RightCount = rightSon?.Count ?? 0;
+      }
+
+      public int DisHeight =&gt; (leftSon?.height ?? 0) - (rightSon?.height ?? 0);
+      public int Count =&gt; LeftCount + RightCount + 1;
+    }
+
+    private Node root;
+    private Comparer&lt;T&gt; comparer;
+    private int Count;
+    public RankList() {
+      comparer = Comparer&lt;T&gt;.Default;
+      Count = 0;
+    }
+
+    public void Init(List&lt;T&gt; source) {
+      foreach (var item in source) {
+        Add(item);
+      }
+    }
+
+    public List&lt;T&gt; ToList() {
+      List&lt;T&gt; list = new List&lt;T&gt;();
+      Dfs(root, list);
+      return list;
+    }
+
+    private void Dfs(Node node, List&lt;T&gt; list) {
+      if (node != null) {
+        var l = node.leftSon != null ? node.leftSon.value : default;
+        var r = node.rightSon != null ? node.rightSon.value : default;
+        Console.WriteLine($&quot;Node father[{node.value}] Lson[{l}] rSon[{r}] H[{node.height}] C[{node.LeftCount}]&quot;);
+        Dfs(node.leftSon, list);
+        list.Add(node.value);
+        Dfs(node.rightSon, list);
+      }
+    }
+
+    private Node RotateR(Node node) {
+      Node lson = node.leftSon;
+      Node lsonRson = lson.rightSon;
+      lson.rightSon = node;
+      node.leftSon = lsonRson;
+      node.UpdateHeight();
+      lson.UpdateHeight();
+      node.UpdateCount();
+      lson.UpdateCount();
+      return lson;
+    }
+
+    private Node RotateL(Node node) {
+      Node rson = node.rightSon;
+      Node rsonLson = rson.leftSon;
+      rson.leftSon = node;
+      node.rightSon = rsonLson;
+      node.UpdateHeight();
+      rson.UpdateHeight();
+      node.UpdateCount();
+      rson.UpdateCount();
+      return rson;
+    }
+
+    private Node RotateLR(Node node) {
+      node.leftSon = RotateL(node.leftSon);
+      return RotateR(node);
+    }
+
+    private Node RotateRL(Node node) {
+      node.rightSon = RotateR(node.rightSon);
+      return RotateL(node);
+    }
+
+    private void CheckRotateR(ref Node node) {
+      if (node.DisHeight &gt; 1) {
+        int leftH = node.leftSon.leftSon?.height ?? 0;
+        int rightH = node.leftSon.rightSon?.height ?? 0;
+        node = leftH &gt;= rightH ? RotateR(node) : RotateLR(node);
+      }
+    }
+
+    private void CheckRotateL(ref Node node) {
+      if (node.DisHeight &lt; -1) {
+        int leftH = node.rightSon.leftSon?.height ?? 0;
+        int rightH = node.rightSon.rightSon?.height ?? 0;
+        node = leftH &gt; rightH ? RotateRL(node) : RotateL(node);
+      }
+    }
+
+    private Node Add(Node node, T val) {
+      if (node == null) {
+        node = new Node(val);
+        ++Count;
+      } else {
+        int c = comparer.Compare(val, node.value);
+        if (c &lt; 0) {
+          node.leftSon = Add(node.leftSon, val);
+          CheckRotateR(ref node);
+        } else if (c &gt; 0) {
+          node.rightSon = Add(node.rightSon, val);
+          CheckRotateL(ref node);
+        }
+        node.UpdateHeight();
+        node.UpdateCount();
+      }
+      return node;
+    }
+
+    public void Add(T item) {
+      Console.WriteLine($&quot;Add Item {item}&quot;);
+      root = Add(root, item);
+      ToList();
+    }
+
+    public bool Remove(T item) {
+       bool ret = Remove(ref root, item);
+      if (ret) {
+        --Count;
+      }
+      return ret;
+    }
+
+    private bool Remove(ref Node node, T item) {
+      if (node != null) {
+        int c = comparer.Compare(item, node.value);
+
+        if (c == 0) {
+          if (node.leftSon == null &amp;&amp; node.rightSon == null) {
+            node = default;
+          } else if (node.leftSon == null) {
+            node = node.rightSon;
+          } else if (node.rightSon == null) {
+            node = node.leftSon;
+          } else {
+            Node lson = node.leftSon;
+            while (lson.rightSon != null) {
+              lson = lson.rightSon;
+            }
+            node.value = lson.value;
+            Remove(ref node.leftSon, node.value);
+
+            CheckRotateL(ref node);
+            node.UpdateHeight();
+            node.UpdateCount();
+          }
+          return true;
+        } else if (c &lt; 0) {
+          bool ret = Remove(ref node.leftSon, item);
+          CheckRotateL(ref node);
+          node.UpdateHeight();
+          node.UpdateCount();
+          return ret;
+        } else {
+          bool ret = Remove(ref node.rightSon, item);
+          CheckRotateR(ref node);
+          node.UpdateHeight();
+          node.UpdateCount();
+          return ret;
+        }
+      }
+      return false;
+    }
+
+    public bool Change(T fromItem, T toItem) {
+      if (Remove(fromItem)) {
+        Add(toItem);
+        return true;
+      }
+      return false;
+    }
+    /*
+    public bool Contain(T item) {
+      return Find(item, root) != null;
+    }
+
+    private Node Find(T item, Node node) {
+      if (node != null) {
+        int c = comparer.Compare(item, node.value);
+        return c == 0 ? node : Find(item, c &lt; 0 ? node.leftSon : node.rightSon);
+      }
+      return null;
+    }
+    */
+    public int GetRank(T item) {
+      return GetRank(root, item);
+    }
+
+    private int GetRank(Node node, T item) {
+      if(node != null) {
+        int c = comparer.Compare(item, node.value);
+        if (c == 0) {
+          return node.LeftCount + 1;
+        } else if (c &lt; 0) {
+          return GetRank(node.leftSon, item);
+        } else {
+          int t = GetRank(node.rightSon, item);
+          return t &lt; 0 ? t : t + node.LeftCount + 1;
+        }
+      }
+      return -1;
+    }
+
+    public T GetValueByRank(int Rank) {
+      if(Rank &gt; 0 &amp;&amp; Rank &lt;= Count) {
+        return GetValueByRank(root, Rank);
+      }
+      return default;
+    }
+
+    private T GetValueByRank(Node node, int rank) {
+      if(node != null) {
+        if(rank == node.LeftCount + 1) {
+          return node.value;
+        }else if(rank &lt; node.LeftCount + 1) {
+          return GetValueByRank(node.leftSon, rank);
+        }else {
+          return GetValueByRank(node.rightSon, rank - node.LeftCount - 1);
+        }
+      }
+      return default;
+    }
+  }
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[数据结构（完全平衡树 AVL Tree）]]></title>
         <id>https://jerilee.github.io/post/shu-ju-jie-gou-wan-quan-ping-heng-shu-avl-tree/</id>
@@ -861,106 +1131,6 @@ static void RunTest() {
   }
 }
 
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[基础算法（KMP）]]></title>
-        <id>https://jerilee.github.io/post/ji-chu-suan-fa-kmp/</id>
-        <link href="https://jerilee.github.io/post/ji-chu-suan-fa-kmp/">
-        </link>
-        <updated>2020-07-12T05:02:32.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="基础算法">基础算法</h1>
-<p>@(算法)[算法|KMP|字符串]</p>
-<hr>
-<p>[TOC]</p>
-<h2 id="kmp">KMP</h2>
-<p>KMP特点：字符串匹配算法，从S串中匹配T串，KMP算法时间复杂度为O(N+M)</p>
-<h3 id="逻辑">逻辑</h3>
-<p>这里有两个字符串，一个A串，一个B串，从A串中匹配B串出现的位置<br>
-A=&quot;abababcababa&quot;<br>
-B=&quot;ababcababa&quot;</p>
-<p><strong>Next数组</strong><br>
-KMP里最重要的Next数组计算。<br>
-next数组的含义：一个固定字符串的最长前缀和最长后缀相同的长度，然后再减1 （计算机下标从0开始）。<br>
-很明显<br>
-&quot;aba&quot;的前缀和后缀相同的最长串为&quot;a&quot;，所以长度为1<br>
-&quot;abab&quot;的前缀和后缀相同的最长串为&quot;ab&quot;，所以长度为2<br>
-可以推出next数组：<br>
-<img src="https://jerilee.github.io/post-images/1594647097197.jpg" alt="" loading="lazy"><br>
-第一行为字符串B<br>
-第二行为固定字符串的<strong>前缀和后缀相同的最长串</strong><br>
-<strong>Next数组</strong>为第二行数值减1</p>
-<p>KMP匹配和Next数组的处理是一摸一样的逻辑。<br>
-如下图，蓝色区域是相同的部分，对于&quot;ababcabab&quot;串来说， 它的最长的相同前缀和后缀就是&quot;abab&quot;，所以当字符'a'和'c'失配的时候，字符串最长可用部分为蓝色部分，所以从这个位置继续匹配。<br>
-下面重复相同步骤。<br>
-<img src="https://jerilee.github.io/post-images/1594648216459.png" alt="" loading="lazy"></p>
-<h3 id="code">Code</h3>
-<h4 id="c代码">C++代码</h4>
-<pre><code class="language-C++">void Kmp::GetNext(std::string str, std::vector&lt;int&gt;&amp; next) {
-  next[0] = -1;
-  for (int i = 1, k = -1; i &lt; str.length(); ++i) {
-    while (k &gt; -1 &amp;&amp; str[k + 1] != str[i])
-      k = next[k];
-    if (str[k + 1] == str[i])
-      k = k + 1;
-    next[i] = k;
-  }
-}
-
-int Kmp::FindByKmp(std::string str1, std::string str2) {
-  std::vector&lt;int&gt; next(str2.length());
-  GetNext(str2, next);
-  for (int i = 0, k = -1; i &lt; str1.length(); i++) {
-    while (k &gt; -1 &amp;&amp; str2[k + 1] != str1[i]) {
-      k = next[k];
-    }
-
-    if (str2[k + 1] == str1[i]) {
-      ++k;
-    }
-
-    if (k == str2.length() - 1) {
-      return i - (int)str2.length() + 1;
-    }
-  }
-  return -1;
-}
-
-</code></pre>
-<h4 id="c代码-2">C#代码</h4>
-<pre><code class="language-C#">public static int[] GetNext(string str) {
-  int[] next = new int[str.Length];
-  next[0] = -1;
-  for (int i = 1, k = -1; i &lt; str.Length; ++i) {
-    while (k &gt; -1 &amp;&amp; str[k + 1] != str[i]){
-      k = next[k];
-    }
-    if (str[k + 1] == str[i]){
-      k = k + 1;
-    }
-    next[i] = k;
-  }
-  return next;
-}
-
-public static int FindByKmp(this string str1, string str2) {
-    var next = GetNext(str2);
-    for (int i = 0, k = -1; i &lt; str1.Length; i++) {
-    while (k &gt; -1 &amp;&amp; str2[k + 1] != str1[i]) {
-        k = next[k];
-    }
-
-    if (str2[k + 1] == str1[i]) {
-        ++k;
-    }
-        
-    if (k == str2.Length - 1){
-        return i - str2.Length + 1;
-    }
-    }
-    return -1;
-}
 </code></pre>
 ]]></content>
     </entry>
