@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>C#笔记 | Rong Sir的博客</title>
-<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1596547072620">
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1596638765095">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="C#笔记 | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
@@ -28,7 +28,7 @@ publi..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://jerilee.github.io">
-  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1596547072620" alt="">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1596638765095" alt="">
   </a>
   <h1 class="site-title">
     Rong Sir的博客
@@ -168,6 +168,20 @@ static void RunTest() {
 }
 
 </code></pre>
+<h3 id="动态编译">动态编译</h3>
+<p>取任意对象中的私有变量</p>
+<p>例如：取List<T>中的_items</p>
+<pre><code class="language-C#">public static class External {
+  public static TDelegate Complie&lt;TDelegate&gt;(this FieldInfo fieldInfo) where TDelegate : class {
+    ParameterExpression list = Expression.Parameter(fieldInfo.DeclaringType);
+    var member = Expression.Field(list, fieldInfo);
+    return Expression.Lambda&lt;TDelegate&gt;(member, list).Compile();
+  }
+}
+public static class ListArrayProvider&lt;T&gt; {
+  public static readonly Func&lt;List&lt;T&gt;, T[]&gt; GetArray = typeof(List&lt;T&gt;).GetField(&quot;_items&quot;, BindingFlags.Instance | BindingFlags.NonPublic).Complie&lt;Func&lt;List&lt;T&gt;, T[]&gt;&gt;();
+}
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -187,6 +201,7 @@ static void RunTest() {
 </ul>
 </li>
 <li><a href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B">多线程</a></li>
+<li><a href="#%E5%8A%A8%E6%80%81%E7%BC%96%E8%AF%91">动态编译</a></li>
 </ul>
 </li>
 </ul>

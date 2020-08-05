@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Rong Sir的博客</title>
-    <updated>2020-08-04T13:17:54.649Z</updated>
+    <updated>2020-08-05T14:46:36.073Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -1135,6 +1135,20 @@ static void RunTest() {
   }
 }
 
+</code></pre>
+<h3 id="动态编译">动态编译</h3>
+<p>取任意对象中的私有变量</p>
+<p>例如：取List<T>中的_items</p>
+<pre><code class="language-C#">public static class External {
+  public static TDelegate Complie&lt;TDelegate&gt;(this FieldInfo fieldInfo) where TDelegate : class {
+    ParameterExpression list = Expression.Parameter(fieldInfo.DeclaringType);
+    var member = Expression.Field(list, fieldInfo);
+    return Expression.Lambda&lt;TDelegate&gt;(member, list).Compile();
+  }
+}
+public static class ListArrayProvider&lt;T&gt; {
+  public static readonly Func&lt;List&lt;T&gt;, T[]&gt; GetArray = typeof(List&lt;T&gt;).GetField(&quot;_items&quot;, BindingFlags.Instance | BindingFlags.NonPublic).Complie&lt;Func&lt;List&lt;T&gt;, T[]&gt;&gt;();
+}
 </code></pre>
 ]]></content>
     </entry>
