@@ -2,24 +2,24 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>基础算法（KMP） | Rong Sir的博客</title>
+<title>C++ 笔记（二） | Rong Sir的博客</title>
 <link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1598278576042">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="基础算法（KMP） | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="C++ 笔记（二） | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="基础算法
-@(算法)[算法|KMP|字符串]
+    <meta name="description" content="以下内容没有阅读过C++文档确认，可能存在错误。
+plament new
+plament new 在指定内存地址上调用构造函数
+class T{ 
+};
 
-[TOC]
-KMP
-KMP特点：字符串匹配算法，从S串中匹配T串，KMP算法时间复杂度为O(N+M)
-逻辑
-这里有两个字符串，一个A串，一个B串，从A串中匹配B串出现的位置
-A=&quot;a..." />
+int main(){
+  //申请一块堆内存
+  void* ptr = mall..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -83,129 +83,101 @@ Mail: Rongerace@163.com
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              基础算法（KMP）
+              C++ 笔记（二）
             </h2>
             <div class="post-info">
               <span>
-                2020-07-12
+                2020-08-24
               </span>
               <span>
-                3 min read
+                2 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h1 id="基础算法">基础算法</h1>
-<p>@(算法)[算法|KMP|字符串]</p>
-<hr>
-<p>[TOC]</p>
-<h2 id="kmp">KMP</h2>
-<p>KMP特点：字符串匹配算法，从S串中匹配T串，KMP算法时间复杂度为O(N+M)</p>
-<h3 id="逻辑">逻辑</h3>
-<p>这里有两个字符串，一个A串，一个B串，从A串中匹配B串出现的位置<br>
-A=&quot;abababcababa&quot;<br>
-B=&quot;ababcababa&quot;</p>
-<p><strong>Next数组</strong><br>
-KMP里最重要的Next数组计算。<br>
-next数组的含义：一个固定字符串的最长前缀和最长后缀相同的长度，然后再减1 （计算机下标从0开始）。<br>
-很明显<br>
-&quot;aba&quot;的前缀和后缀相同的最长串为&quot;a&quot;，所以长度为1<br>
-&quot;abab&quot;的前缀和后缀相同的最长串为&quot;ab&quot;，所以长度为2<br>
-可以推出next数组：<br>
-<img src="https://jerilee.github.io/post-images/1594647097197.jpg" alt="" loading="lazy"><br>
-第一行为字符串B<br>
-第二行为固定字符串的<strong>前缀和后缀相同的最长串</strong><br>
-<strong>Next数组</strong>为第二行数值减1</p>
-<p>KMP匹配和Next数组的处理是一摸一样的逻辑。<br>
-如下图，蓝色区域是相同的部分，对于&quot;ababcabab&quot;串来说， 它的最长的相同前缀和后缀就是&quot;abab&quot;，所以当字符'a'和'c'失配的时候，字符串最长可用部分为蓝色部分，所以从这个位置继续匹配。<br>
-下面重复相同步骤。<br>
-<img src="https://jerilee.github.io/post-images/1594648216459.png" alt="" loading="lazy"></p>
-<h3 id="code">Code</h3>
-<h4 id="c代码">C++代码</h4>
-<pre><code class="language-C++">void Kmp::GetNext(std::string str, std::vector&lt;int&gt;&amp; next) {
-  next[0] = -1;
-  for (int i = 1, k = -1; i &lt; str.length(); ++i) {
-    while (k &gt; -1 &amp;&amp; str[k + 1] != str[i])
-      k = next[k];
-    if (str[k + 1] == str[i])
-      k = k + 1;
-    next[i] = k;
-  }
+                <p>以下内容没有阅读过C++文档确认，可能存在错误。</p>
+<h2 id="plament-new">plament new</h2>
+<p>plament new 在指定内存地址上调用构造函数</p>
+<pre><code class="language-C++">class T{ 
+};
+
+int main(){
+  //申请一块堆内存
+  void* ptr = malloc(sizeof(T));
+  调用构造函数
+  T* ptr2 = new(ptr) T(1,2,3,4);
+  //申请一块栈内存
+  T a[1000];
+  调用构造函数
+  ptr2 = new(a) T(1,2,3,4);
 }
-
-int Kmp::FindByKmp(std::string str1, std::string str2) {
-  std::vector&lt;int&gt; next(str2.length());
-  GetNext(str2, next);
-  for (int i = 0, k = -1; i &lt; str1.length(); i++) {
-    while (k &gt; -1 &amp;&amp; str2[k + 1] != str1[i]) {
-      k = next[k];
-    }
-
-    if (str2[k + 1] == str1[i]) {
-      ++k;
-    }
-
-    if (k == str2.length() - 1) {
-      return i - (int)str2.length() + 1;
-    }
-  }
-  return -1;
-}
-
 </code></pre>
-<h4 id="c代码-2">C#代码</h4>
-<pre><code class="language-C#">public static int[] GetNext(string str) {
-  int[] next = new int[str.Length];
-  next[0] = -1;
-  for (int i = 1, k = -1; i &lt; str.Length; ++i) {
-    while (k &gt; -1 &amp;&amp; str[k + 1] != str[i]){
-      k = next[k];
-    }
-    if (str[k + 1] == str[i]){
-      k = k + 1;
-    }
-    next[i] = k;
+<h2 id="未完成的部分">未完成的部分</h2>
+<p>关于重载operate new，还有些没搞明白</p>
+<pre><code class="language-C++">#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+using namespace std;
+
+void* operator new (size_t t) {
+  printf(&quot;Global operator new called\n&quot;);
+  return malloc(t);
+}
+
+class T {
+public:
+  int a;
+  int b;
+  int c;
+  long d;
+  void Init(int a_, int b_, int c_, long d_) {
+    a = a_, b = b_, c = c_, d = d_;
   }
-  return next;
+
+  static void* operator new(size_t t, void*) {
+    printf(&quot;operator new called 1\n&quot;);
+    //return ::operator new(t);
+    return malloc(t);
+  }
+  void* operator new(size_t t) {
+    printf(&quot;operator new called 2\n&quot;);
+    //return ::operator new(t);
+    return malloc(t);
+  }
+
+  T(int a_, int b_, int c_, long d_) {
+    a = a_, b = b_, c = c_, d = d_;
+  }
+  T() {}
+
+  ~T() {}
+};
+
+int main() {
+  //T* a = new T();
+  void* raw = operator new(sizeof(T));
+  cout &lt;&lt; &quot;oper&quot; &lt;&lt; endl;
+  T* raw_t = static_cast&lt;T*&gt;(raw);
+  raw_t -&gt; T::T(1,2,3,4);
+  T* ptr = new(raw) T();
+  raw_t-&gt;~T();
+  raw_t-&gt;Init(1,2,3,4);
+
+  return 0;
 }
 
-public static int FindByKmp(this string str1, string str2) {
-    var next = GetNext(str2);
-    for (int i = 0, k = -1; i &lt; str1.Length; i++) {
-    while (k &gt; -1 &amp;&amp; str2[k + 1] != str1[i]) {
-        k = next[k];
-    }
 
-    if (str2[k + 1] == str1[i]) {
-        ++k;
-    }
-        
-    if (k == str2.Length - 1){
-        return i - str2.Length + 1;
-    }
-    }
-    return -1;
-}
 </code></pre>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li><a href="#%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95">基础算法</a>
+<li>
 <ul>
-<li><a href="#kmp">KMP</a>
-<ul>
-<li><a href="#%E9%80%BB%E8%BE%91">逻辑</a></li>
-<li><a href="#code">Code</a>
-<ul>
-<li><a href="#c%E4%BB%A3%E7%A0%81">C++代码</a></li>
-<li><a href="#c%E4%BB%A3%E7%A0%81-2">C#代码</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a href="#plament-new">plament new</a></li>
+<li><a href="#%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9A%84%E9%83%A8%E5%88%86">未完成的部分</a></li>
 </ul>
 </li>
 </ul>
@@ -218,9 +190,9 @@ public static int FindByKmp(this string str1, string str2) {
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://jerilee.github.io/post/ji-chu-shu-ju-jie-gou-dui/">
+            <a href="https://jerilee.github.io/post/pai-xing-bang-dai-ma-mo-ban/">
               <h3 class="post-title">
-                基础数据结构（堆Segment Tree）
+                排行榜代码模板(平衡树&amp;线段树)
               </h3>
             </a>
           </div>

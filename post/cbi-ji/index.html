@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>C#笔记 | Rong Sir的博客</title>
-<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1596761709778">
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1598278576042">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="C#笔记 | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
@@ -28,7 +28,7 @@ publi..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://jerilee.github.io">
-  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1596761709778" alt="">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1598278576042" alt="">
   </a>
   <h1 class="site-title">
     Rong Sir的博客
@@ -89,7 +89,7 @@ Mail: Rongerace@163.com
                 2020-07-13
               </span>
               <span>
-                3 min read
+                5 min read
               </span>
               
             </div>
@@ -182,6 +182,74 @@ public static class ListArrayProvider&lt;T&gt; {
   public static readonly Func&lt;List&lt;T&gt;, T[]&gt; GetArray = typeof(List&lt;T&gt;).GetField(&quot;_items&quot;, BindingFlags.Instance | BindingFlags.NonPublic).Complie&lt;Func&lt;List&lt;T&gt;, T[]&gt;&gt;();
 }
 </code></pre>
+<h1 id="两种字典方式">两种字典方式</h1>
+<p>如果重复Add同一个key，会抛出异常ArgumentException<br>
+如果重复TryAdd同一个key，会返回false，添加失败<br>
+如果查询一个不错在的key， dic_name[key_name] 会抛出异常KeyNotFoundException</p>
+<h2 id="dictionary">Dictionary</h2>
+<p>采用哈希实现的字典<br>
+需要重写key的下面两个方法：</p>
+<pre><code class="language-C#">public override int GetHashCode();
+public override bool Equals(object obj);
+</code></pre>
+<p>例如：</p>
+<pre><code class="language-C#">public class TestDic {
+  class Test {
+    public int id;
+    public Test(int c) { id = c;}
+    public override string ToString() =&gt; id.ToString();
+    public override int GetHashCode() =&gt; id;
+    public override bool Equals(object obj) =&gt; id == ((Test)obj).id;
+  }
+
+  public static void main() {
+    Dictionary&lt;Test, string&gt; dic = new Dictionary&lt;Test, string&gt;();
+    dic.Add(new Test(1), &quot;Tom&quot;);
+    foreach(var item in dic) Console.WriteLine(item.Key + &quot; #1 &quot; + item.Value);
+
+    dic[new Test(1)] = &quot;Jeri&quot;;
+    foreach (var item in dic) Console.WriteLine(item.Key + &quot; #2 &quot; + item.Value);
+
+    dic.TryAdd(new Test(1), &quot;LI&quot;);
+    foreach (var item in dic) Console.WriteLine(item.Key + &quot; #3 &quot; + item.Value);
+  }
+}
+</code></pre>
+<h2 id="sorteddictionary">SortedDictionary</h2>
+<p>采用红黑树实现的字典<br>
+需要实现key的IComparable<T>接口<br>
+例如：</p>
+<pre><code class="language-C#">public class TestDic {
+  class Test : IComparable&lt;Test&gt; {
+    public int id;
+    public Test(int c) { id = c;}
+    public override string ToString() =&gt; id.ToString();
+    public int CompareTo([AllowNull] Test other) =&gt; id.CompareTo(other.id);
+  }
+
+  public static void main() {
+    SortedDictionary&lt;Test, string&gt; dic = new SortedDictionary&lt;Test, string&gt;();
+    dic.Add(new Test(1), &quot;Tom&quot;);
+    foreach(var item in dic) Console.WriteLine(item.Key + &quot; #1 &quot; + item.Value);
+
+    dic[new Test(1)] = &quot;Jeri&quot;;
+    foreach (var item in dic) Console.WriteLine(item.Key + &quot; #2 &quot; + item.Value);
+
+    dic.TryAdd(new Test(1), &quot;LI&quot;);
+    foreach (var item in dic) Console.WriteLine(item.Key + &quot; #3 &quot; + item.Value);
+  }
+}
+</code></pre>
+<p>##标记Linq</p>
+<p>Aggregate<br>
+All<br>
+Any<br>
+Append 返回一个新的对象<br>
+AsEnumerable 一个弱智接口<br>
+Average<br>
+Cast 强制转换异常会报异常<br>
+Concat 拼接两个集合，返回新的集合<br>
+Contains 可以通过值比较</p>
 
               </div>
               <div class="toc-container">
@@ -204,6 +272,12 @@ public static class ListArrayProvider&lt;T&gt; {
 <li><a href="#%E5%8A%A8%E6%80%81%E7%BC%96%E8%AF%91">动态编译</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li><a href="#%E4%B8%A4%E7%A7%8D%E5%AD%97%E5%85%B8%E6%96%B9%E5%BC%8F">两种字典方式</a>
+<ul>
+<li><a href="#dictionary">Dictionary</a></li>
+<li><a href="#sorteddictionary">SortedDictionary</a></li>
 </ul>
 </li>
 </ul>

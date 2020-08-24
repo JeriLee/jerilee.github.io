@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Rong Sir的博客</title>
-    <updated>2020-08-07T00:55:10.649Z</updated>
+    <updated>2020-08-24T14:16:18.098Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -11,6 +11,87 @@ Mail: Rongerace@163.com</subtitle>
     <logo>https://jerilee.github.io/images/avatar.png</logo>
     <icon>https://jerilee.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Rong Sir的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[C++ 笔记（二）]]></title>
+        <id>https://jerilee.github.io/post/c-bi-ji-er/</id>
+        <link href="https://jerilee.github.io/post/c-bi-ji-er/">
+        </link>
+        <updated>2020-08-24T14:16:02.000Z</updated>
+        <content type="html"><![CDATA[<p>以下内容没有阅读过C++文档确认，可能存在错误。</p>
+<h2 id="plament-new">plament new</h2>
+<p>plament new 在指定内存地址上调用构造函数</p>
+<pre><code class="language-C++">class T{ 
+};
+
+int main(){
+  //申请一块堆内存
+  void* ptr = malloc(sizeof(T));
+  调用构造函数
+  T* ptr2 = new(ptr) T(1,2,3,4);
+  //申请一块栈内存
+  T a[1000];
+  调用构造函数
+  ptr2 = new(a) T(1,2,3,4);
+}
+</code></pre>
+<h2 id="未完成的部分">未完成的部分</h2>
+<p>关于重载operate new，还有些没搞明白</p>
+<pre><code class="language-C++">#include &lt;string&gt;
+#include &lt;iostream&gt;
+
+using namespace std;
+
+void* operator new (size_t t) {
+  printf(&quot;Global operator new called\n&quot;);
+  return malloc(t);
+}
+
+class T {
+public:
+  int a;
+  int b;
+  int c;
+  long d;
+  void Init(int a_, int b_, int c_, long d_) {
+    a = a_, b = b_, c = c_, d = d_;
+  }
+
+  static void* operator new(size_t t, void*) {
+    printf(&quot;operator new called 1\n&quot;);
+    //return ::operator new(t);
+    return malloc(t);
+  }
+  void* operator new(size_t t) {
+    printf(&quot;operator new called 2\n&quot;);
+    //return ::operator new(t);
+    return malloc(t);
+  }
+
+  T(int a_, int b_, int c_, long d_) {
+    a = a_, b = b_, c = c_, d = d_;
+  }
+  T() {}
+
+  ~T() {}
+};
+
+int main() {
+  //T* a = new T();
+  void* raw = operator new(sizeof(T));
+  cout &lt;&lt; &quot;oper&quot; &lt;&lt; endl;
+  T* raw_t = static_cast&lt;T*&gt;(raw);
+  raw_t -&gt; T::T(1,2,3,4);
+  T* ptr = new(raw) T();
+  raw_t-&gt;~T();
+  raw_t-&gt;Init(1,2,3,4);
+
+  return 0;
+}
+
+
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[排行榜代码模板(平衡树&线段树)]]></title>
         <id>https://jerilee.github.io/post/pai-xing-bang-dai-ma-mo-ban/</id>
@@ -1056,100 +1137,6 @@ orz<br>
 <h2 id="-31-敏感词匹配模板">---- 3.1 <a href="http://localhost:4000/post/dai-ma-mo-ban-min-gan-ci-pi-pei/">敏感词匹配模板</a></h2>
 <h2 id="-32-排行榜代码模板使用平衡树和线段树版本">---- 3.2 <a href="https://jerilee.github.io/post/pai-xing-bang-dai-ma-mo-ban/">排行榜代码模板(使用平衡树和线段树版本)</a></h2>
 <h1 id="c代码模板-2">C++代码模板</h1>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[C#笔记]]></title>
-        <id>https://jerilee.github.io/post/cbi-ji/</id>
-        <link href="https://jerilee.github.io/post/cbi-ji/">
-        </link>
-        <updated>2020-07-13T13:28:35.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="c笔记">C#笔记</h2>
-<h3 id="c部分类">C#部分类</h3>
-<p>部分类可以定义部分方法。部分方法在部分类中定义，但没有方法体，在另一个部分类中执行。</p>
-<pre><code class="language-C#">public partial class MyClass {
-  partial void MyMethod();
-}
-
-public partial class MyClass {
-  partial void MyMethod(){
-    
-  }
-}
-</code></pre>
-<p>部分方法不能有返回值。<br>
-部分方法如果没有实现，编译器不会编译这个方法。</p>
-<h3 id="字符串查找">字符串查找</h3>
-<pre><code class="language-C#">string.Contains();
-string.IndexOf();
-</code></pre>
-<h3 id="dictionary和-sorteddictionary">Dictionary和 SortedDictionary</h3>
-<pre><code class="language-C#">SortedDictionary&lt;string, string&gt; dic = new SortedDictionary&lt;string, string&gt;();
-dic.Add(&quot;1&quot;, &quot;Tom&quot;);
-dic.Add(&quot;1&quot;, &quot;Jeri&quot;); //不可以重复添加
-
-Dictionary&lt;string, string&gt; dic = new Dictionary&lt;string, string&gt;();
-dic.Add(&quot;1&quot;, &quot;Tom&quot;);
-dic.Add(&quot;1&quot;, &quot;Jeri&quot;); //不可以重复添加
-//SortedList也不可以重复Add
-</code></pre>
-<p><a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.collections.generic.dictionary-2?view=netcore-3.1">Dictionary文档</a></p>
-<h3 id="linq库">Linq库</h3>
-<p>Select和Where都是延迟加载</p>
-<pre><code class="language-C#">IEnumerable&lt;T&gt;.Select(Func func);
-IEnumerable&lt;T&gt;.Where(Func func);
-</code></pre>
-<h3 id="元组">元组</h3>
-<h4 id="引用元组-tuple">引用元组 Tuple</h4>
-<p>元素最多8个，并且第8个元素是Tuple<br>
-元素是只读<br>
-元组为引用</p>
-<pre><code class="language-C#">var testTuple1 = new Tuple&lt;int, int, int, int, int&gt;(1, 2, 3, 4, 5);
-var testTuple2 = Tuple.Create&lt;int, int, int&gt;(1, 2, 3);
-</code></pre>
-<h4 id="值元组-valuetuple">值元组 ValueTuple</h4>
-<p>元素属于字段，可读可写<br>
-元素值传递</p>
-<pre><code class="language-C#">//构造函数最多8个元素
-var testTuple1 = new ValueTuple&lt;int, int, int, int, int&gt;(1, 2, 3, 4, 5);
-var testTuple2 = ValueTuple.Create&lt;int, int, int&gt;(1, 2, 3);
-
-//元素超过8个可以使用 Item8 Item9访问
-var testTuple4 = new ValueTuple&lt;int, int, int, int, int, int, int, ValueTuple&lt;int, int&gt;&gt;(1, 2, 3, 4, 5, 6, 7, new ValueTuple&lt;int, int&gt;(8,9));
-Console.WriteLine($&quot;Item 8: {testTuple4.Item8}, Item 8: {testTuple4.Item9}&quot;);
-Console.WriteLine($&quot;Item 8: {testTuple4.Rest.Item1}, Item 8: {testTuple4.Rest.Item2}&quot;);
-
-// 解构
-var testTuple42 = Tuple.Create&lt;int, int, int&gt;(1, 2, 3);
-var (_, x, _) = testTuple42;
-</code></pre>
-<h3 id="多线程">多线程</h3>
-<pre><code class="language-C#">
-static void DoFunction(Object obj) {
-}
-static void RunTest() {
-  var t = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(DoFunction));
-  t.Start(new object());
-  while (t.IsAlive) {
-    System.Threading.Thread.Sleep(50);
-  }
-}
-
-</code></pre>
-<h3 id="动态编译">动态编译</h3>
-<p>取任意对象中的私有变量</p>
-<p>例如：取List<T>中的_items</p>
-<pre><code class="language-C#">public static class External {
-  public static TDelegate Complie&lt;TDelegate&gt;(this FieldInfo fieldInfo) where TDelegate : class {
-    ParameterExpression list = Expression.Parameter(fieldInfo.DeclaringType);
-    var member = Expression.Field(list, fieldInfo);
-    return Expression.Lambda&lt;TDelegate&gt;(member, list).Compile();
-  }
-}
-public static class ListArrayProvider&lt;T&gt; {
-  public static readonly Func&lt;List&lt;T&gt;, T[]&gt; GetArray = typeof(List&lt;T&gt;).GetField(&quot;_items&quot;, BindingFlags.Instance | BindingFlags.NonPublic).Complie&lt;Func&lt;List&lt;T&gt;, T[]&gt;&gt;();
-}
-</code></pre>
 ]]></content>
     </entry>
 </feed>
