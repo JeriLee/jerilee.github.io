@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>C++ 笔记（二） | Rong Sir的博客</title>
-<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1598278576042">
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1598632928179">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="C++ 笔记（二） | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
@@ -29,7 +29,7 @@ int main(){
       <div class="main-content">
         <div class="site-header">
   <a href="https://jerilee.github.io">
-  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1598278576042" alt="">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1598632928179" alt="">
   </a>
   <h1 class="site-title">
     Rong Sir的博客
@@ -90,7 +90,7 @@ Mail: Rongerace@163.com
                 2020-08-24
               </span>
               <span>
-                2 min read
+                3 min read
               </span>
               
             </div>
@@ -170,6 +170,40 @@ int main() {
 
 
 </code></pre>
+<h2 id="输入输出">输入输出</h2>
+<pre><code>char s[1024];
+</code></pre>
+<h3 id="scanf_s">scanf_s</h3>
+<pre><code>scanf_s(&quot;%4s&quot;, s, 5);
+printf(&quot;[%s]\n&quot;, s);
+</code></pre>
+<p>读取4个字符（可以不写）<br>
+缓冲区大小为5（必须要写）</p>
+<h3 id="cinget">cin.get()</h3>
+<pre><code>cin.get(s, 5);
+</code></pre>
+<p>读取该行字符串，缓冲区大小为5，最多读取缓冲区大小减1个字符<br>
+注意:该接口不能读取下一行，行尾返回空串</p>
+<pre><code>char c;
+c = cin.get();
+</code></pre>
+<p>读取一个字符，也会读取空白符类似于getchar()</p>
+<h3 id="cins">cin&gt;&gt;s</h3>
+<pre><code>cin&gt;&gt;s;
+</code></pre>
+<p>读取一个字符串，遇到空白符结束 类似于scanf(%s)</p>
+<h3 id="cingetline">cin.getline()</h3>
+<pre><code>cin.getline(s, maxn);
+printf(&quot;[%s] %d\n&quot;, s, strlen(s));
+</code></pre>
+<p>读取一行，包括空白符，回车不会包含在内类似于 gets_s()</p>
+<pre><code>cin.getline(s, maxn, 10);
+</code></pre>
+<p>cin.getline()有第三个参数，默认是Ascii[10]，可自定义</p>
+<h3 id="getline">getline()</h3>
+<pre><code>string str;
+getline(cin, str);
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -178,6 +212,15 @@ int main() {
 <ul>
 <li><a href="#plament-new">plament new</a></li>
 <li><a href="#%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9A%84%E9%83%A8%E5%88%86">未完成的部分</a></li>
+<li><a href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA">输入输出</a>
+<ul>
+<li><a href="#scanf_s">scanf_s</a></li>
+<li><a href="#cinget">cin.get()</a></li>
+<li><a href="#cins">cin&gt;&gt;s</a></li>
+<li><a href="#cingetline">cin.getline()</a></li>
+<li><a href="#getline">getline()</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

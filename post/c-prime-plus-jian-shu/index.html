@@ -2,20 +2,20 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>我的C++笔记 | Rong Sir的博客</title>
+<title>C++ Prime Plus简述 | Rong Sir的博客</title>
 <link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1598632928179">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="我的C++笔记 | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="C++ Prime Plus简述 | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="闭包
-函数指针
-值得注意的是，函数指针不能捕获上限文，无法形成闭包
-template &lt;class T&gt;
-static typename std::vector&lt;T&gt;::const_iterator FindByMe..." />
+    <meta name="description" content="第三章处理数据
+整形
+int x;
+cout &lt;&lt; hex &lt;&lt; x &lt;&lt;endl;  // 16进制
+cout &lt;&lt; oct &lt;&lt; x &lt;&lt;endl;  // 8进制..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -79,76 +79,68 @@ Mail: Rongerace@163.com
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              我的C++笔记
+              C++ Prime Plus简述
             </h2>
             <div class="post-info">
               <span>
-                2020-07-28
+                2020-08-29
               </span>
               <span>
-                2 min read
+                1 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h2 id="闭包"><strong>闭包</strong></h2>
-<h3 id="函数指针">函数指针</h3>
-<p><strong>值得注意的是，函数指针不能捕获上限文，无法形成闭包</strong></p>
-<pre><code class="language-C++">template &lt;class T&gt;
-static typename std::vector&lt;T&gt;::const_iterator FindByMethod(const std::vector&lt;T&gt;&amp; list, bool (*Equal)(const T&amp;)) {
-  for (auto it = list.begin(); it != list.end(); ++it) {
-    if (Equal(*it)) {
-      return it;
-    }
-  }
-  return list.end();
-}
+                <h2 id="第三章处理数据">第三章处理数据</h2>
+<h3 id="整形">整形</h3>
+<pre><code class="language-C++">int x;
+cout &lt;&lt; hex &lt;&lt; x &lt;&lt;endl;  // 16进制
+cout &lt;&lt; oct &lt;&lt; x &lt;&lt;endl;  // 8进制
 </code></pre>
-<h3 id="stdfunction">std::function</h3>
-<pre><code class="language-C++">  template &lt;class T&gt;
-  static typename std::vector&lt;T&gt;::const_iterator FindByFunc(const std::vector&lt;T&gt;&amp; list, const std::function&lt;bool(const T&amp;)&gt;&amp; Equal) {
-    auto it = list.begin();
-    for (; it != list.end(); ++it) {
-      if (Equal(*it)) {
-        break;
-      }
-    }
-    return it;
-  }
+<p>CHAR_BIT<br>
+CHAR_MAX<br>
+CHAR_MIN</p>
+<p>SCHAR_MAX<br>
+SCHAR_MIN<br>
+UCHAR_MAX</p>
+<p>SHRT_MAX<br>
+SHRT_MIN<br>
+USHRT_NAX</p>
+<p>INT_MAX<br>
+INT_MIN<br>
+UNIT_MAX</p>
+<p>LONG_MAX<br>
+LONG_MIN<br>
+ULONG_MAX</p>
+<p>LLONG_MAX<br>
+LLONG_MIN<br>
+ULLONG_MAX</p>
+<h3 id="cin-cout">cin cout</h3>
+<pre><code>cin.put(int x); //输出一个字符
 </code></pre>
-<h3 id="标准写法">标准写法</h3>
-<pre><code class="language-C++">template &lt;class T, class F&gt;
-static typename std::vector&lt;T&gt;::const_iterator FindBy(const std::vector&lt;T&gt;&amp; list, const F&amp; Equal) {
-  typename std::vector&lt;T&gt;::const_iterator it = list.begin();
-  for (; it != list.end(); ++it) {
-    if (Equal(*it)) {
-      return it;
-    }
-  }
-  return list.end();
-}
+<h3 id="char">char</h3>
+<pre><code>//Ctrl + Z
+//ASCALL 26
+char c = 032 = 0x1a = '\032';
+string s = &quot;65\x41\n&quot;;
 </code></pre>
-<h3 id="stdfind_if实现">std::find_if()实现</h3>
-<pre><code class="language-C++">template &lt;class T, class F&gt;
-static typename std::vector&lt;T&gt;::const_iterator FindByKu(const std::vector&lt;T&gt;&amp; list, const F&amp; Equal) {
-  auto it = std::find_if(list.begin(), list.end(), Equal);
-  return it;
-}
+<h3 id="wchar_t">wchar_t</h3>
+<h3 id="char32_t-char16_t">char32_t char16_t</h3>
+<p>C++11新增，内置整形，随系统而改变</p>
+<pre><code>char16_t ch1 = u'q';
+char32_t ch2 = U'\U0000222B';
+const char16_t s[4] = u&quot;ABC&quot;;
+const char32_t s2[4] = U&quot;ABC&quot;;
 </code></pre>
-<h2 id="多数量入参"><strong>多数量入参</strong></h2>
-<pre><code class="language-C++">template&lt;class T, class... _Valty&gt;
-static int AddFixed(std::vector&lt;T&gt;&amp; list, int max_count, _Valty&amp;&amp;... _Val) {
-  std::cout &lt;&lt; &quot;Fixed 2&quot; &lt;&lt; std::endl;
-  list.emplace_back(_STD forward&lt;_Valty&gt;(_Val)...);
-  if (list.size() &gt; max_count) {
-    int count = list.size() - max_count;
-    list.erase(list.begin(), list.begin() + count);
-    return count;
-  }
-  return 0;
-}
+<h3 id="const-常量">const 常量</h3>
+<p>const常量 在C++ 和C中作用域不同（详见第九章）<br>
+const常量在C++中可以用来声明数组长度</p>
+<h3 id="浮点数">浮点数</h3>
+<pre><code>//打印6位小数 更多详情第17章
+cout.setf(ios_base::fixed, ios_base::floatfield);
+cout &lt;&lt; 3.5 &lt;&lt; endl;
 </code></pre>
 
               </div>
@@ -156,15 +148,17 @@ static int AddFixed(std::vector&lt;T&gt;&amp; list, int max_count, _Valty&amp;&a
                 <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E9%97%AD%E5%8C%85"><strong>闭包</strong></a>
+<li><a href="#%E7%AC%AC%E4%B8%89%E7%AB%A0%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE">第三章处理数据</a>
 <ul>
-<li><a href="#%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88">函数指针</a></li>
-<li><a href="#stdfunction">std::function</a></li>
-<li><a href="#%E6%A0%87%E5%87%86%E5%86%99%E6%B3%95">标准写法</a></li>
-<li><a href="#stdfind_if%E5%AE%9E%E7%8E%B0">std::find_if()实现</a></li>
+<li><a href="#%E6%95%B4%E5%BD%A2">整形</a></li>
+<li><a href="#cin-cout">cin cout</a></li>
+<li><a href="#char">char</a></li>
+<li><a href="#wchar_t">wchar_t</a></li>
+<li><a href="#char32_t-char16_t">char32_t char16_t</a></li>
+<li><a href="#const-%E5%B8%B8%E9%87%8F">const 常量</a></li>
+<li><a href="#%E6%B5%AE%E7%82%B9%E6%95%B0">浮点数</a></li>
 </ul>
 </li>
-<li><a href="#%E5%A4%9A%E6%95%B0%E9%87%8F%E5%85%A5%E5%8F%82"><strong>多数量入参</strong></a></li>
 </ul>
 </li>
 </ul>
@@ -177,9 +171,9 @@ static int AddFixed(std::vector&lt;T&gt;&amp; list, int max_count, _Valty&amp;&a
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://jerilee.github.io/post/wo-de-cgong-ju-lei-dai-ma-ku/">
+            <a href="https://jerilee.github.io/post/c-bi-ji-er/">
               <h3 class="post-title">
-                我的C#工具类代码库
+                C++ 笔记（二）
               </h3>
             </a>
           </div>
