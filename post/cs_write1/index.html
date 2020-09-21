@@ -1,0 +1,380 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>C#笔记 | Rong Sir的博客</title>
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1600700307070">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="C#笔记 | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="C#笔记
+C#部分类
+部分类可以定义部分方法。部分方法在部分类中定义，但没有方法体，在另一个部分类中执行。
+public partial class MyClass {
+  partial void MyMethod();
+}
+
+publi..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://jerilee.github.io">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1600700307070" alt="">
+  </a>
+  <h1 class="site-title">
+    Rong Sir的博客
+  </h1>
+  <p class="site-description">
+    Phone: 17621996523
+Mail: Rongerace@163.com
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              C#笔记
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-07-13
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h2 id="c笔记">C#笔记</h2>
+<h3 id="c部分类">C#部分类</h3>
+<p>部分类可以定义部分方法。部分方法在部分类中定义，但没有方法体，在另一个部分类中执行。</p>
+<pre><code class="language-C#">public partial class MyClass {
+  partial void MyMethod();
+}
+
+public partial class MyClass {
+  partial void MyMethod(){
+    
+  }
+}
+</code></pre>
+<p>部分方法不能有返回值。<br>
+部分方法如果没有实现，编译器不会编译这个方法。</p>
+<h3 id="字符串查找">字符串查找</h3>
+<pre><code class="language-C#">string.Contains();
+string.IndexOf();
+</code></pre>
+<h3 id="dictionary和-sorteddictionary">Dictionary和 SortedDictionary</h3>
+<pre><code class="language-C#">SortedDictionary&lt;string, string&gt; dic = new SortedDictionary&lt;string, string&gt;();
+dic.Add(&quot;1&quot;, &quot;Tom&quot;);
+dic.Add(&quot;1&quot;, &quot;Jeri&quot;); //不可以重复添加
+
+Dictionary&lt;string, string&gt; dic = new Dictionary&lt;string, string&gt;();
+dic.Add(&quot;1&quot;, &quot;Tom&quot;);
+dic.Add(&quot;1&quot;, &quot;Jeri&quot;); //不可以重复添加
+//SortedList也不可以重复Add
+</code></pre>
+<p><a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.collections.generic.dictionary-2?view=netcore-3.1">Dictionary文档</a></p>
+<h3 id="linq库">Linq库</h3>
+<p>Select和Where都是延迟加载</p>
+<pre><code class="language-C#">IEnumerable&lt;T&gt;.Select(Func func);
+IEnumerable&lt;T&gt;.Where(Func func);
+</code></pre>
+<h3 id="元组">元组</h3>
+<h4 id="引用元组-tuple">引用元组 Tuple</h4>
+<p>元素最多8个，并且第8个元素是Tuple<br>
+元素是只读<br>
+元组为引用</p>
+<pre><code class="language-C#">var testTuple1 = new Tuple&lt;int, int, int, int, int&gt;(1, 2, 3, 4, 5);
+var testTuple2 = Tuple.Create&lt;int, int, int&gt;(1, 2, 3);
+</code></pre>
+<h4 id="值元组-valuetuple">值元组 ValueTuple</h4>
+<p>元素属于字段，可读可写<br>
+元素值传递</p>
+<pre><code class="language-C#">//构造函数最多8个元素
+var testTuple1 = new ValueTuple&lt;int, int, int, int, int&gt;(1, 2, 3, 4, 5);
+var testTuple2 = ValueTuple.Create&lt;int, int, int&gt;(1, 2, 3);
+
+//元素超过8个可以使用 Item8 Item9访问
+var testTuple4 = new ValueTuple&lt;int, int, int, int, int, int, int, ValueTuple&lt;int, int&gt;&gt;(1, 2, 3, 4, 5, 6, 7, new ValueTuple&lt;int, int&gt;(8,9));
+Console.WriteLine($&quot;Item 8: {testTuple4.Item8}, Item 8: {testTuple4.Item9}&quot;);
+Console.WriteLine($&quot;Item 8: {testTuple4.Rest.Item1}, Item 8: {testTuple4.Rest.Item2}&quot;);
+
+// 解构
+var testTuple42 = Tuple.Create&lt;int, int, int&gt;(1, 2, 3);
+var (_, x, _) = testTuple42;
+</code></pre>
+<h3 id="多线程">多线程</h3>
+<pre><code class="language-C#">
+static void DoFunction(Object obj) {
+}
+static void RunTest() {
+  var t = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(DoFunction));
+  t.Start(new object());
+  while (t.IsAlive) {
+    System.Threading.Thread.Sleep(50);
+  }
+}
+
+</code></pre>
+<h3 id="动态编译">动态编译</h3>
+<p>取任意对象中的私有变量</p>
+<p>例如：取List<T>中的_items</p>
+<pre><code class="language-C#">public static class External {
+  public static TDelegate Complie&lt;TDelegate&gt;(this FieldInfo fieldInfo) where TDelegate : class {
+    ParameterExpression list = Expression.Parameter(fieldInfo.DeclaringType);
+    var member = Expression.Field(list, fieldInfo);
+    return Expression.Lambda&lt;TDelegate&gt;(member, list).Compile();
+  }
+}
+public static class ListArrayProvider&lt;T&gt; {
+  public static readonly Func&lt;List&lt;T&gt;, T[]&gt; GetArray = typeof(List&lt;T&gt;).GetField(&quot;_items&quot;, BindingFlags.Instance | BindingFlags.NonPublic).Complie&lt;Func&lt;List&lt;T&gt;, T[]&gt;&gt;();
+}
+</code></pre>
+<h1 id="两种字典方式">两种字典方式</h1>
+<p>如果重复Add同一个key，会抛出异常ArgumentException<br>
+如果重复TryAdd同一个key，会返回false，添加失败<br>
+如果查询一个不错在的key， dic_name[key_name] 会抛出异常KeyNotFoundException</p>
+<h2 id="dictionary">Dictionary</h2>
+<p>采用哈希实现的字典<br>
+需要重写key的下面两个方法：</p>
+<pre><code class="language-C#">public override int GetHashCode();
+public override bool Equals(object obj);
+</code></pre>
+<p>例如：</p>
+<pre><code class="language-C#">public class TestDic {
+  class Test {
+    public int id;
+    public Test(int c) { id = c;}
+    public override string ToString() =&gt; id.ToString();
+    public override int GetHashCode() =&gt; id;
+    public override bool Equals(object obj) =&gt; id == ((Test)obj).id;
+  }
+
+  public static void main() {
+    Dictionary&lt;Test, string&gt; dic = new Dictionary&lt;Test, string&gt;();
+    dic.Add(new Test(1), &quot;Tom&quot;);
+    foreach(var item in dic) Console.WriteLine(item.Key + &quot; #1 &quot; + item.Value);
+
+    dic[new Test(1)] = &quot;Jeri&quot;;
+    foreach (var item in dic) Console.WriteLine(item.Key + &quot; #2 &quot; + item.Value);
+
+    dic.TryAdd(new Test(1), &quot;LI&quot;);
+    foreach (var item in dic) Console.WriteLine(item.Key + &quot; #3 &quot; + item.Value);
+  }
+}
+</code></pre>
+<h2 id="sorteddictionary">SortedDictionary</h2>
+<p>采用红黑树实现的字典<br>
+需要实现key的IComparable<T>接口<br>
+例如：</p>
+<pre><code class="language-C#">public class TestDic {
+  class Test : IComparable&lt;Test&gt; {
+    public int id;
+    public Test(int c) { id = c;}
+    public override string ToString() =&gt; id.ToString();
+    public int CompareTo([AllowNull] Test other) =&gt; id.CompareTo(other.id);
+  }
+
+  public static void main() {
+    SortedDictionary&lt;Test, string&gt; dic = new SortedDictionary&lt;Test, string&gt;();
+    dic.Add(new Test(1), &quot;Tom&quot;);
+    foreach(var item in dic) Console.WriteLine(item.Key + &quot; #1 &quot; + item.Value);
+
+    dic[new Test(1)] = &quot;Jeri&quot;;
+    foreach (var item in dic) Console.WriteLine(item.Key + &quot; #2 &quot; + item.Value);
+
+    dic.TryAdd(new Test(1), &quot;LI&quot;);
+    foreach (var item in dic) Console.WriteLine(item.Key + &quot; #3 &quot; + item.Value);
+  }
+}
+</code></pre>
+<p>##标记Linq</p>
+<p>Aggregate<br>
+All<br>
+Any<br>
+Append 返回一个新的对象<br>
+AsEnumerable 一个弱智接口<br>
+Average<br>
+Cast 强制转换异常会报异常<br>
+Concat 拼接两个集合，返回新的集合<br>
+Contains 可以通过值比较</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#c%E7%AC%94%E8%AE%B0">C#笔记</a>
+<ul>
+<li><a href="#c%E9%83%A8%E5%88%86%E7%B1%BB">C#部分类</a></li>
+<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9F%A5%E6%89%BE">字符串查找</a></li>
+<li><a href="#dictionary%E5%92%8C-sorteddictionary">Dictionary和 SortedDictionary</a></li>
+<li><a href="#linq%E5%BA%93">Linq库</a></li>
+<li><a href="#%E5%85%83%E7%BB%84">元组</a>
+<ul>
+<li><a href="#%E5%BC%95%E7%94%A8%E5%85%83%E7%BB%84-tuple">引用元组 Tuple</a></li>
+<li><a href="#%E5%80%BC%E5%85%83%E7%BB%84-valuetuple">值元组 ValueTuple</a></li>
+</ul>
+</li>
+<li><a href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B">多线程</a></li>
+<li><a href="#%E5%8A%A8%E6%80%81%E7%BC%96%E8%AF%91">动态编译</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%B8%A4%E7%A7%8D%E5%AD%97%E5%85%B8%E6%96%B9%E5%BC%8F">两种字典方式</a>
+<ul>
+<li><a href="#dictionary">Dictionary</a></li>
+<li><a href="#sorteddictionary">SortedDictionary</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://jerilee.github.io/post/ji-chu-suan-fa-kmp/">
+              <h3 class="post-title">
+                基础算法（KMP）
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: '',
+    owner: '',
+    admin: [''],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://jerilee.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

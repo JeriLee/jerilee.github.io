@@ -2,24 +2,20 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>C++ 笔记（二） | Rong Sir的博客</title>
+<title>C++ Prime Plus简述 | Rong Sir的博客</title>
 <link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1600700307070">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="C++ 笔记（二） | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="C++ Prime Plus简述 | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="以下内容没有阅读过C++文档确认，可能存在错误。
-plament new
-plament new 在指定内存地址上调用构造函数
-class T{ 
-};
-
-int main(){
-  //申请一块堆内存
-  void* ptr = mall..." />
+    <meta name="description" content="第三章处理数据
+整形
+int x;
+cout &lt;&lt; hex &lt;&lt; x &lt;&lt;endl;  // 16进制
+cout &lt;&lt; oct &lt;&lt; x &lt;&lt;endl;  // 8进制..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -83,126 +79,68 @@ Mail: Rongerace@163.com
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              C++ 笔记（二）
+              C++ Prime Plus简述
             </h2>
             <div class="post-info">
               <span>
-                2020-08-24
+                2020-08-29
               </span>
               <span>
-                3 min read
+                1 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>以下内容没有阅读过C++文档确认，可能存在错误。</p>
-<h2 id="plament-new">plament new</h2>
-<p>plament new 在指定内存地址上调用构造函数</p>
-<pre><code class="language-C++">class T{ 
-};
-
-int main(){
-  //申请一块堆内存
-  void* ptr = malloc(sizeof(T));
-  调用构造函数
-  T* ptr2 = new(ptr) T(1,2,3,4);
-  //申请一块栈内存
-  T a[1000];
-  调用构造函数
-  ptr2 = new(a) T(1,2,3,4);
-}
+                <h2 id="第三章处理数据">第三章处理数据</h2>
+<h3 id="整形">整形</h3>
+<pre><code class="language-C++">int x;
+cout &lt;&lt; hex &lt;&lt; x &lt;&lt;endl;  // 16进制
+cout &lt;&lt; oct &lt;&lt; x &lt;&lt;endl;  // 8进制
 </code></pre>
-<h2 id="未完成的部分">未完成的部分</h2>
-<p>关于重载operate new，还有些没搞明白</p>
-<pre><code class="language-C++">#include &lt;string&gt;
-#include &lt;iostream&gt;
-
-using namespace std;
-
-void* operator new (size_t t) {
-  printf(&quot;Global operator new called\n&quot;);
-  return malloc(t);
-}
-
-class T {
-public:
-  int a;
-  int b;
-  int c;
-  long d;
-  void Init(int a_, int b_, int c_, long d_) {
-    a = a_, b = b_, c = c_, d = d_;
-  }
-
-  static void* operator new(size_t t, void*) {
-    printf(&quot;operator new called 1\n&quot;);
-    //return ::operator new(t);
-    return malloc(t);
-  }
-  void* operator new(size_t t) {
-    printf(&quot;operator new called 2\n&quot;);
-    //return ::operator new(t);
-    return malloc(t);
-  }
-
-  T(int a_, int b_, int c_, long d_) {
-    a = a_, b = b_, c = c_, d = d_;
-  }
-  T() {}
-
-  ~T() {}
-};
-
-int main() {
-  //T* a = new T();
-  void* raw = operator new(sizeof(T));
-  cout &lt;&lt; &quot;oper&quot; &lt;&lt; endl;
-  T* raw_t = static_cast&lt;T*&gt;(raw);
-  raw_t -&gt; T::T(1,2,3,4);
-  T* ptr = new(raw) T();
-  raw_t-&gt;~T();
-  raw_t-&gt;Init(1,2,3,4);
-
-  return 0;
-}
-
-
+<p>CHAR_BIT<br>
+CHAR_MAX<br>
+CHAR_MIN</p>
+<p>SCHAR_MAX<br>
+SCHAR_MIN<br>
+UCHAR_MAX</p>
+<p>SHRT_MAX<br>
+SHRT_MIN<br>
+USHRT_NAX</p>
+<p>INT_MAX<br>
+INT_MIN<br>
+UNIT_MAX</p>
+<p>LONG_MAX<br>
+LONG_MIN<br>
+ULONG_MAX</p>
+<p>LLONG_MAX<br>
+LLONG_MIN<br>
+ULLONG_MAX</p>
+<h3 id="cin-cout">cin cout</h3>
+<pre><code>cin.put(int x); //输出一个字符
 </code></pre>
-<h2 id="输入输出">输入输出</h2>
-<pre><code>char s[1024];
+<h3 id="char">char</h3>
+<pre><code>//Ctrl + Z
+//ASCALL 26
+char c = 032 = 0x1a = '\032';
+string s = &quot;65\x41\n&quot;;
 </code></pre>
-<h3 id="scanf_s">scanf_s</h3>
-<pre><code>scanf_s(&quot;%4s&quot;, s, 5);
-printf(&quot;[%s]\n&quot;, s);
+<h3 id="wchar_t">wchar_t</h3>
+<h3 id="char32_t-char16_t">char32_t char16_t</h3>
+<p>C++11新增，内置整形，随系统而改变</p>
+<pre><code>char16_t ch1 = u'q';
+char32_t ch2 = U'\U0000222B';
+const char16_t s[4] = u&quot;ABC&quot;;
+const char32_t s2[4] = U&quot;ABC&quot;;
 </code></pre>
-<p>读取4个字符（可以不写）<br>
-缓冲区大小为5（必须要写）</p>
-<h3 id="cinget">cin.get()</h3>
-<pre><code>cin.get(s, 5);
-</code></pre>
-<p>读取该行字符串，缓冲区大小为5，最多读取缓冲区大小减1个字符<br>
-注意:该接口不能读取下一行，行尾返回空串</p>
-<pre><code>char c;
-c = cin.get();
-</code></pre>
-<p>读取一个字符，也会读取空白符类似于getchar()</p>
-<h3 id="cins">cin&gt;&gt;s</h3>
-<pre><code>cin&gt;&gt;s;
-</code></pre>
-<p>读取一个字符串，遇到空白符结束 类似于scanf(%s)</p>
-<h3 id="cingetline">cin.getline()</h3>
-<pre><code>cin.getline(s, maxn);
-printf(&quot;[%s] %d\n&quot;, s, strlen(s));
-</code></pre>
-<p>读取一行，包括空白符，回车不会包含在内类似于 gets_s()</p>
-<pre><code>cin.getline(s, maxn, 10);
-</code></pre>
-<p>cin.getline()有第三个参数，默认是Ascii[10]，可自定义</p>
-<h3 id="getline">getline()</h3>
-<pre><code>string str;
-getline(cin, str);
+<h3 id="const-常量">const 常量</h3>
+<p>const常量 在C++ 和C中作用域不同（详见第九章）<br>
+const常量在C++中可以用来声明数组长度</p>
+<h3 id="浮点数">浮点数</h3>
+<pre><code>//打印6位小数 更多详情第17章
+cout.setf(ios_base::fixed, ios_base::floatfield);
+cout &lt;&lt; 3.5 &lt;&lt; endl;
 </code></pre>
 
               </div>
@@ -210,15 +148,15 @@ getline(cin, str);
                 <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#plament-new">plament new</a></li>
-<li><a href="#%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9A%84%E9%83%A8%E5%88%86">未完成的部分</a></li>
-<li><a href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA">输入输出</a>
+<li><a href="#%E7%AC%AC%E4%B8%89%E7%AB%A0%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE">第三章处理数据</a>
 <ul>
-<li><a href="#scanf_s">scanf_s</a></li>
-<li><a href="#cinget">cin.get()</a></li>
-<li><a href="#cins">cin&gt;&gt;s</a></li>
-<li><a href="#cingetline">cin.getline()</a></li>
-<li><a href="#getline">getline()</a></li>
+<li><a href="#%E6%95%B4%E5%BD%A2">整形</a></li>
+<li><a href="#cin-cout">cin cout</a></li>
+<li><a href="#char">char</a></li>
+<li><a href="#wchar_t">wchar_t</a></li>
+<li><a href="#char32_t-char16_t">char32_t char16_t</a></li>
+<li><a href="#const-%E5%B8%B8%E9%87%8F">const 常量</a></li>
+<li><a href="#%E6%B5%AE%E7%82%B9%E6%95%B0">浮点数</a></li>
 </ul>
 </li>
 </ul>
@@ -233,9 +171,9 @@ getline(cin, str);
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://jerilee.github.io/post/pai-xing-bang-dai-ma-mo-ban/">
+            <a href="https://jerilee.github.io/post/c-bi-ji-er/">
               <h3 class="post-title">
-                排行榜代码模板(平衡树&amp;线段树)
+                C++ 笔记（二）
               </h3>
             </a>
           </div>
