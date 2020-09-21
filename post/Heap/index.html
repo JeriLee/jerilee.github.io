@@ -2,26 +2,26 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>语言特性总结 | Rong Sir的博客</title>
+<title>基础数据结构（堆Heap） | Rong Sir的博客</title>
 <link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1600700541962">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="语言特性总结 | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="基础数据结构（堆Heap） | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="C++语言总结
-C++11 language feature
-C++11右值引用
-《C++Prime Plus 笔记》
-C#语言总结
-C#9.0新语法
-我的C++代码库
-我的C#代码库
-no name
-敏感词匹配
--------------..." />
+    <meta name="description" content="基础数据结构
+@(数据结构)[堆|Heap|数据结构]
+
+[TOC]
+堆
+原理
+堆属于二叉树，属于完全二叉树。
+堆特性 ： 以大顶堆为例，父节点比两个子节点的值都要大。如图，5号节点，它的v值比10号节点和11号节点都要大。
+
+实现方法
+堆..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -85,65 +85,135 @@ Mail: Rongerace@163.com
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              语言特性总结
+              基础数据结构（堆Heap）
             </h2>
             <div class="post-info">
               <span>
-                2020-09-21
+                2020-07-12
               </span>
               <span>
-                1 min read
+                3 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h2 id="c语言总结"><strong>C++语言总结</strong></h2>
-<h3 id="c11-language-feature"><a href="https://jerilee.github.io/post/c11-language-feature/">C++11 language feature</a></h3>
-<h3 id="c11右值引用"><a href="https://jerilee.github.io/post/cpp_rvalue/">C++11右值引用</a></h3>
-<h3 id="cprime-plus-笔记"><a href="https://jerilee.github.io/post/c-prime-plus-simple/">《C++Prime Plus 笔记》</a></h3>
-<h2 id="c语言总结-2"><strong>C#语言总结</strong></h2>
-<h3 id="c90新语法"><a href="https://jerilee.github.io/post/c_sharp9/">C#9.0新语法</a></h3>
-<h2 id="我的c代码库">我的C++代码库</h2>
-<h2 id="我的c代码库-2">我的C#代码库</h2>
-<h3 id="no-name"><a href="https://jerilee.github.io/post/my_cs_library/">no name</a></h3>
-<h3 id="敏感词匹配"><a href="https://jerilee.github.io/post/cs_sensitive_words/">敏感词匹配</a></h3>
-<p><strong>---------------------------------------------------------</strong></p>
-<h2 id="未整理的部分">未整理的部分</h2>
-<h3 id="未整理的c笔记2"><a href="https://jerilee.github.io/post/c-bi-ji-er/">未整理的C++笔记2</a></h3>
-<h3 id="c笔记1"><a href="https://jerilee.github.io/post/wo-de-cbi-ji/">C++笔记1</a></h3>
-<h3 id="csharp笔记9">[CSharp笔记]【9】</h3>
+                <h1 id="基础数据结构">基础数据结构</h1>
+<p>@(数据结构)[堆|Heap|数据结构]</p>
+<hr>
+<p>[TOC]</p>
+<h2 id="堆">堆</h2>
+<h3 id="原理">原理</h3>
+<p>堆属于二叉树，属于完全二叉树。<br>
+堆特性 ： 以大顶堆为例，父节点比两个子节点的值都要大。如图，5号节点，它的v值比10号节点和11号节点都要大。<br>
+<img src="https://jerilee.github.io/post-images/1594513997324.png" alt="" loading="lazy"></p>
+<h3 id="实现方法">实现方法</h3>
+<p>堆通常使用数组实现。<br>
+每个堆节点（index）的左子节点为（index*2 + 1），右子节点为（index*2 + 2）</p>
+<h4 id="插入元素">插入元素</h4>
+<p>1.因为堆属于完全二叉树，所以新元素放在数组的最末尾。<br>
+2.如果<strong>当前节点</strong>比<strong>父节点</strong>更优先，则和父节点交换，递归向上比较。</p>
+<h4 id="删除最优先元素">删除最优先元素</h4>
+<p>因为堆属于完全二叉树，删除最优先元素时：<br>
+1.先将0号元素与末尾元素交换，再删除最末尾元素。<br>
+2.该节点是否比子节点要小，如果确实是这样，则从两个子节点中找一个更大的和自己交换，再递归向下比较。</p>
+<h4 id="查找最优先元素">查找最优先元素</h4>
+<p>如果堆不为空，则最优先元素一定是根节点。</p>
+<h3 id="code">Code</h3>
+<h4 id="c代码">C#代码</h4>
+<pre><code class="language-C#">
+  public class Heap&lt;T&gt; where T: IComparable&lt;T&gt; {
+    private List&lt;T&gt; list = new List&lt;T&gt;();
+    private int count = 0;
+
+    public Heap() {
+    }
+
+    public void Add(T value) {
+      if(list.Count &gt; count) {
+        list[count] = value;
+      } else {
+        list.Add(value);
+      }
+
+      CheckAdd(count);
+      ++count;
+    }
+
+    private void CheckAdd(int index) {
+      if(index &gt; 0) {
+        int father = (index - 1 ) &gt;&gt; 1;
+        if (list[index].CompareTo(list[father]) &lt; 0) {
+          T temp = list[index];
+          list[index] = list[father];
+          list[father] = temp;
+          CheckAdd(father);
+        }
+      }
+    }
+
+    public T Top() {
+      if(count &gt; 0) {
+        return list[0];
+      }
+      return default;
+    }
+
+    public int Count =&gt; count;
+    public bool IsEmpty =&gt; count == 0;
+
+    public bool Pop() {
+      if(count &gt; 0) {
+        --count;
+        if (count &gt; 0) {
+          T temp = list[0];
+          list[0] = list[count];
+          list[count] = temp;
+          CheckPop(0);
+        }
+        return true;
+      }
+      return false;
+    }
+
+    private void CheckPop(int index) {
+      int leftSon = index &lt;&lt; 1 | 1;
+      int rightSon = leftSon + 1;
+      if (leftSon &lt; Count) {
+        int upSon = rightSon &lt; Count &amp;&amp; list[rightSon].CompareTo(list[leftSon]) &lt; 0 ? rightSon : leftSon;
+        if (list[upSon].CompareTo(list[index]) &lt; 0) {
+          T temp = list[index];
+          list[index] = list[upSon];
+          list[upSon] = temp;
+          CheckPop(upSon);
+        }
+      }
+    }
+  }
+
+</code></pre>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li>
+<li><a href="#%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">基础数据结构</a>
 <ul>
-<li><a href="#c%E8%AF%AD%E8%A8%80%E6%80%BB%E7%BB%93"><strong>C++语言总结</strong></a>
+<li><a href="#%E5%A0%86">堆</a>
 <ul>
-<li><a href="#c11-language-feature">C++11 language feature</a></li>
-<li><a href="#c11%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8">C++11右值引用</a></li>
-<li><a href="#cprime-plus-%E7%AC%94%E8%AE%B0">《C++Prime Plus 笔记》</a></li>
+<li><a href="#%E5%8E%9F%E7%90%86">原理</a></li>
+<li><a href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95">实现方法</a>
+<ul>
+<li><a href="#%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0">插入元素</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E6%9C%80%E4%BC%98%E5%85%88%E5%85%83%E7%B4%A0">删除最优先元素</a></li>
+<li><a href="#%E6%9F%A5%E6%89%BE%E6%9C%80%E4%BC%98%E5%85%88%E5%85%83%E7%B4%A0">查找最优先元素</a></li>
 </ul>
 </li>
-<li><a href="#c%E8%AF%AD%E8%A8%80%E6%80%BB%E7%BB%93-2"><strong>C#语言总结</strong></a>
+<li><a href="#code">Code</a>
 <ul>
-<li><a href="#c90%E6%96%B0%E8%AF%AD%E6%B3%95">C#9.0新语法</a></li>
+<li><a href="#c%E4%BB%A3%E7%A0%81">C#代码</a></li>
 </ul>
 </li>
-<li><a href="#%E6%88%91%E7%9A%84c%E4%BB%A3%E7%A0%81%E5%BA%93">我的C++代码库</a></li>
-<li><a href="#%E6%88%91%E7%9A%84c%E4%BB%A3%E7%A0%81%E5%BA%93-2">我的C#代码库</a>
-<ul>
-<li><a href="#no-name">no name</a></li>
-<li><a href="#%E6%95%8F%E6%84%9F%E8%AF%8D%E5%8C%B9%E9%85%8D">敏感词匹配</a></li>
-</ul>
-</li>
-<li><a href="#%E6%9C%AA%E6%95%B4%E7%90%86%E7%9A%84%E9%83%A8%E5%88%86">未整理的部分</a>
-<ul>
-<li><a href="#%E6%9C%AA%E6%95%B4%E7%90%86%E7%9A%84c%E7%AC%94%E8%AE%B02">未整理的C++笔记2</a></li>
-<li><a href="#c%E7%AC%94%E8%AE%B01">C++笔记1</a></li>
-<li><a href="#csharp%E7%AC%94%E8%AE%B09">[CSharp笔记]【9】</a></li>
 </ul>
 </li>
 </ul>
@@ -158,9 +228,9 @@ Mail: Rongerace@163.com
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://jerilee.github.io/post/cpp_rvalue/">
+            <a href="https://jerilee.github.io/post/segment_tree/">
               <h3 class="post-title">
-                C++11的右值引用和左值引用
+                基础数据结构（线段树Segment Tree）
               </h3>
             </a>
           </div>
