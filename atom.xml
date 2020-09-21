@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Rong Sir的博客</title>
-    <updated>2020-09-21T14:31:06.054Z</updated>
+    <updated>2020-09-21T14:33:58.766Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -135,7 +135,7 @@ auto f2(T t, U u) -&gt; decltype(T*U){</p>
 <p>这里解决的问题是，在编译器遇到eff的参数列表前，T和U还不在作用域内，因此必须在参数列表后使用decltype</p>
 <h3 id="18134-模板别名">18.1.3.4 模板别名</h3>
 <p>using=<br>
-和typename的区别在于，可以时的模板初始化</p>
+和typename的区别在于，可以在编译时的模板初始化</p>
 <pre><code>template&lt;typename T&gt;
 using arr12 = std::array&lt;T, 12&gt;;
 </code></pre>
