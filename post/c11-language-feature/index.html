@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>C++11 language feature | Rong Sir的博客</title>
-<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1600698833931">
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1600698921171">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="C++11 language feature | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
@@ -28,7 +28,7 @@ au..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://jerilee.github.io">
-  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1600698833931" alt="">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1600698921171" alt="">
   </a>
   <h1 class="site-title">
     Rong Sir的博客
@@ -151,7 +151,7 @@ array</p>
 移动构造<br>
 移动赋值</p>
 <h3 id="1831">18.3.1</h3>
-<p>** 备注：可是我不明白，移动构造也是会构造的啊，除了托管堆内存，对于栈内存有什么意义呢。我需要一个办法托管栈内存，可能对于C++的退栈机制，这个想法不可行。</p>
+<p><strong>备注：可是我不明白，移动构造也是会构造的啊，除了托管堆内存，对于栈内存有什么意义呢。我需要一个办法托管栈内存，可能对于C++的退栈机制，这个想法不可行。</strong></p>
 <pre><code>Person p1;
 Person p11;
 Person p2 = (p1 + p1); // VC++/Debug中，默认构造，移动构造。           VC++/Release中，默认构造
@@ -165,7 +165,7 @@ p11 = (p1 + p1);       // VC++/Debug中，默认构造，移动构造，移动�
 <h3 id="1834-委托构造函数">18.3.4 委托构造函数</h3>
 <p>using Studeng::Person;<br>
 继承构造函数<br>
-** 备注：这tm会造成很多BUG，还不知道有什么用</p>
+<strong>备注：这tm会造成很多BUG，还不知道有什么用</strong></p>
 <h3 id="1835-管理虚方法">18.3.5 管理虚方法</h3>
 <pre><code>virtual void f(char* ch) const override {}
 virtual void f(char* ch) const final {}
