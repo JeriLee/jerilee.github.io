@@ -1,0 +1,368 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>C++11 language feature | Rong Sir的博客</title>
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1600698663981">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="C++11 language feature | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="本文总结一下C++11语言特性
+备注：关于详细的右值引用and左值引用由下一篇博客详细解释
+C++11 language feature
+18.1.3.2
+decltype(x) y;
+将y定义为x类型
+18.1.3.3 返回类型后置
+au..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://jerilee.github.io">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1600698663981" alt="">
+  </a>
+  <h1 class="site-title">
+    Rong Sir的博客
+  </h1>
+  <p class="site-description">
+    Phone: 17621996523
+Mail: Rongerace@163.com
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              C++11 language feature
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-09-21
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p><strong>本文总结一下C++11语言特性</strong><br>
+<strong>备注：关于详细的右值引用and左值引用由下一篇博客详细解释</strong></p>
+<h2 id="c11-language-feature">C++11 language feature</h2>
+<h3 id="18132">18.1.3.2</h3>
+<p>decltype(x) y;<br>
+将y定义为x类型</p>
+<h3 id="18133-返回类型后置">18.1.3.3 返回类型后置</h3>
+<p>auto f2(double, int) -&gt; double;<br>
+auto f2(T t, U u) -&gt; decltype(T*U){</p>
+<p>}</p>
+<p>这里解决的问题是，在编译器遇到eff的参数列表前，T和U还不在作用域内，因此必须在参数列表后使用decltype</p>
+<h3 id="18134-模板别名">18.1.3.4 模板别名</h3>
+<p>using=<br>
+和typename的区别在于，可以时的模板初始化</p>
+<pre><code>template&lt;typename T&gt;
+using arr12 = std::array&lt;T, 12&gt;;
+</code></pre>
+<h3 id="1814-智能指针">18.1.4 智能指针</h3>
+<p>新增unique_ptr, shared_ptr, weak_ptr<br>
+详情，参考第16章</p>
+<h3 id="1815-异常语法">18.1.5 异常语法</h3>
+<p>old:</p>
+<pre><code>void f501(int) throw(bad_dog);
+void f733(long long) throw();
+</code></pre>
+<p>new</p>
+<pre><code>void f875(short, short) noexcept;
+</code></pre>
+<h3 id="18171-显示转换">18.1.7.1 显示转换</h3>
+<p>禁止单参数构造函数导致的隐式转换</p>
+<pre><code>class A{
+  explicit A(double);
+  explicit operator double() const;
+  operator int() const;
+}
+
+A b;
+int n = b;    //allowed
+double x = b; // not allowed
+x = double(b);// allowed
+</code></pre>
+<h3 id="18182-新增容器">18.1.8.2 新增容器</h3>
+<p>forward_list<br>
+unordered_map<br>
+unordered_multimap<br>
+unordered_set<br>
+unordered_multiset<br>
+array</p>
+<h3 id="1819-右值引用">18.1.9 右值引用</h3>
+<p>...</p>
+<h3 id="182-移动语义">18.2 移动语义</h3>
+<p>...<br>
+移动构造<br>
+移动赋值</p>
+<h3 id="1831">18.3.1</h3>
+<p>** 备注：可是我不明白，移动构造也是会构造的啊，除了托管堆内存，对于栈内存有什么意义呢。我需要一个办法托管栈内存，可能对于C++的退栈机制，这个想法不可行。</p>
+<pre><code>Person p1;
+Person p11;
+Person p2 = (p1 + p1); // VC++/Debug中，默认构造，移动构造。           VC++/Release中，默认构造
+p11 = (p1 + p1);       // VC++/Debug中，默认构造，移动构造，移动赋值。 VC++/Release中，默认构造，移动赋值
+</code></pre>
+<h3 id="1832-默认方法和禁用方法">18.3.2 默认方法和禁用方法</h3>
+<p>...</p>
+<pre><code>= delete;   //禁用函数
+= default;  //默认
+</code></pre>
+<h3 id="1834-委托构造函数">18.3.4 委托构造函数</h3>
+<p>using Studeng::Person;<br>
+继承构造函数<br>
+** 备注：这tm会造成很多BUG，还不知道有什么用</p>
+<h3 id="1835-管理虚方法">18.3.5 管理虚方法</h3>
+<pre><code>virtual void f(char* ch) const override {}
+virtual void f(char* ch) const final {}
+</code></pre>
+<h3 id="184-lamda表达式">18.4 lamda表达式</h3>
+<p>基础问题，略过</p>
+<h3 id="185-包装器">18.5 包装器</h3>
+<p>std::function<br>
+便于泛型实例化，避免实例化很多次</p>
+<p>例如：<br>
+对于泛型函数</p>
+<pre><code>template&lt;typename F&gt;
+void use_f(F func) {
+  static int count = 0;
+  cout &lt;&lt; (&amp;count) &lt;&lt; endl;
+}
+</code></pre>
+<p>调用函数</p>
+<pre><code>use_f(my_add);                //1泛型实例
+use_f(my_mul);                //1泛型实例
+use_f(Fake1(2));              //2泛型实例
+use_f(Fake1(4));              //2泛型实例
+use_f(Fake2(8));              //3泛型实例
+use_f(Fake2(16));             //3泛型实例
+use_f([](double x) -&gt;double {return x + 2;}); //4泛型实例
+use_f([](double x) -&gt;double {return x + 2;}); //5泛型实例
+</code></pre>
+<p>实例化函数和仿函数</p>
+<pre><code>double my_add(double x) {
+  return x + x;
+}
+
+double my_mul(double x) {
+  return x * 2;
+}
+struct Fake1 {
+  int n_;
+  Fake1(int n) :n_(n) {}
+  bool operator()(int x) {
+    return x + n_;
+  }
+};
+struct Fake2 {
+  int n_;
+  Fake2(int n) :n_(n) {}
+  bool operator()(int x) {
+    return x + n_;
+  }
+};
+</code></pre>
+<p>** 解决办法：把所有函数包装成std::function&lt;double(double)&gt; 实例化即可改为一次<br>
+** 解决办法2：void use_f(T t, std::function&lt;T(T)&gt; func);</p>
+<h3 id="186-可变参数模板">18.6 可变参数模板</h3>
+<pre><code>template&lt;typename T&gt;
+void show_list(T&amp;&amp; value) {
+  //static int count = 0;
+  //cout &lt;&lt; &quot;show one count &quot; &lt;&lt; &amp;count &lt;&lt; endl;
+  cout &lt;&lt; value &lt;&lt; endl;
+}
+
+template&lt;typename T, typename... Args&gt;
+void show_list(T&amp;&amp; value, Args&amp;&amp;... args) {
+  //static int count = 0;
+  //cout &lt;&lt; &quot;show list count &quot; &lt;&lt; &amp;count &lt;&lt; endl;
+  cout &lt;&lt; value&lt;&lt; &quot; &quot;;
+  show_list(args...);
+}
+</code></pre>
+<h3 id="1871-并行编程">18.7.1 并行编程</h3>
+<p>???</p>
+<h3 id="1873">18.7.3</h3>
+<p>alignof(Person) 查看字节对齐</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#c11-language-feature">C++11 language feature</a>
+<ul>
+<li><a href="#18132">18.1.3.2</a></li>
+<li><a href="#18133-%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B%E5%90%8E%E7%BD%AE">18.1.3.3 返回类型后置</a></li>
+<li><a href="#18134-%E6%A8%A1%E6%9D%BF%E5%88%AB%E5%90%8D">18.1.3.4 模板别名</a></li>
+<li><a href="#1814-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88">18.1.4 智能指针</a></li>
+<li><a href="#1815-%E5%BC%82%E5%B8%B8%E8%AF%AD%E6%B3%95">18.1.5 异常语法</a></li>
+<li><a href="#18171-%E6%98%BE%E7%A4%BA%E8%BD%AC%E6%8D%A2">18.1.7.1 显示转换</a></li>
+<li><a href="#18182-%E6%96%B0%E5%A2%9E%E5%AE%B9%E5%99%A8">18.1.8.2 新增容器</a></li>
+<li><a href="#1819-%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8">18.1.9 右值引用</a></li>
+<li><a href="#182-%E7%A7%BB%E5%8A%A8%E8%AF%AD%E4%B9%89">18.2 移动语义</a></li>
+<li><a href="#1831">18.3.1</a></li>
+<li><a href="#1832-%E9%BB%98%E8%AE%A4%E6%96%B9%E6%B3%95%E5%92%8C%E7%A6%81%E7%94%A8%E6%96%B9%E6%B3%95">18.3.2 默认方法和禁用方法</a></li>
+<li><a href="#1834-%E5%A7%94%E6%89%98%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0">18.3.4 委托构造函数</a></li>
+<li><a href="#1835-%E7%AE%A1%E7%90%86%E8%99%9A%E6%96%B9%E6%B3%95">18.3.5 管理虚方法</a></li>
+<li><a href="#184-lamda%E8%A1%A8%E8%BE%BE%E5%BC%8F">18.4 lamda表达式</a></li>
+<li><a href="#185-%E5%8C%85%E8%A3%85%E5%99%A8">18.5 包装器</a></li>
+<li><a href="#186-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF">18.6 可变参数模板</a></li>
+<li><a href="#1871-%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B">18.7.1 并行编程</a></li>
+<li><a href="#1873">18.7.3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://jerilee.github.io/post/c90-xin-nei-rong/">
+              <h3 class="post-title">
+                C#9.0 新内容
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: '',
+    owner: '',
+    admin: [''],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://jerilee.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

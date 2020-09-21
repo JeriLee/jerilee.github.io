@@ -1,0 +1,305 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>C++11的右值引用和左值引用 | Rong Sir的博客</title>
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1600698663981">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="C++11的右值引用和左值引用 | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="关于右值引用 和左值引用的详解
+引用规则
+1.对于class Person模板匹配的时候，下列三种是左值引用
+Person&amp;&amp; &amp; 则转换为Person&amp;
+Person&amp; &amp;&amp; 则转换..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://jerilee.github.io">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1600698663981" alt="">
+  </a>
+  <h1 class="site-title">
+    Rong Sir的博客
+  </h1>
+  <p class="site-description">
+    Phone: 17621996523
+Mail: Rongerace@163.com
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              C++11的右值引用和左值引用
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-09-21
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p><strong>关于右值引用 和左值引用的详解</strong></p>
+<h3 id="引用规则">引用规则</h3>
+<p>1.对于class Person模板匹配的时候，下列三种是左值引用<br>
+Person&amp;&amp; &amp; 则转换为Person&amp;<br>
+Person&amp; &amp;&amp; 则转换为Person&amp;<br>
+Person&amp; &amp;  则转换为Person&amp;<br>
+只有以下情况，才会是右值引用<br>
+Person&amp;&amp; &amp;&amp; 则转换为Person&amp;&amp;</p>
+<p>例如对于以下代码</p>
+<pre><code>template&lt;typename T&gt; 
+void func(T&amp;&amp;);
+
+int i = 3;
+func(i)  //T为int&amp;  所以模板实例化为int&amp;
+func(2)  //T为int&amp;&amp; 所以模板实例化为int&amp;&amp;
+</code></pre>
+<p>很显然，这种情况下，模板会实例化两份</p>
+<p>2.static_cast可以将一个左值转换为右值，该代码只会在编译器检查，实际上生成的二进制没有多1byte</p>
+<h3 id="关于stdmove">关于std::move</h3>
+<pre><code>// FUNCTION TEMPLATE move
+template &lt;class _Ty&gt;
+_NODISCARD constexpr remove_reference_t&lt;_Ty&gt;&amp;&amp; move(_Ty&amp;&amp; _Arg) noexcept { // forward _Arg as movable
+    return static_cast&lt;remove_reference_t&lt;_Ty&gt;&amp;&amp;&gt;(_Arg);
+}
+</code></pre>
+<p>很明显，这个代码把任何引用转换为右值引用</p>
+<pre><code>// FUNCTION TEMPLATE forward
+template &lt;class _Ty&gt;
+_NODISCARD constexpr _Ty&amp;&amp; forward(
+    remove_reference_t&lt;_Ty&gt;&amp; _Arg) noexcept { // forward an lvalue as either an lvalue or an rvalue
+    return static_cast&lt;_Ty&amp;&amp;&gt;(_Arg);
+}
+
+template &lt;class _Ty&gt;
+_NODISCARD constexpr _Ty&amp;&amp; forward(remove_reference_t&lt;_Ty&gt;&amp;&amp; _Arg) noexcept { // forward an rvalue as an rvalue
+    static_assert(!is_lvalue_reference_v&lt;_Ty&gt;, &quot;bad forward call&quot;);
+    return static_cast&lt;_Ty&amp;&amp;&gt;(_Arg);
+}
+</code></pre>
+<p>而std::forward 可以把左值转右值/左值， 或者把右值转右值</p>
+<h3 id="举个例子">举个例子</h3>
+<pre><code>
+struct Person {
+  int n = 0;
+  Person() {
+    cout &lt;&lt; &quot;默认构造 &quot; &lt;&lt; (void*)(&amp;n) &lt;&lt; endl;
+  }
+  Person(const Person&amp; a) {
+    cout &lt;&lt; &quot;拷贝构造 &quot; &lt;&lt; (void*)(&amp;n) &lt;&lt; endl;
+    cout &lt;&lt; &quot;from &quot; &lt;&lt; (void*)(&amp;a.n) &lt;&lt; endl;
+  }
+  Person(Person&amp;&amp; a) noexcept {
+    cout &lt;&lt; &quot;移动构造 &quot; &lt;&lt; (void*)(&amp;n) &lt;&lt; endl;
+    cout &lt;&lt; &quot;from &quot; &lt;&lt; (void*)(&amp;a.n) &lt;&lt; endl;
+  }
+  Person operator + (const Person&amp; b)const {
+    cout &lt;&lt; &quot;操作 +&quot; &lt;&lt; endl;
+    Person res;
+    res.n = b.n + n;
+    return res;
+  }
+  Person&amp; operator = (Person&amp;&amp; b) noexcept {
+    cout &lt;&lt; &quot;移动赋值 &quot; &lt;&lt; (void*)(&amp;n) &lt;&lt; endl;
+    cout &lt;&lt; &quot;from &quot; &lt;&lt; (void*)(&amp;b.n) &lt;&lt; endl;
+    n = b.n;
+    return *this;
+  }
+
+  Person&amp; operator = (const Person&amp; b) noexcept {
+    cout &lt;&lt; &quot;拷贝赋值 &quot; &lt;&lt; (void*)(&amp;n) &lt;&lt; endl;
+    cout &lt;&lt; &quot;from &quot; &lt;&lt; (void*)(&amp;b.n) &lt;&lt; endl;
+    n = b.n;
+    return *this;
+  }
+
+  ~Person() {
+    cout &lt;&lt; &quot;析构 &quot; &lt;&lt; (void*)(&amp;n) &lt;&lt; endl;
+  }
+};
+
+
+template&lt;typename T&gt;
+void Dfs(T&amp;&amp; a, int cnt = 1) {
+  a.n = 10086;
+  static int count = 0;
+  cout &lt;&lt; cnt &lt;&lt; &quot; &quot; &lt;&lt; (void*)(&amp;a.n) &lt;&lt; &quot; count &quot; &lt;&lt; &amp;count &lt;&lt; endl;
+  if (cnt == 5) return;
+  Dfs(std::forward&lt;T&amp;&amp;&gt;(a), cnt + 1); //很明显这里的a是左值，所以将他转为被他引用的类型
+  //Dfs(a, cnt + 1);
+}
+
+int main(){
+  Person a;
+  Dfs(std::move(a)); // T = Person&amp;&amp;
+  Dfs(a);            // T = Person&amp;
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E5%BC%95%E7%94%A8%E8%A7%84%E5%88%99">引用规则</a></li>
+<li><a href="#%E5%85%B3%E4%BA%8Estdmove">关于std::move</a></li>
+<li><a href="#%E4%B8%BE%E4%B8%AA%E4%BE%8B%E5%AD%90">举个例子</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://jerilee.github.io/post/c11-language-feature/">
+              <h3 class="post-title">
+                C++11 language feature
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: '',
+    owner: '',
+    admin: [''],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://jerilee.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
