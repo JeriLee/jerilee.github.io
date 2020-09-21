@@ -1,0 +1,327 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>C#9.0 新内容 | Rong Sir的博客</title>
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1600699500927">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="C#9.0 新内容 | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="由于2020年9月还未发布正式版C# 9.0 所以本文内容暂时不全，后续会逐步完善
+关于Try Catch Finally代码时序问题
+try代码块中如果return，会将return的内容拷贝出来，再执行finally语句块。catch同..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://jerilee.github.io">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1600699500927" alt="">
+  </a>
+  <h1 class="site-title">
+    Rong Sir的博客
+  </h1>
+  <p class="site-description">
+    Phone: 17621996523
+Mail: Rongerace@163.com
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              C#9.0 新内容
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-09-21
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p><strong>由于2020年9月还未发布正式版C# 9.0 所以本文内容暂时不全，后续会逐步完善</strong></p>
+<h2 id="关于try-catch-finally代码时序问题">关于Try Catch Finally代码时序问题</h2>
+<p>try代码块中如果return，会将return的内容拷贝出来，再执行finally语句块。catch同理</p>
+<h2 id="c-90-language-feature">C# 9.0 language feature</h2>
+<h3 id="函数重写可以使用派生类返回值">函数重写可以使用派生类返回值</h3>
+<pre><code class="language-C#">public class Food { }
+public class Meat : Food { }
+public class Poke : Meat { }
+public abstract class Animal {
+  public abstract Food GetFood();
+}
+
+public class Tiger : Animal{
+  public override Meat GetFood(){
+    throw new NotImplementedException();
+  }
+}
+
+public class BigTiger : Tiger{
+  public override Poke GetFood(){
+    throw new NotImplementedException();
+  }
+}
+</code></pre>
+<h3 id="操作符-和">操作符 ?? 和 ?:</h3>
+<pre><code>Person person = student ?? customer; // 共享基类，截止16.8.0Preview 3.0版本，还未实现该功能
+int? result = b ? 0 : null; // 可null的值类型
+</code></pre>
+<h3 id="new操作符省略类型">new操作符省略类型</h3>
+<pre><code>Point p = new (3, 5);
+</code></pre>
+<h3 id="switch匹配">Switch匹配</h3>
+<p>传统代码</p>
+<pre><code>public static decimal CalculateToll(object vehicle) =&gt;
+    vehicle switch {
+       ...
+       
+        DeliveryTruck t when t.GrossWeightClass &gt; 5000 =&gt; 10.00m + 5.00m,
+        DeliveryTruck t when t.GrossWeightClass &lt; 3000 =&gt; 10.00m - 2.00m,
+        DeliveryTruck _ =&gt; 10.00m,
+
+        _ =&gt; throw new ArgumentException(&quot;Not a known vehicle type&quot;, nameof(vehicle))
+    };
+</code></pre>
+<p>对于</p>
+<pre><code>DeliveryTruck _ =&gt; 10.00m,
+</code></pre>
+<p>可以省略为</p>
+<pre><code>DeliveryTruck =&gt; 10.00m,
+</code></pre>
+<p>新的书写方式</p>
+<pre><code>DeliveryTruck t when t.GrossWeightClass switch {
+    &gt; 5000 =&gt; 10.00m + 5.00m,
+    &lt; 3000 =&gt; 10.00m - 2.00m,
+    _ =&gt; 10.00m,
+},
+</code></pre>
+<p>加入新的or and not</p>
+<pre><code>&gt;= 3000 and &lt;= 5000 =&gt; 10.00m,
+</code></pre>
+<p>判断是否为空</p>
+<pre><code>not null =&gt; xxx,
+null =&gt; xxx,
+</code></pre>
+<p>另外 对于语句</p>
+<pre><code>if (!(e is Customer)) { ... }
+</code></pre>
+<p>可以用新的方式书写</p>
+<pre><code>if (e is not Customer) { ... }
+</code></pre>
+<h3 id="顶级语法">顶级语法</h3>
+<pre><code>using System;
+
+Console.WriteLine(&quot;Hello World!&quot;);
+</code></pre>
+<h3 id="比较相等">比较相等</h3>
+<p>问题：Equal 处理基类和派生类，会采用不同的重写<br>
+新的函数：EqualityContract</p>
+<h3 id="record标识符-和-with标识符">Record标识符 和 with标识符</h3>
+<pre><code>public record A(int Id,string Name);
+public static void main() {
+  A a = new A(1, &quot;&quot;);
+  A b = a with { Id = 2 };
+  Console.WriteLine(a.Id);
+  Console.WriteLine(b.Id);
+}
+</code></pre>
+<h3 id="属性标记init">属性标记init</h3>
+<p>对于init标记的属性，只能在构造和初始化的时候修改。</p>
+<pre><code>public class Person
+{
+  public int Id { get; init; } = 2;
+  public string Name;
+  public Person(int a, string b)
+  {
+    Id = a;
+    Name = b;
+  }
+}
+</code></pre>
+<h3 id="反构造">反构造</h3>
+<pre><code>A a = new A(1, &quot;&quot;); //构造
+var (id, name) = a; //反向构造
+</code></pre>
+<p>record或class或struct都可以反向构造</p>
+<pre><code class="language-重写反构造">public record A{
+  public int Id;
+  public string Name;
+  public A(int id, string name)
+    =&gt; (Id, Name) = (id, name);
+  public void Deconstruct(out int id, out string name)
+    =&gt; (id, name) = (Id, Name);
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%85%B3%E4%BA%8Etry-catch-finally%E4%BB%A3%E7%A0%81%E6%97%B6%E5%BA%8F%E9%97%AE%E9%A2%98">关于Try Catch Finally代码时序问题</a></li>
+<li><a href="#c-90-language-feature">C# 9.0 language feature</a>
+<ul>
+<li><a href="#%E5%87%BD%E6%95%B0%E9%87%8D%E5%86%99%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E6%B4%BE%E7%94%9F%E7%B1%BB%E8%BF%94%E5%9B%9E%E5%80%BC">函数重写可以使用派生类返回值</a></li>
+<li><a href="#%E6%93%8D%E4%BD%9C%E7%AC%A6-%E5%92%8C">操作符 ?? 和 ?:</a></li>
+<li><a href="#new%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%9C%81%E7%95%A5%E7%B1%BB%E5%9E%8B">new操作符省略类型</a></li>
+<li><a href="#switch%E5%8C%B9%E9%85%8D">Switch匹配</a></li>
+<li><a href="#%E9%A1%B6%E7%BA%A7%E8%AF%AD%E6%B3%95">顶级语法</a></li>
+<li><a href="#%E6%AF%94%E8%BE%83%E7%9B%B8%E7%AD%89">比较相等</a></li>
+<li><a href="#record%E6%A0%87%E8%AF%86%E7%AC%A6-%E5%92%8C-with%E6%A0%87%E8%AF%86%E7%AC%A6">Record标识符 和 with标识符</a></li>
+<li><a href="#%E5%B1%9E%E6%80%A7%E6%A0%87%E8%AE%B0init">属性标记init</a></li>
+<li><a href="#%E5%8F%8D%E6%9E%84%E9%80%A0">反构造</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://jerilee.github.io/post/c-prime-plus-jian-shu/">
+              <h3 class="post-title">
+                C++ Prime Plus简述
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: '',
+    owner: '',
+    admin: [''],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://jerilee.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
