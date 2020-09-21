@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Rong Sir的博客</title>
-    <updated>2020-09-21T15:07:56.958Z</updated>
+    <updated>2020-09-21T15:09:21.648Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -18,17 +18,18 @@ Mail: Rongerace@163.com</subtitle>
         </link>
         <updated>2020-09-21T14:39:35.000Z</updated>
         <content type="html"><![CDATA[<h2 id="c语言总结"><strong>C++语言总结</strong></h2>
-<h3 id="c11-language-feature"><a href="https://jerilee.github.io/post/c11-language-feature/">C++11 language feature</a></h3>
-<h3 id="c11右值引用"><a href="https://jerilee.github.io/post/cpp_rvalue/">C++11右值引用</a></h3>
-<h3 id="cprime-plus-笔记"><a href="https://jerilee.github.io/post/c-prime-plus-simple/">《C++Prime Plus 笔记》</a></h3>
+<h4 id="c11-language-feature"><a href="https://jerilee.github.io/post/c11-language-feature/">C++11 language feature</a></h4>
+<h4 id="c11右值引用"><a href="https://jerilee.github.io/post/cpp_rvalue/">C++11右值引用</a></h4>
+<h4 id="cprime-plus-笔记"><a href="https://jerilee.github.io/post/c-prime-plus-simple/">《C++Prime Plus 笔记》</a></h4>
 <h2 id="c语言总结-2"><strong>C#语言总结</strong></h2>
-<h3 id="c90新语法"><a href="https://jerilee.github.io/post/c_sharp9/">C#9.0新语法</a></h3>
-<h2 id="我的c代码库">我的C++代码库</h2>
-<h2 id="我的c代码库-2">我的C#代码库</h2>
-<h3 id="no-name"><a href="https://jerilee.github.io/post/my_cs_library/">no name</a></h3>
-<h3 id="敏感词匹配"><a href="https://jerilee.github.io/post/cs_sensitive_words/">敏感词匹配</a></h3>
+<h4 id="c90新语法"><a href="https://jerilee.github.io/post/c_sharp9/">C#9.0新语法</a></h4>
 <p><strong>---------------------------------------------------------</strong></p>
-<h2 id="未整理的部分">未整理的部分</h2>
+<h2 id="我的c代码库"><strong>我的C++代码库</strong></h2>
+<h2 id="我的c代码库-2"><strong>我的C#代码库</strong></h2>
+<h4 id="no-name"><a href="https://jerilee.github.io/post/my_cs_library/">no name</a></h4>
+<h4 id="敏感词匹配"><a href="https://jerilee.github.io/post/cs_sensitive_words/">敏感词匹配</a></h4>
+<p><strong>---------------------------------------------------------</strong></p>
+<h2 id="未整理的部分"><strong>未整理的部分</strong></h2>
 <h3 id="未整理的c笔记2"><a href="https://jerilee.github.io/post/c-bi-ji-er/">未整理的C++笔记2</a></h3>
 <h3 id="c笔记1"><a href="https://jerilee.github.io/post/wo-de-cbi-ji/">C++笔记1</a></h3>
 <h3 id="csharp笔记9">[CSharp笔记]【9】</h3>
