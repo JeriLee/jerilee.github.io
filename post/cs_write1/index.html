@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>C#笔记 | Rong Sir的博客</title>
-<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1600701674663">
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1600704057426">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="C#笔记 | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
@@ -28,7 +28,7 @@ pub..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://jerilee.github.io">
-  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1600701674663" alt="">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1600704057426" alt="">
   </a>
   <h1 class="site-title">
     Rong Sir的博客
@@ -89,7 +89,7 @@ Mail: Rongerace@163.com
                 2020-07-13
               </span>
               <span>
-                6 min read
+                7 min read
               </span>
               
             </div>
@@ -120,7 +120,7 @@ string.IndexOf();
 <p>C#中的字典有些特殊：<br>
 1.对于重复的key值不可以重复添加，如果重复Add同一个key，会抛出异常ArgumentException<br>
 当然C#中提供了另一种TryAdd，会返回true或false<br>
-2.对于字典中不存在的key，不可以下标索引。如果查询一个不错在的key， dic_name[key_name] 会抛出异常KeyNotFoundException</p>
+2.对于字典中不存在的key，不可以下标索引。如果查询一个不存在的key， dic_name[key_name] 会抛出异常KeyNotFoundException</p>
 <pre><code class="language-C#">SortedDictionary&lt;string, string&gt; dic = new SortedDictionary&lt;string, string&gt;();
 dic.Add(&quot;1&quot;, &quot;Tom&quot;);
 dic.Add(&quot;1&quot;, &quot;Jeri&quot;); //不可以重复添加
@@ -246,6 +246,49 @@ public static class ListArrayProvider&lt;T&gt; {
   public static readonly Func&lt;List&lt;T&gt;, T[]&gt; GetArray = typeof(List&lt;T&gt;).GetField(&quot;_items&quot;, BindingFlags.Instance | BindingFlags.NonPublic).Complie&lt;Func&lt;List&lt;T&gt;, T[]&gt;&gt;();
 }
 </code></pre>
+<h4 id="c的try-catch-final时序"><strong>C#的try catch final时序</strong></h4>
+<p>关于Try Catch Finally代码时序问题<br>
+需要明确的是，无论如何finally代码块都会执行</p>
+<pre><code class="language-C#">    public static int TestFunc() {
+      int x = 0;
+      try {
+        x = 1;
+        return x;
+      } catch {
+        x = 2;
+      } finally {
+        x = 3;
+      }
+      return x;
+    }
+</code></pre>
+<p>对于这份代码，先运行try代码块令x=1，然后执行return， 然后再执行final代码块令x=3，最后退栈。<br>
+这里需要注意的是，返回值是1，而不是3。但是x=3是确确实实执行了，问题在于代码的时序是这样的。</p>
+<pre><code>int x = 0;
+//do try
+x = 1;
+//do return 
+var ret = x;
+//do final
+x = 3;
+//退栈 返回值为ret
+</code></pre>
+<p>很明显下列代码返回值是&quot;13&quot;，因为ret是引用类型，而不是值类型，所以已经被修改</p>
+<pre><code>public static StringBuilder TestFunc2() {
+    StringBuilder x = new StringBuilder();
+    try {
+    x.Append(&quot;1&quot;);
+    return x;
+    } catch {
+    x.Append(&quot;2&quot;);
+    } finally {
+    x.Append(&quot;3&quot;);
+    }
+    return x;
+}
+</code></pre>
+<p>当然，对于catch中的return，也会执行和try中的return一样的操作。<br>
+为了保证final中的代码一定会执行，final中的代码是不允许跳出final代码块的，例如final中不能存在return，但是可以抛出异常。</p>
 
               </div>
               <div class="toc-container">
@@ -262,6 +305,7 @@ public static class ListArrayProvider&lt;T&gt; {
 <li><a href="#5-%E5%85%83%E7%BB%84"><strong>5 元组</strong></a></li>
 <li><a href="#6-%E5%A4%9A%E7%BA%BF%E7%A8%8B"><strong>6 多线程</strong></a></li>
 <li><a href="#7-%E5%8A%A8%E6%80%81%E7%BC%96%E8%AF%91"><strong>7 动态编译</strong></a></li>
+<li><a href="#c%E7%9A%84try-catch-final%E6%97%B6%E5%BA%8F"><strong>C#的try catch final时序</strong></a></li>
 </ul>
 </li>
 </ul>
