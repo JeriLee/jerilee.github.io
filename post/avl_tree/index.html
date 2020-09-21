@@ -1,0 +1,420 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>数据结构（完全二叉平衡树 AVL Tree） | Rong Sir的博客</title>
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1600700806504">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="数据结构（完全二叉平衡树 AVL Tree） | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="基础数据结构
+@(数据结构)[完全平衡树|AVL Tree|数据结构]
+
+[TOC]
+完全平衡树 AVLTree
+概念
+以后补充
+...
+...
+...
+Code
+C#
+Author:  Jerilee
+Time: 最后修改日2020-8-..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://jerilee.github.io">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1600700806504" alt="">
+  </a>
+  <h1 class="site-title">
+    Rong Sir的博客
+  </h1>
+  <p class="site-description">
+    Phone: 17621996523
+Mail: Rongerace@163.com
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              数据结构（完全二叉平衡树 AVL Tree）
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-08-04
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="基础数据结构">基础数据结构</h1>
+<p>@(数据结构)[完全平衡树|AVL Tree|数据结构]</p>
+<hr>
+<p>[TOC]</p>
+<h2 id="完全平衡树-avltree"><strong>完全平衡树 AVLTree</strong></h2>
+<h3 id="概念"><strong>概念</strong></h3>
+<p>以后补充<br>
+...<br>
+...<br>
+...</p>
+<h3 id="code"><strong>Code</strong></h3>
+<h4 id="c"><strong>C#</strong></h4>
+<p><strong>Author:  Jerilee</strong><br>
+<strong>Time: 最后修改日2020-8-4 20:00</strong><br>
+<strong>AVLTree树</strong></p>
+<pre><code class="language-C#">  /// &lt;summary&gt;
+  /// AVLTree
+  /// Author:  Jerilee
+  /// Time:    2020-8-4 14:47
+  /// Link :   jerilee.github.io
+  /// &lt;/summary&gt;
+  public class AVLTree&lt;T&gt; where T : IComparable&lt;T&gt; {
+    class Node {
+      public T value;
+      public Node leftSon;
+      public Node rightSon;
+      public int height;
+      public Node(T v) {
+        value = v;
+        height = 1;
+        leftSon = default;
+        rightSon = default;
+      }
+
+      public void UpdateHeight() {
+        height = Math.Max(leftSon?.height ?? 0, rightSon?.height ?? 0) + 1;
+      }
+
+      public int DisHeight =&gt; (leftSon?.height ?? 0) - (rightSon?.height ?? 0);
+    }
+
+    private Node root;
+    private Comparer&lt;T&gt; comparer;
+    public AVLTree() {
+      comparer = Comparer&lt;T&gt;.Default;
+    }
+
+    public void Init(List&lt;T&gt; source) {
+      foreach (var item in source) {
+        Add(item);
+      }
+    }
+
+    public List&lt;T&gt; ToList() {
+      List&lt;T&gt; list = new List&lt;T&gt;();
+      Dfs(root, list);
+      return list;
+    }
+
+    private void Dfs(Node node, List&lt;T&gt; list) {
+      if (node != null) {
+        var l = node.leftSon != null ? node.leftSon.value : default;
+        var r = node.rightSon != null ? node.rightSon.value : default;
+        //Console.WriteLine($&quot;Node father[{node.value}] Lson[{l}] rSon[{r}] H[{node.height}]&quot;);
+        Dfs(node.leftSon, list);
+        list.Add(node.value);
+        Dfs(node.rightSon, list);
+      }
+    }
+
+    private Node RotateR(Node node) {
+      Node lson = node.leftSon;
+      Node lsonRson = lson.rightSon;
+      lson.rightSon = node;
+      node.leftSon = lsonRson;
+      node.UpdateHeight();
+      lson.UpdateHeight();
+      return lson;
+    }
+
+    private Node RotateL(Node node) {
+      Node rson = node.rightSon;
+      Node rsonLson = rson.leftSon;
+      rson.leftSon = node;
+      node.rightSon = rsonLson;
+      node.UpdateHeight();
+      rson.UpdateHeight();
+      return rson;
+    }
+
+    private Node RotateLR(Node node) {
+      node.leftSon = RotateL(node.leftSon);
+      return RotateR(node);
+    }
+
+    private Node RotateRL(Node node) {
+      node.rightSon = RotateR(node.rightSon);
+      return RotateL(node);
+    }
+
+    private void CheckRotateR(ref Node node) {
+      if (node.DisHeight &gt; 1) {
+        int leftH = node.leftSon.leftSon?.height ?? 0;
+        int rightH = node.leftSon.rightSon?.height ?? 0;
+        node = leftH &gt;= rightH ? RotateR(node) : RotateLR(node);
+      }
+    }
+
+    private void CheckRotateL(ref Node node) {
+      if (node.DisHeight &lt; -1) {
+        int leftH = node.rightSon.leftSon?.height ?? 0;
+        int rightH = node.rightSon.rightSon?.height ?? 0;
+        node = leftH &gt; rightH ? RotateRL(node) : RotateL(node);
+      }
+    }
+
+    private Node Add(Node node, T val) {
+      if (node == null) {
+        node = new Node(val);
+      } else {
+        int c = comparer.Compare(val, node.value);
+        if (c &lt; 0) {
+          node.leftSon = Add(node.leftSon, val);
+          CheckRotateR(ref node);
+        } else if (c &gt; 0) {
+          node.rightSon = Add(node.rightSon, val);
+          CheckRotateL(ref node);
+        }
+        node.UpdateHeight();
+      }
+      return node;
+    }
+
+    public void Add(T item) {
+      root = Add(root, item);
+    }
+
+    public bool Remove(T item) {
+      return Remove(ref root, item);
+    }
+
+    private bool Remove(ref Node node, T item) {
+      if (node != null) {
+        int c = comparer.Compare(item, node.value);
+
+        if (c == 0) {
+          if(node.leftSon == null &amp;&amp; node.rightSon == null) {
+            node = default;
+          }else if(node.leftSon == null) {
+            node = node.rightSon;
+          }else if(node.rightSon == null) {
+            node = node.leftSon;
+          } else {
+            Node lson = node.leftSon;
+            while (lson.rightSon != null) {
+              lson = lson.rightSon;
+            }
+            node.value = lson.value;
+            Remove(ref node.leftSon, node.value);
+
+            CheckRotateL(ref node);
+            node.UpdateHeight();
+          }
+          return true;
+        } else if (c &lt; 0) {
+          bool ret = Remove(ref node.leftSon, item);
+          CheckRotateL(ref node);
+          node.UpdateHeight();
+          return ret;
+        } else {
+          bool ret = Remove(ref node.rightSon, item);
+          CheckRotateR(ref node);
+          node.UpdateHeight();
+          return ret;
+        }
+      }
+      return false;
+    }
+
+    public bool Change(T fromItem, T toItem) {
+      if (Remove(fromItem)) {
+        Add(toItem);
+        return true;
+      }
+      return false;
+    }
+
+    public bool Contain(T item) {
+      return Find(item, root) != null;
+    }
+
+    private Node Find(T item, Node node) {
+      if (node != null) {
+        int c = comparer.Compare(item, node.value);
+        return c == 0 ? node : Find(item, c &lt; 0 ? node.leftSon : node.rightSon);
+      }
+      return null;
+    }
+  }
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">基础数据结构</a>
+<ul>
+<li><a href="#%E5%AE%8C%E5%85%A8%E5%B9%B3%E8%A1%A1%E6%A0%91-avltree"><strong>完全平衡树 AVLTree</strong></a>
+<ul>
+<li><a href="#%E6%A6%82%E5%BF%B5"><strong>概念</strong></a></li>
+<li><a href="#code"><strong>Code</strong></a>
+<ul>
+<li><a href="#c"><strong>C#</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://jerilee.github.io/post/binary_sort_tree/">
+              <h3 class="post-title">
+                数据结构(二叉搜索树BinarySortTree)
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: '',
+    owner: '',
+    admin: [''],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://jerilee.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

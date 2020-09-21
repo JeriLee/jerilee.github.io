@@ -1,0 +1,477 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>排行榜代码模板(平衡树&amp;线段树) | Rong Sir的博客</title>
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1600700806504">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="排行榜代码模板(平衡树&amp;线段树) | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="排行榜代码模板
+基于平衡二叉树和线段树
+在完全平衡树上写一颗线段树
+实现逻辑
+以后再写
+...
+...
+...
+C#版本
+备注：代码是不完整版本
+  /// &lt;summary&gt;
+  /// AVLTree
+  /// Autho..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://jerilee.github.io">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1600700806504" alt="">
+  </a>
+  <h1 class="site-title">
+    Rong Sir的博客
+  </h1>
+  <p class="site-description">
+    Phone: 17621996523
+Mail: Rongerace@163.com
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              排行榜代码模板(平衡树&amp;线段树)
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-08-04
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h2 id="排行榜代码模板">排行榜代码模板</h2>
+<h2 id="基于平衡二叉树和线段树">基于平衡二叉树和线段树</h2>
+<p>在完全平衡树上写一颗线段树</p>
+<h3 id="实现逻辑">实现逻辑</h3>
+<p>以后再写<br>
+...<br>
+...<br>
+...</p>
+<h3 id="c版本">C#版本</h3>
+<p><strong>备注：代码是不完整版本</strong></p>
+<pre><code class="language-C#">  /// &lt;summary&gt;
+  /// AVLTree
+  /// Author:  Jerilee
+  /// Time:    2020-8-4 17:00
+  /// Link :   jerilee.github.io
+  /// &lt;/summary&gt;
+  public class RankList&lt;T&gt; where T : IComparable&lt;T&gt; {
+    class Node {
+      public T value;
+      public Node leftSon;
+      public Node rightSon;
+      public int height;
+
+      public int LeftCount;
+      public int RightCount;
+
+      public Node(T v) {
+        value = v;
+        height = 1;
+        leftSon = rightSon = default;
+        LeftCount = RightCount = 0;
+      }
+
+      public void UpdateHeight() {
+        height = Math.Max(leftSon?.height ?? 0, rightSon?.height ?? 0) + 1;
+      }
+
+      public void UpdateCount() {
+        LeftCount = leftSon?.Count ?? 0;
+        RightCount = rightSon?.Count ?? 0;
+      }
+
+      public int DisHeight =&gt; (leftSon?.height ?? 0) - (rightSon?.height ?? 0);
+      public int Count =&gt; LeftCount + RightCount + 1;
+    }
+
+    private Node root;
+    private Comparer&lt;T&gt; comparer;
+    private int Count;
+    public RankList() {
+      comparer = Comparer&lt;T&gt;.Default;
+      Count = 0;
+    }
+
+    public void Init(List&lt;T&gt; source) {
+      foreach (var item in source) {
+        Add(item);
+      }
+    }
+
+    public List&lt;T&gt; ToList() {
+      List&lt;T&gt; list = new List&lt;T&gt;();
+      Dfs(root, list);
+      return list;
+    }
+
+    private void Dfs(Node node, List&lt;T&gt; list) {
+      if (node != null) {
+        var l = node.leftSon != null ? node.leftSon.value : default;
+        var r = node.rightSon != null ? node.rightSon.value : default;
+        Console.WriteLine($&quot;Node father[{node.value}] Lson[{l}] rSon[{r}] H[{node.height}] C[{node.LeftCount}]&quot;);
+        Dfs(node.leftSon, list);
+        list.Add(node.value);
+        Dfs(node.rightSon, list);
+      }
+    }
+
+    private Node RotateR(Node node) {
+      Node lson = node.leftSon;
+      Node lsonRson = lson.rightSon;
+      lson.rightSon = node;
+      node.leftSon = lsonRson;
+      node.UpdateHeight();
+      lson.UpdateHeight();
+      node.UpdateCount();
+      lson.UpdateCount();
+      return lson;
+    }
+
+    private Node RotateL(Node node) {
+      Node rson = node.rightSon;
+      Node rsonLson = rson.leftSon;
+      rson.leftSon = node;
+      node.rightSon = rsonLson;
+      node.UpdateHeight();
+      rson.UpdateHeight();
+      node.UpdateCount();
+      rson.UpdateCount();
+      return rson;
+    }
+
+    private Node RotateLR(Node node) {
+      node.leftSon = RotateL(node.leftSon);
+      return RotateR(node);
+    }
+
+    private Node RotateRL(Node node) {
+      node.rightSon = RotateR(node.rightSon);
+      return RotateL(node);
+    }
+
+    private void CheckRotateR(ref Node node) {
+      if (node.DisHeight &gt; 1) {
+        int leftH = node.leftSon.leftSon?.height ?? 0;
+        int rightH = node.leftSon.rightSon?.height ?? 0;
+        node = leftH &gt;= rightH ? RotateR(node) : RotateLR(node);
+      }
+    }
+
+    private void CheckRotateL(ref Node node) {
+      if (node.DisHeight &lt; -1) {
+        int leftH = node.rightSon.leftSon?.height ?? 0;
+        int rightH = node.rightSon.rightSon?.height ?? 0;
+        node = leftH &gt; rightH ? RotateRL(node) : RotateL(node);
+      }
+    }
+
+    private Node Add(Node node, T val) {
+      if (node == null) {
+        node = new Node(val);
+        ++Count;
+      } else {
+        int c = comparer.Compare(val, node.value);
+        if (c &lt; 0) {
+          node.leftSon = Add(node.leftSon, val);
+          CheckRotateR(ref node);
+        } else if (c &gt; 0) {
+          node.rightSon = Add(node.rightSon, val);
+          CheckRotateL(ref node);
+        }
+        node.UpdateHeight();
+        node.UpdateCount();
+      }
+      return node;
+    }
+
+    public void Add(T item) {
+      Console.WriteLine($&quot;Add Item {item}&quot;);
+      root = Add(root, item);
+      ToList();
+    }
+
+    public bool Remove(T item) {
+       bool ret = Remove(ref root, item);
+      if (ret) {
+        --Count;
+      }
+      return ret;
+    }
+
+    private bool Remove(ref Node node, T item) {
+      if (node != null) {
+        int c = comparer.Compare(item, node.value);
+
+        if (c == 0) {
+          if (node.leftSon == null &amp;&amp; node.rightSon == null) {
+            node = default;
+          } else if (node.leftSon == null) {
+            node = node.rightSon;
+          } else if (node.rightSon == null) {
+            node = node.leftSon;
+          } else {
+            Node lson = node.leftSon;
+            while (lson.rightSon != null) {
+              lson = lson.rightSon;
+            }
+            node.value = lson.value;
+            Remove(ref node.leftSon, node.value);
+
+            CheckRotateL(ref node);
+            node.UpdateHeight();
+            node.UpdateCount();
+          }
+          return true;
+        } else if (c &lt; 0) {
+          bool ret = Remove(ref node.leftSon, item);
+          CheckRotateL(ref node);
+          node.UpdateHeight();
+          node.UpdateCount();
+          return ret;
+        } else {
+          bool ret = Remove(ref node.rightSon, item);
+          CheckRotateR(ref node);
+          node.UpdateHeight();
+          node.UpdateCount();
+          return ret;
+        }
+      }
+      return false;
+    }
+
+    public bool Change(T fromItem, T toItem) {
+      if (Remove(fromItem)) {
+        Add(toItem);
+        return true;
+      }
+      return false;
+    }
+    /*
+    public bool Contain(T item) {
+      return Find(item, root) != null;
+    }
+
+    private Node Find(T item, Node node) {
+      if (node != null) {
+        int c = comparer.Compare(item, node.value);
+        return c == 0 ? node : Find(item, c &lt; 0 ? node.leftSon : node.rightSon);
+      }
+      return null;
+    }
+    */
+    public int GetRank(T item) {
+      return GetRank(root, item);
+    }
+
+    private int GetRank(Node node, T item) {
+      if(node != null) {
+        int c = comparer.Compare(item, node.value);
+        if (c == 0) {
+          return node.LeftCount + 1;
+        } else if (c &lt; 0) {
+          return GetRank(node.leftSon, item);
+        } else {
+          int t = GetRank(node.rightSon, item);
+          return t &lt; 0 ? t : t + node.LeftCount + 1;
+        }
+      }
+      return -1;
+    }
+
+    public T GetValueByRank(int Rank) {
+      if(Rank &gt; 0 &amp;&amp; Rank &lt;= Count) {
+        return GetValueByRank(root, Rank);
+      }
+      return default;
+    }
+
+    private T GetValueByRank(Node node, int rank) {
+      if(node != null) {
+        if(rank == node.LeftCount + 1) {
+          return node.value;
+        }else if(rank &lt; node.LeftCount + 1) {
+          return GetValueByRank(node.leftSon, rank);
+        }else {
+          return GetValueByRank(node.rightSon, rank - node.LeftCount - 1);
+        }
+      }
+      return default;
+    }
+  }
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%8E%92%E8%A1%8C%E6%A6%9C%E4%BB%A3%E7%A0%81%E6%A8%A1%E6%9D%BF">排行榜代码模板</a></li>
+<li><a href="#%E5%9F%BA%E4%BA%8E%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E7%BA%BF%E6%AE%B5%E6%A0%91">基于平衡二叉树和线段树</a>
+<ul>
+<li><a href="#%E5%AE%9E%E7%8E%B0%E9%80%BB%E8%BE%91">实现逻辑</a></li>
+<li><a href="#c%E7%89%88%E6%9C%AC">C#版本</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://jerilee.github.io/post/avl_tree/">
+              <h3 class="post-title">
+                数据结构（完全二叉平衡树 AVL Tree）
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: '',
+    owner: '',
+    admin: [''],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://jerilee.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
