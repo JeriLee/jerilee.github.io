@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Rong Sir的博客</title>
-    <updated>2020-09-21T14:43:04.624Z</updated>
+    <updated>2020-09-21T14:43:38.644Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -281,8 +281,8 @@ void show_list(T&amp;&amp; value, Args&amp;&amp;... args) {
     </entry>
     <entry>
         <title type="html"><![CDATA[C#9.0 新内容]]></title>
-        <id>https://jerilee.github.io/post/CS9/</id>
-        <link href="https://jerilee.github.io/post/CS9/">
+        <id>https://jerilee.github.io/post/CSharp9/</id>
+        <link href="https://jerilee.github.io/post/CSharp9/">
         </link>
         <updated>2020-09-21T14:27:13.000Z</updated>
         <content type="html"><![CDATA[<p><strong>由于2020年9月还未发布正式版C# 9.0 所以本文内容暂时不全，后续会逐步完善</strong></p>
