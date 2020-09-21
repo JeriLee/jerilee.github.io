@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Rong Sir的博客</title>
-    <updated>2020-09-21T15:10:51.621Z</updated>
+    <updated>2020-09-21T15:21:29.229Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -23,6 +23,7 @@ Mail: Rongerace@163.com</subtitle>
 <h4 id="cprime-plus-笔记"><a href="https://jerilee.github.io/post/c-prime-plus-simple/">《C++Prime Plus 笔记》</a></h4>
 <h2 id="c语言总结-2"><strong>C#语言总结</strong></h2>
 <h4 id="c90新语法"><a href="https://jerilee.github.io/post/c_sharp9/">C#9.0新语法</a></h4>
+<h4 id="csharp基础笔记"><a href="https://jerilee.github.io/post/cs_write1/">CSharp基础笔记</a></h4>
 <p><strong>---------------------------------------------------------</strong></p>
 <h2 id="我的c代码库"><strong>我的C++代码库</strong></h2>
 <h2 id="我的c代码库-2"><strong>我的C#代码库</strong></h2>
@@ -32,7 +33,6 @@ Mail: Rongerace@163.com</subtitle>
 <h2 id="未整理的部分"><strong>未整理的部分</strong></h2>
 <h3 id="未整理的c笔记2"><a href="https://jerilee.github.io/post/c-bi-ji-er/">未整理的C++笔记2</a></h3>
 <h3 id="c笔记1"><a href="https://jerilee.github.io/post/wo-de-cbi-ji/">C++笔记1</a></h3>
-<h3 id="csharp笔记9">[CSharp笔记]【9】</h3>
 ]]></content>
     </entry>
     <entry>
