@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>C#9.0 新内容 | Rong Sir的博客</title>
-<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1600704057426">
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1600704077574">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="C#9.0 新内容 | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
@@ -12,8 +12,10 @@
 
 
     <meta name="description" content="由于2020年9月还未发布正式版C# 9.0 所以本文内容暂时不全，后续会逐步完善
-关于Try Catch Finally代码时序问题
-try代码块中如果return，会将return的内容拷贝出来，再执行finally语句块。catch同..." />
+C# 9.0 language feature
+函数重写可以使用派生类返回值
+public class Food { }
+public class Meat..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -23,7 +25,7 @@ try代码块中如果return，会将return的内容拷贝出来，再执行final
       <div class="main-content">
         <div class="site-header">
   <a href="https://jerilee.github.io">
-  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1600704057426" alt="">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1600704077574" alt="">
   </a>
   <h1 class="site-title">
     Rong Sir的博客
@@ -92,8 +94,6 @@ Mail: Rongerace@163.com
             <div class="post-content-wrapper">
               <div class="post-content">
                 <p><strong>由于2020年9月还未发布正式版C# 9.0 所以本文内容暂时不全，后续会逐步完善</strong></p>
-<h2 id="关于try-catch-finally代码时序问题">关于Try Catch Finally代码时序问题</h2>
-<p>try代码块中如果return，会将return的内容拷贝出来，再执行finally语句块。catch同理</p>
 <h2 id="c-90-language-feature">C# 9.0 language feature</h2>
 <h3 id="函数重写可以使用派生类返回值">函数重写可以使用派生类返回值</h3>
 <pre><code class="language-C#">public class Food { }
@@ -211,7 +211,6 @@ var (id, name) = a; //反向构造
                 <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E5%85%B3%E4%BA%8Etry-catch-finally%E4%BB%A3%E7%A0%81%E6%97%B6%E5%BA%8F%E9%97%AE%E9%A2%98">关于Try Catch Finally代码时序问题</a></li>
 <li><a href="#c-90-language-feature">C# 9.0 language feature</a>
 <ul>
 <li><a href="#%E5%87%BD%E6%95%B0%E9%87%8D%E5%86%99%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E6%B4%BE%E7%94%9F%E7%B1%BB%E8%BF%94%E5%9B%9E%E5%80%BC">函数重写可以使用派生类返回值</a></li>
