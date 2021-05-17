@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>JAVA语言基础 | Rong Sir的博客</title>
-<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1621266455430">
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1621270602114">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="JAVA语言基础 | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
@@ -12,7 +12,11 @@
 
 
     <meta name="description" content="一小时学会java系列
-" />
+JAVA中的main函数
+在C++中，进程开始于main函数。在JAVA中，进程开始于某个类的静态函数main，这里需要注意的是，main函数签名必须为规定的格式。
+在C++中的实现方式
+int main(){
+  ..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -22,7 +26,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://jerilee.github.io">
-  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1621266455430" alt="">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1621270602114" alt="">
   </a>
   <h1 class="site-title">
     Rong Sir的博客
@@ -83,7 +87,7 @@ Mail: Rongerace@163.com
                 2021-05-17
               </span>
               <span>
-                1 min read
+                4 min read
               </span>
               
             </div>
@@ -91,10 +95,146 @@ Mail: Rongerace@163.com
             <div class="post-content-wrapper">
               <div class="post-content">
                 <p>一小时学会java系列</p>
+<h2 id="java中的main函数">JAVA中的main函数</h2>
+<p>在C++中，进程开始于main函数。在JAVA中，进程开始于某个类的静态函数main，这里需要注意的是，main函数签名必须为规定的格式。</p>
+<p>在C++中的实现方式</p>
+<pre><code class="language-C++">int main(){
+    std::cout &lt;&lt; &quot;Hello World!\n&quot;;
+}
+</code></pre>
+<p>在JAVA中的实现方式</p>
+<pre><code class="language-JAVA">public class Main {
+    public static void main(String[] args) {
+        System.out.println(&quot;Hello World&quot;);
+    }
+}
+</code></pre>
+<h2 id="值类型和引用类型">值类型和引用类型</h2>
+<p>java中，仅有以下几种值类型，其他类型（包括自定义类型）都是引用类型。</p>
+<pre><code class="language-JAVA">int a = 1;
+long b  = 2;
+short c = 3;
+char d = 4;
+double e = 5.0;
+float f = 6.0f;
+char g = 0;
+boolean h = false; 
+</code></pre>
+<h2 id="java中的基础数据结构">JAVA中的基础数据结构</h2>
+<p>C++的变长数组vector，对应java中的ArrayList</p>
+<p>C++的vector使用</p>
+<pre><code class="language-C++">std::vector&lt;int&gt; list;
+list.push_back(1);
+int temp = list[0];
+int size = list.size();
+</code></pre>
+<p>JAVA的使用</p>
+<pre><code class="language-JAVA">ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+//向数组中添加
+list.add(1);
+//获取数组中index为0的元素
+Integer temp = list.get(0);
+//获得数组长度
+int length = list.size();
+</code></pre>
+<p>C++和JAVA的数据结构对照表</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">C++</th>
+<th style="text-align:left">JAVA</th>
+<th style="text-align:left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">vector</td>
+<td style="text-align:left">ArrayList</td>
+<td style="text-align:left">变长数组</td>
+</tr>
+<tr>
+<td style="text-align:left">list</td>
+<td style="text-align:left">LinkedList</td>
+<td style="text-align:left">链表</td>
+</tr>
+<tr>
+<td style="text-align:left">unordered_map</td>
+<td style="text-align:left">HashMap</td>
+<td style="text-align:left">哈希字典</td>
+</tr>
+<tr>
+<td style="text-align:left">map</td>
+<td style="text-align:left">TreeMap</td>
+<td style="text-align:left">有序字典</td>
+</tr>
+<tr>
+<td style="text-align:left">unordered_set</td>
+<td style="text-align:left">HashSet</td>
+<td style="text-align:left">哈希集合</td>
+</tr>
+<tr>
+<td style="text-align:left">set</td>
+<td style="text-align:left">TreeSet</td>
+<td style="text-align:left">有序集合</td>
+</tr>
+</tbody>
+</table>
+<p>JAVA示例</p>
+<pre><code class="language-JAVA">LinkedList&lt;Integer&gt; linkList = new LinkedList&lt;&gt;();
+HashSet&lt;Integer&gt; hashSet = new HashSet&lt;&gt;();
+HashMap&lt;Integer, Integer&gt; hashMap = new HashMap&lt;&gt;();
+TreeMap&lt;Integer,Integer&gt; map = new TreeMap&lt;&gt;();
+TreeSet&lt;Integer&gt; set = new TreeSet&lt;&gt;();
+</code></pre>
+<p>JAVA有一个特点，泛型所有的实例化类型，均为引用类型，所以每一个值类型都有引用类型相对应，例如int对应Integer，boolean对应Boolean。<br>
+在C++中，因为不同的类型创建对象占用不同大小的内存空间，每一个泛型的实例化，都会生成一份代码。而JAVA中所有类型均继承于Object，所以泛型实例化代码仅有一份。</p>
+<p>这里需要注意的是，Java中所有表示下标的类型，均为值类型int，而不是引用类型Integer，例如Java库中ArrayList的remove函数如下，很巧妙的避免了ArrayList<Integer>在删除元素的时候调用函数出现错误。这也产生了另外一个问题，java数组的最大长度为int上限，很容易因数组长度超过最大长度而异常。</p>
+<pre><code>//Removes the element at the specified position in this list
+public E remove(int index) {
+}
+//Removes the first occurrence of the specified element from this list, if it is present
+public boolean remove(Object o) {
+}
+</code></pre>
+<p>需要注意的是JAVA的</p>
+<h2 id="java的for">JAVA的for</h2>
+<p>Java提供了两种for循环的方式，和C++相同，也拥有相同的关键字continue和break</p>
+<pre><code class="language-JAVA">ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+for(int index = 0; index &lt; list.size();++index) {
+    Integer value = list.get(index);
+    break;
+}
+
+for(Integer integer: list) {
+    continue;
+}
+</code></pre>
+<h2 id="java的stream">JAVA的Stream</h2>
+<h2 id="java的lamda表达式">JAVA的lamda表达式</h2>
+<h2 id="java的自定义委托">JAVA的自定义委托</h2>
+<h2 id="java的-内部类-和内部静态类">JAVA的 内部类 和内部静态类</h2>
+<h2 id="java的匿名类">JAVA的匿名类</h2>
+<h2 id="java的局部内部类">JAVA的局部内部类</h2>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#java%E4%B8%AD%E7%9A%84main%E5%87%BD%E6%95%B0">JAVA中的main函数</a></li>
+<li><a href="#%E5%80%BC%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B">值类型和引用类型</a></li>
+<li><a href="#java%E4%B8%AD%E7%9A%84%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">JAVA中的基础数据结构</a></li>
+<li><a href="#java%E7%9A%84for">JAVA的for</a></li>
+<li><a href="#java%E7%9A%84stream">JAVA的Stream</a></li>
+<li><a href="#java%E7%9A%84lamda%E8%A1%A8%E8%BE%BE%E5%BC%8F">JAVA的lamda表达式</a></li>
+<li><a href="#java%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A7%94%E6%89%98">JAVA的自定义委托</a></li>
+<li><a href="#java%E7%9A%84-%E5%86%85%E9%83%A8%E7%B1%BB-%E5%92%8C%E5%86%85%E9%83%A8%E9%9D%99%E6%80%81%E7%B1%BB">JAVA的 内部类 和内部静态类</a></li>
+<li><a href="#java%E7%9A%84%E5%8C%BF%E5%90%8D%E7%B1%BB">JAVA的匿名类</a></li>
+<li><a href="#java%E7%9A%84%E5%B1%80%E9%83%A8%E5%86%85%E9%83%A8%E7%B1%BB">JAVA的局部内部类</a></li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
