@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://jerilee.github.io</id>
     <title>Rong Sir的博客</title>
-    <updated>2021-05-17T15:32:33.814Z</updated>
+    <updated>2021-05-17T15:36:46.144Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://jerilee.github.io"/>
     <link rel="self" href="https://jerilee.github.io/atom.xml"/>
@@ -11,6 +11,15 @@ Mail: Rongerace@163.com</subtitle>
     <logo>https://jerilee.github.io/images/avatar.png</logo>
     <icon>https://jerilee.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Rong Sir的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[JAVA语言基础]]></title>
+        <id>https://jerilee.github.io/post/java_language/</id>
+        <link href="https://jerilee.github.io/post/java_language/">
+        </link>
+        <updated>2021-05-17T15:33:00.000Z</updated>
+        <content type="html"><![CDATA[<p>一小时学会java系列</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[语言特性总结(目录)]]></title>
         <id>https://jerilee.github.io/post/languageFeature/</id>
@@ -1223,71 +1232,6 @@ getline(cin, str);
     return Remove(ref node.rightSon, item);
   }
   */
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[我的C++笔记]]></title>
-        <id>https://jerilee.github.io/post/wo-de-cbi-ji/</id>
-        <link href="https://jerilee.github.io/post/wo-de-cbi-ji/">
-        </link>
-        <updated>2020-07-27T16:13:03.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="闭包"><strong>闭包</strong></h2>
-<h3 id="函数指针">函数指针</h3>
-<p><strong>值得注意的是，函数指针不能捕获上限文，无法形成闭包</strong></p>
-<pre><code class="language-C++">template &lt;class T&gt;
-static typename std::vector&lt;T&gt;::const_iterator FindByMethod(const std::vector&lt;T&gt;&amp; list, bool (*Equal)(const T&amp;)) {
-  for (auto it = list.begin(); it != list.end(); ++it) {
-    if (Equal(*it)) {
-      return it;
-    }
-  }
-  return list.end();
-}
-</code></pre>
-<h3 id="stdfunction">std::function</h3>
-<pre><code class="language-C++">  template &lt;class T&gt;
-  static typename std::vector&lt;T&gt;::const_iterator FindByFunc(const std::vector&lt;T&gt;&amp; list, const std::function&lt;bool(const T&amp;)&gt;&amp; Equal) {
-    auto it = list.begin();
-    for (; it != list.end(); ++it) {
-      if (Equal(*it)) {
-        break;
-      }
-    }
-    return it;
-  }
-</code></pre>
-<h3 id="标准写法">标准写法</h3>
-<pre><code class="language-C++">template &lt;class T, class F&gt;
-static typename std::vector&lt;T&gt;::const_iterator FindBy(const std::vector&lt;T&gt;&amp; list, const F&amp; Equal) {
-  typename std::vector&lt;T&gt;::const_iterator it = list.begin();
-  for (; it != list.end(); ++it) {
-    if (Equal(*it)) {
-      return it;
-    }
-  }
-  return list.end();
-}
-</code></pre>
-<h3 id="stdfind_if实现">std::find_if()实现</h3>
-<pre><code class="language-C++">template &lt;class T, class F&gt;
-static typename std::vector&lt;T&gt;::const_iterator FindByKu(const std::vector&lt;T&gt;&amp; list, const F&amp; Equal) {
-  auto it = std::find_if(list.begin(), list.end(), Equal);
-  return it;
-}
-</code></pre>
-<h2 id="多数量入参"><strong>多数量入参</strong></h2>
-<pre><code class="language-C++">template&lt;class T, class... _Valty&gt;
-static int AddFixed(std::vector&lt;T&gt;&amp; list, int max_count, _Valty&amp;&amp;... _Val) {
-  std::cout &lt;&lt; &quot;Fixed 2&quot; &lt;&lt; std::endl;
-  list.emplace_back(_STD forward&lt;_Valty&gt;(_Val)...);
-  if (list.size() &gt; max_count) {
-    int count = list.size() - max_count;
-    list.erase(list.begin(), list.begin() + count);
-    return count;
-  }
-  return 0;
-}
 </code></pre>
 ]]></content>
     </entry>
