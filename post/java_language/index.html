@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>JAVA语言基础 | Rong Sir的博客</title>
-<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1621270714214">
+<link rel="shortcut icon" href="https://jerilee.github.io/favicon.ico?v=1621960957601">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://jerilee.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="JAVA语言基础 | Rong Sir的博客 - Atom Feed" href="https://jerilee.github.io/atom.xml">
@@ -26,7 +26,7 @@ int main(){
       <div class="main-content">
         <div class="site-header">
   <a href="https://jerilee.github.io">
-  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1621270714214" alt="">
+  <img class="avatar" src="https://jerilee.github.io/images/avatar.png?v=1621960957601" alt="">
   </a>
   <h1 class="site-title">
     Rong Sir的博客
@@ -87,7 +87,7 @@ Mail: Rongerace@163.com
                 2021-05-17
               </span>
               <span>
-                4 min read
+                9 min read
               </span>
               
             </div>
@@ -95,7 +95,7 @@ Mail: Rongerace@163.com
             <div class="post-content-wrapper">
               <div class="post-content">
                 <p>一小时学会java系列</p>
-<h2 id="java中的main函数">JAVA中的main函数</h2>
+<h2 id="java中的main函数"><strong>JAVA中的main函数</strong></h2>
 <p>在C++中，进程开始于main函数。在JAVA中，进程开始于某个类的静态函数main，这里需要注意的是，main函数签名必须为规定的格式。</p>
 <p>在C++中的实现方式</p>
 <pre><code class="language-C++">int main(){
@@ -109,7 +109,7 @@ Mail: Rongerace@163.com
     }
 }
 </code></pre>
-<h2 id="值类型和引用类型">值类型和引用类型</h2>
+<h2 id="值类型和引用类型"><strong>值类型和引用类型</strong></h2>
 <p>java中，仅有以下几种值类型，其他类型（包括自定义类型）都是引用类型。</p>
 <pre><code class="language-JAVA">int a = 1;
 long b  = 2;
@@ -120,7 +120,7 @@ float f = 6.0f;
 char g = 0;
 boolean h = false; 
 </code></pre>
-<h2 id="java中的基础数据结构">JAVA中的基础数据结构</h2>
+<h2 id="java中的基础数据结构"><strong>JAVA中的基础数据结构</strong></h2>
 <p>C++的变长数组vector，对应java中的ArrayList</p>
 <p>C++的vector使用</p>
 <pre><code class="language-C++">std::vector&lt;int&gt; list;
@@ -189,14 +189,14 @@ TreeSet&lt;Integer&gt; set = new TreeSet&lt;&gt;();
 <p>JAVA有一个特点，泛型所有的实例化类型，均为引用类型，所以每一个值类型都有引用类型相对应，例如int对应Integer，boolean对应Boolean。<br>
 在C++中，因为不同的类型创建对象占用不同大小的内存空间，每一个泛型的实例化，都会生成一份代码。而JAVA中所有类型均继承于Object，所以泛型实例化代码仅有一份。</p>
 <p>这里需要注意的是，Java中所有表示下标的类型，均为值类型int，而不是引用类型Integer，例如Java库中ArrayList的remove函数如下，很巧妙的避免了ArrayList<Integer>在删除元素的时候调用函数出现错误。这也产生了另外一个问题，java数组的最大长度为int上限，很容易因数组长度超过最大长度而异常。</p>
-<pre><code>//Removes the element at the specified position in this list
+<pre><code class="language-JAVA">//Removes the element at the specified position in this list
 public E remove(int index) {
 }
 //Removes the first occurrence of the specified element from this list, if it is present
 public boolean remove(Object o) {
 }
 </code></pre>
-<h2 id="java的for">JAVA的for</h2>
+<h2 id="java的for"><strong>JAVA的for</strong></h2>
 <p>Java提供了两种for循环的方式，和C++相同，也拥有相同的关键字continue和break</p>
 <pre><code class="language-JAVA">ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;();
 for(int index = 0; index &lt; list.size();++index) {
@@ -208,28 +208,155 @@ for(Integer integer: list) {
     continue;
 }
 </code></pre>
-<h2 id="java的stream">JAVA的Stream</h2>
-<h2 id="java的lamda表达式">JAVA的lamda表达式</h2>
-<h2 id="java的自定义委托">JAVA的自定义委托</h2>
-<h2 id="java的-内部类-和内部静态类">JAVA的 内部类 和内部静态类</h2>
+<h2 id="java的委托"><strong>JAVA的委托</strong></h2>
+<p>类似于C++中的 std::function<T>，在JAVA中也存在泛型委托，当然在JAVA中没有委托的概念，它只是一个接口</p>
+<p>例如，Test::print为一个静态函数，它的函数签名是一个Integer的入参，void类型的返回值。</p>
+<pre><code class="language-JAVA">public class Test {
+    public static void print(Integer p) {
+        System.out.println(p);
+    }
+}
+</code></pre>
+<p>在代码中可以定义一个委托绑定这个函数，这个委托调用的时候，即调用这个函数。<br>
+类似于C++的std::function&lt;void(int)&gt;，<br>
+Consumer<T>即为单入参，无返回值的委托类型</p>
+<pre><code class="language-JAVA">Consumer&lt;Integer&gt; func = Test::print;
+Integer x = 5;
+func.accept(x);
+</code></pre>
+<p>类似于C++的std::function&lt;int(int)&gt;, 单个入参，有返回值的情况，在java中使用Function&lt;T, TResult&gt;</p>
+<pre><code class="language-JAVA">public class Test {
+    public static Integer calculate(Integer x) {
+        if(x &gt; 0) return x - 1;
+        else return x + 1;
+    }
+
+    public static void main(String[] args) {
+        Function&lt;Integer,Integer&gt; func3 = Test::calculate;
+    }
+}
+</code></pre>
+<p>类似于C++的std::function&lt;int(void)&gt;，没有入参，有返回值，使用Supplier<T></p>
+<pre><code class="language-JAVA">public class Test {
+    public static Integer x = 314;
+    public static Integer calculate() {
+        return (x &lt;&lt;= 17) ^ (x &gt;&gt;= 15) ^ (x &lt;&lt;= 8);
+    }
+
+    public static void main(String[] args) {
+        Supplier&lt;Integer&gt; func3 = Test::calculate;
+    }
+}
+</code></pre>
+<p>类似于C++的std::function&lt;bool(int, int)&gt;，两个入参，有返回值，使用BiFunction&lt;T1, T2, TR&gt;</p>
+<pre><code class="language-JAVA">public class Test {
+    public static Boolean comp(Integer x, Integer y) {
+        return x &lt; y;
+    }
+
+    public static void main(String[] args) {
+        BiFunction&lt;Integer, Integer, Boolean&gt; func3 = Test::comp;
+    }
+}
+</code></pre>
+<p>和C++/C#中相同，在JAVA中，委托类型也可以自定义，以BiFunction&lt;T, U, R&gt;为例，它是一个接口，只要实例化时，实现这个apply的函数就可以了。后面还添加了一个语法糖，方便程序员串接委托。</p>
+<pre><code class="language-JAVA">@FunctionalInterface
+public interface BiFunction&lt;T, U, R&gt; {
+    R apply(T t, U u);
+
+    default &lt;V&gt; BiFunction&lt;T, U, V&gt; andThen(Function&lt;? super R, ? extends V&gt; after) {
+        Objects.requireNonNull(after);
+        return (T t, U u) -&gt; after.apply(apply(t, u));
+    }
+}
+</code></pre>
+<h2 id="java的lamda表达式"><strong>JAVA的lamda表达式</strong></h2>
+<p>类似于C++中的lamda表达式，在JAVA中也存在lamda表达式<br>
+格式:</p>
+<pre><code class="language-JAVA">    (参数列表) -&gt; { 
+        函数主体;
+        return 返回值;
+    };
+</code></pre>
+<p>当参数列表只有一个参数时，小括号可以省略；当函数主体只包含一行返回值时，函数主体括号可以省略。<br>
+例如：</p>
+<pre><code class="language-JAVA">Function&lt;Integer,Integer&gt; func10 = (x) -&gt; x+ 1;
+Consumer&lt;Integer&gt; func11 = x -&gt; {};
+BiFunction&lt;Integer,Integer, Boolean&gt; func12 = (x, y) -&gt; x &lt; y;
+BiFunction&lt;Integer,Integer, Boolean&gt; func13 = (x, y) -&gt; {
+    int z = x * y;
+    return z &lt; x + y;
+};
+</code></pre>
+<h2 id="java的stream"><strong>JAVA的Stream</strong></h2>
+<p>类似于C#的linq表达式，简单地讲就是语法糖，便于JAVA程序员书写更简洁代码。</p>
+<p>filter方法，在集合中筛选出满足条件的元素。<br>
+例如，在一个List<Integer>中筛选出所有大于0的元素，把筛选出的元素生成新的List。</p>
+<pre><code class="language-JAVA">List&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+ //找出List中所有大于0的元素，
+List&lt;Integer&gt; list2 = list.stream().filter(i -&gt; i &gt; 0).collect(Collectors.toList());
+</code></pre>
+<p>stream函数定义在Collection<E>中，而List<E> 继承了Collection<E>的stream函数，这个函数的返回值是一个Stream<E>对象。</p>
+<pre><code class="language-JAVA">//class Collection&lt;E&gt; 
+default Stream&lt;E&gt; stream() {
+    return StreamSupport.stream(spliterator(), false);
+}
+</code></pre>
+<p>很显然，可以猜测出filter的参数是Function&lt;T, TResult&gt;类型，实际上并不完全正确，下面是库定义，这个Predicate&lt;? super T&gt; 的意思是，泛型的模板类型可以是T的任意一个基类，当predicate调用时，传入的参数需要是T的派生类。<br>
+接口Predicate<T> 实际上是接口Function&lt;T, Boolean&gt; 的一个特例，又添加了几个函数定义。</p>
+<pre><code class="language-JAVA">Stream&lt;T&gt; filter(Predicate&lt;? super T&gt; predicate);
+</code></pre>
+<p>map方法，集合转换为另一种类集合<br>
+例如将Integer类型集合转换为String集合</p>
+<pre><code class="language-JAVA">List&lt;String&gt; list3 = list.stream().map(i -&gt; i.toString()).collect(Collectors.toList());
+</code></pre>
+<p>stream的其他常用方法：</p>
+<pre><code class="language-JAVA">    anyMatch     //任何一个满足条件，即为true
+    noneMatch  //没有一个满足条件，即为true
+    allMatch       //都满足条件，即为true
+    findFirst()     //获得第一个
+</code></pre>
+<h2 id="java的注解"><strong>JAVA的注解</strong></h2>
+<p>JAVA的注解用@标识，例如上文的BiFunction定义，@FunctionalInterface就标识了该接口为函数接口</p>
+<pre><code class="language-JAVA">@FunctionalInterface
+public interface BiFunction&lt;T, U, R&gt; {
+    R apply(T t, U u);
+
+    default &lt;V&gt; BiFunction&lt;T, U, V&gt; andThen(Function&lt;? super R, ? extends V&gt; after) {
+        Objects.requireNonNull(after);
+        return (T t, U u) -&gt; after.apply(apply(t, u));
+    }
+}
+</code></pre>
+<p>注解有三种类型，由枚举RetentionPolicy定义，分别是<br>
+SOURCE：在原文件中有效，被编译器丢弃<br>
+CLASS：在class文件有效，可能会被虚拟机忽略<br>
+RUNTIME：在运行时有效</p>
+<p>注解定义时也比较简单，即空接口，在interface前面加@</p>
+<pre><code class="language-JAVA">public @interface FunctionalInterface {}
+</code></pre>
+<h2 id="java的-内部类-和内部静态类"><strong>JAVA的 内部类 和内部静态类</strong></h2>
 <h2 id="java的匿名类">JAVA的匿名类</h2>
 <h2 id="java的局部内部类">JAVA的局部内部类</h2>
+<h2 id="java">JAVA</h2>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#java%E4%B8%AD%E7%9A%84main%E5%87%BD%E6%95%B0">JAVA中的main函数</a></li>
-<li><a href="#%E5%80%BC%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B">值类型和引用类型</a></li>
-<li><a href="#java%E4%B8%AD%E7%9A%84%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">JAVA中的基础数据结构</a></li>
-<li><a href="#java%E7%9A%84for">JAVA的for</a></li>
-<li><a href="#java%E7%9A%84stream">JAVA的Stream</a></li>
-<li><a href="#java%E7%9A%84lamda%E8%A1%A8%E8%BE%BE%E5%BC%8F">JAVA的lamda表达式</a></li>
-<li><a href="#java%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A7%94%E6%89%98">JAVA的自定义委托</a></li>
-<li><a href="#java%E7%9A%84-%E5%86%85%E9%83%A8%E7%B1%BB-%E5%92%8C%E5%86%85%E9%83%A8%E9%9D%99%E6%80%81%E7%B1%BB">JAVA的 内部类 和内部静态类</a></li>
+<li><a href="#java%E4%B8%AD%E7%9A%84main%E5%87%BD%E6%95%B0"><strong>JAVA中的main函数</strong></a></li>
+<li><a href="#%E5%80%BC%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B"><strong>值类型和引用类型</strong></a></li>
+<li><a href="#java%E4%B8%AD%E7%9A%84%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><strong>JAVA中的基础数据结构</strong></a></li>
+<li><a href="#java%E7%9A%84for"><strong>JAVA的for</strong></a></li>
+<li><a href="#java%E7%9A%84%E5%A7%94%E6%89%98"><strong>JAVA的委托</strong></a></li>
+<li><a href="#java%E7%9A%84lamda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><strong>JAVA的lamda表达式</strong></a></li>
+<li><a href="#java%E7%9A%84stream"><strong>JAVA的Stream</strong></a></li>
+<li><a href="#java%E7%9A%84%E6%B3%A8%E8%A7%A3"><strong>JAVA的注解</strong></a></li>
+<li><a href="#java%E7%9A%84-%E5%86%85%E9%83%A8%E7%B1%BB-%E5%92%8C%E5%86%85%E9%83%A8%E9%9D%99%E6%80%81%E7%B1%BB"><strong>JAVA的 内部类 和内部静态类</strong></a></li>
 <li><a href="#java%E7%9A%84%E5%8C%BF%E5%90%8D%E7%B1%BB">JAVA的匿名类</a></li>
 <li><a href="#java%E7%9A%84%E5%B1%80%E9%83%A8%E5%86%85%E9%83%A8%E7%B1%BB">JAVA的局部内部类</a></li>
+<li><a href="#java">JAVA</a></li>
 </ul>
 </li>
 </ul>
